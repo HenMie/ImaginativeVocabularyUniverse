@@ -18,7 +18,6 @@ const sampleLevel: LevelFile = {
     {
       id: 'alpha',
       category: 'Alpha',
-      type: 'word',
       tiles: [
         { id: 'a1', languageCode: 'ko', text: '가', translations: { zh: '甲' } },
         { id: 'a2', languageCode: 'ko', text: '나', translations: { zh: '乙' } },
@@ -29,7 +28,6 @@ const sampleLevel: LevelFile = {
     {
       id: 'beta',
       category: 'Beta',
-      type: 'word',
       tiles: [
         { id: 'b1', languageCode: 'ko', text: '마', translations: { zh: '戊' } },
         { id: 'b2', languageCode: 'ko', text: '바', translations: { zh: '己' } },

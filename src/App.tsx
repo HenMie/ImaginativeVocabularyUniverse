@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { fetchLanguages } from './services/languageService'
+import { Footer } from './components/Footer'
 import { LevelPlay } from './routes/LevelPlay'
 import { LevelSelect } from './routes/LevelSelect'
 import { useLanguageStore } from './store/languageStore'
@@ -46,6 +47,7 @@ export const App = () => {
         <Route path="/levels/:levelId" element={<LevelPlay />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <Footer />
     </div>
   )
 }

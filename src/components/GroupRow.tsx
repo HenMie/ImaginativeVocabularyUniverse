@@ -1,5 +1,6 @@
 import type { GroupColorPreset } from '../constants/groupColors'
 import type { CompletedGroup } from '../utils/board'
+import { useEffect, useRef } from 'react'
 
 interface GroupRowProps {
   group: CompletedGroup
@@ -11,11 +12,37 @@ export const GroupRow = ({ group, colorPreset }: GroupRowProps) => {
   const border = colorPreset?.border ?? 'rgba(203,213,225,0.7)'
   const badgeBg = colorPreset?.badgeBackground ?? '#1E3A8A'
   const badgeText = colorPreset?.badgeText ?? '#FFFFFF'
+  const ref = useRef<HTMLDivElement>(null)
+  const isVisible = useRef(false)
+
+  useEffect(() => {
+    const element = ref.current
+    if (!element || isVisible.current) return
+
+    // 简单的进入动画
+    element.style.opacity = '0'
+    element.style.transform = 'translateY(20px) scale(0.95)'
+
+    // 触发动画
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        element.style.transition = 'opacity 0.35s var(--ease-out-cubic), transform 0.35s var(--ease-out-cubic)'
+        element.style.opacity = '1'
+        element.style.transform = 'translateY(0) scale(1)'
+        isVisible.current = true
+      })
+    })
+  }, [])
 
   return (
     <div
-      className="flex w-full flex-col gap-1.5 rounded-2xl border px-3 py-2 shadow-sm"
-      style={{ backgroundColor: background, borderColor: border }}
+      ref={ref}
+      className="group-row flex w-full flex-col gap-1.5 rounded-2xl border px-3 py-2 shadow-sm hover-lift gpu-accelerated"
+      style={{
+        backgroundColor: background,
+        borderColor: border,
+        transition: 'background-color 0.25s var(--ease-out-cubic), border-color 0.25s var(--ease-out-cubic)'
+      }}
     >
       <header className="flex items-center justify-between">
         <span

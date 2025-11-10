@@ -32,7 +32,7 @@ export const CompletedRow = ({ group, colorPreset, columns }: CompletedRowProps)
         </span>
       </div>
       <div className="flex flex-1 items-center justify-around gap-1">
-        {group.tiles.map((tile, idx) => (
+        {group.tiles.map((tile) => (
           <span
             key={tile.instanceId}
             className="text-base font-semibold"

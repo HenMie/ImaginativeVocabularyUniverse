@@ -73,13 +73,17 @@ export const TileDragLayer = () => {
       style={{
         ...style,
       }}
+      className="drag-preview"
     >
       <div
-        className="pointer-events-none flex h-full w-full select-none items-center justify-center rounded-xl border-2 px-2 py-1 text-center text-base font-semibold shadow-2xl"
+        className="pointer-events-none flex h-full w-full select-none items-center justify-center rounded-xl border-2 px-2 py-1 text-center text-base font-semibold gpu-accelerated"
         style={{
           backgroundColor: background,
           borderColor: border,
           color,
+          boxShadow: 'var(--shadow-floating)',
+          backdropFilter: 'blur(8px)',
+          transform: 'scale(1.05) rotate(1deg)',
         }}
       >
         <span

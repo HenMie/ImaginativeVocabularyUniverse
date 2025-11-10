@@ -1,7 +1,9 @@
+import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { STORAGE_EXPORT_FILENAME } from '../constants/storage'
 import { useProgressStore } from '../store/progressStore'
 import { decodeProgressPayload, encodeProgressPayload } from '../utils/progressCodec'
+import { ModalTransition } from './ModalTransition'
 
 interface ImportExportModalProps {
   open: boolean
@@ -66,14 +68,14 @@ export const ImportExportModal = ({ open, onClose }: ImportExportModalProps) => 
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur">
-      <div className="flex w-full max-w-xl flex-col gap-4 rounded-3xl bg-surface p-6 shadow-2xl">
+    <ModalTransition isOpen={open} onClose={onClose}>
+      <div className="flex w-full max-w-xl flex-col gap-4 p-6">
         <header className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-slate-800">导入 / 导出存档</h2>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full bg-slate-200 px-3 py-1 text-sm text-slate-600 hover:bg-slate-300"
+            className="rounded-full bg-slate-200 px-3 py-1 text-sm text-slate-600 transition-all-smooth hover:bg-slate-300 hover:scale-105 pressable gpu-accelerated"
           >
             关闭
           </button>
@@ -85,7 +87,7 @@ export const ImportExportModal = ({ open, onClose }: ImportExportModalProps) => 
           value={raw}
           onChange={(event) => setRaw(event.target.value)}
           spellCheck={false}
-          className="h-64 w-full rounded-2xl border border-slate-200 bg-white p-3 font-mono text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary/40"
+          className="h-64 w-full rounded-2xl border border-slate-200 bg-white p-3 font-mono text-xs text-slate-700 transition-all-smooth focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/50 gpu-accelerated"
         />
         {error && <p className="text-xs text-red-500">{error}</p>}
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -93,7 +95,12 @@ export const ImportExportModal = ({ open, onClose }: ImportExportModalProps) => 
             <button
               type="button"
               onClick={handleCopy}
-              className="rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary hover:bg-primary/20"
+              className={clsx(
+                'rounded-full px-4 py-2 text-sm font-medium transition-all-smooth hover:scale-105 pressable gpu-accelerated',
+                copied
+                  ? 'bg-emerald-500 text-white'
+                  : 'bg-primary/10 text-primary hover:bg-primary/20'
+              )}
             >
               {copied ? '已复制' : '复制存档'}
             </button>
@@ -108,13 +115,13 @@ export const ImportExportModal = ({ open, onClose }: ImportExportModalProps) => 
           <button
             type="button"
             onClick={handleImport}
-            className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow hover:bg-primary-dark"
+            className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow transition-all-smooth hover:bg-primary-dark hover:scale-105 hover:shadow-lg pressable gpu-accelerated"
           >
             导入进度
           </button>
         </div>
       </div>
-    </div>
+    </ModalTransition>
   )
 }
 

@@ -50,7 +50,7 @@ export const WordTile = ({
   const isCompleted = tile.status === 'completed'
   const isDraggable = tile.status === 'available' && !isCompleted
 
-  const [, drop] = useDrop<DragItem>({
+  const [{ isOver, canDrop }, drop] = useDrop<DragItem, void, { isOver: boolean; canDrop: boolean }>({
     accept: DND_ITEM_TYPES.TILE,
     canDrop: (item) => item.instanceId !== tile.instanceId && isDraggable,
     drop: (item) => {
@@ -58,6 +58,10 @@ export const WordTile = ({
       moveTile(item.index, index)
       item.index = index
     },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
   })
 
   const paletteForDrag = tileOverrideColor ?? groupColor ?? highlightPreset
@@ -158,9 +162,15 @@ export const WordTile = ({
         }
       }}
       className={clsx(
-        'word-tile relative flex min-h-[44px] w-full select-none flex-col items-center justify-center rounded-xl border-2 px-2 py-1 text-center text-base font-semibold shadow-md transition-transform duration-150 ease-out focus:outline-none focus:ring-4 focus:ring-primary/30',
-        !isDraggable ? 'cursor-default' : 'cursor-grab active:cursor-grabbing',
-        isDragging && 'opacity-0',
+        'word-tile relative flex min-h-[44px] w-full select-none flex-col items-center justify-center rounded-xl border-2 px-2 py-1 text-center text-base font-semibold shadow-md transition-all-smooth focus:outline-none focus:ring-4 focus:ring-primary/30 gpu-accelerated',
+        !isDraggable
+          ? 'cursor-default'
+          : 'cursor-grab active:cursor-grabbing hover-lift pressable',
+        isDragging && 'opacity-0 scale-95', // 拖拽时原位置隐藏并缩小
+        !isDragging && isOver && canDrop && 'drop-target-indicator', // 拖拽目标高亮
+        isHighlighted && highlightContext === 'hint' && 'animate-pulse',
+        isHighlighted && highlightContext === 'verify-reveal-success' && 'success-pulse',
+        isHighlighted && highlightContext === 'verify-reveal-fail' && 'error-shake',
         highlightRing,
       )}
       style={baseStyle}

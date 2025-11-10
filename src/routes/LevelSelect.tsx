@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ImportExportModal } from '../components/ImportExportModal'
 import { fetchLevelIndex, clearLevelCache } from '../services/levelService'
 import type { LevelIndexEntry } from '../types/levels'
 import { useProgressStore } from '../store/progressStore'
+import { animationOptimizer } from '../utils/animationOptimizer'
 import {
   DIFFICULTY_CONFIG,
   formatDifficultyBadgeClasses,
@@ -22,6 +23,7 @@ export const LevelSelect = () => {
   const [showBackup, setShowBackup] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [updateAvailable, setUpdateAvailable] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   // 定期检查数据更新
   useEffect(() => {
@@ -41,6 +43,37 @@ export const LevelSelect = () => {
     return () => clearInterval(interval)
   }, [levels])
 
+  // 性能优化：懒加载和视口检测
+  useEffect(() => {
+    if (!containerRef.current) return
+
+    // 预加载动画资源
+    animationOptimizer.preloadAnimations()
+
+    // 为关卡卡片添加视口观察
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const element = entry.target as HTMLElement
+          if (entry.isIntersecting) {
+            element.classList.add('animate-slide-in-bounce')
+            observer.unobserve(element)
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '50px' }
+    )
+
+    // 观察所有关卡卡片
+    const cards = containerRef.current.querySelectorAll('[data-level-card]')
+    cards.forEach((card) => observer.observe(card))
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [levels])
+
+  
   useEffect(() => {
     // 清除缓存以确保获取最新关卡列表
     clearLevelCache()
@@ -87,7 +120,7 @@ export const LevelSelect = () => {
 
   return (
     <>
-      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 p-6">
+      <main ref={containerRef} className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 p-6">
         {updateAvailable && (
           <div className="flex items-center justify-between rounded-2xl bg-gradient-to-r from-primary/10 to-primary/5 px-5 py-3 shadow-sm ring-1 ring-primary/20">
             <div className="flex items-center gap-2">
