@@ -1,0 +1,196 @@
+{
+  "id": "level-003",
+  "name": "关卡3",
+  "difficulty": "medium",
+  "version": 1,
+  "languageCodes": ["ko", "zh"],
+  "groups": [
+    {
+      "id": "postponable-things",
+      "category": "可延期的事物",
+      "colorPreset": "lilac",
+      "tiles": [
+        {
+          "id": "meeting",
+          "languageCode": "ko",
+          "text": "회의",
+          "translations": { "zh": "会议" }
+        },
+        {
+          "id": "appointment",
+          "languageCode": "ko",
+          "text": "약속",
+          "translations": { "zh": "约定" }
+        },
+        {
+          "id": "deadline",
+          "languageCode": "ko",
+          "text": "마감",
+          "translations": { "zh": "截止期" }
+        },
+        {
+          "id": "departure",
+          "languageCode": "ko",
+          "text": "출발",
+          "translations": { "zh": "出发" }
+        }
+      ]
+    },
+    {
+      "id": "weather-phenomena",
+      "category": "自然天气",
+      "colorPreset": "mint",
+      "tiles": [
+        {
+          "id": "fog",
+          "languageCode": "ko",
+          "text": "안개",
+          "translations": { "zh": "雾" }
+        },
+        {
+          "id": "dew",
+          "languageCode": "ko",
+          "text": "이슬",
+          "translations": { "zh": "露水" }
+        },
+        {
+          "id": "frost",
+          "languageCode": "ko",
+          "text": "서리",
+          "translations": { "zh": "霜" }
+        },
+        {
+          "id": "rainbow",
+          "languageCode": "ko",
+          "text": "무지개",
+          "translations": { "zh": "彩虹" }
+        }
+      ]
+    },
+    {
+      "id": "life-stages",
+      "category": "人生阶段",
+      "colorPreset": "sunset",
+      "tiles": [
+        {
+          "id": "childhood",
+          "languageCode": "ko",
+          "text": "유년기",
+          "translations": { "zh": "幼年期" }
+        },
+        {
+          "id": "adolescence",
+          "languageCode": "ko",
+          "text": "청소년기",
+          "translations": { "zh": "青少年期" }
+        },
+        {
+          "id": "middle-age",
+          "languageCode": "ko",
+          "text": "중년",
+          "translations": { "zh": "中年" }
+        },
+        {
+          "id": "old-age",
+          "languageCode": "ko",
+          "text": "노년",
+          "translations": { "zh": "老年" }
+        }
+      ]
+    },
+    {
+      "id": "cultivatable-things",
+      "category": "品质",
+      "colorPreset": "rose",
+      "tiles": [
+        {
+          "id": "habit",
+          "languageCode": "ko",
+          "text": "습관",
+          "translations": { "zh": "习惯" }
+        },
+        {
+          "id": "talent",
+          "languageCode": "ko",
+          "text": "재능",
+          "translations": { "zh": "才能" }
+        },
+        {
+          "id": "relationship",
+          "languageCode": "ko",
+          "text": "관계",
+          "translations": { "zh": "关系" }
+        },
+        {
+          "id": "trust",
+          "languageCode": "ko",
+          "text": "신뢰",
+          "translations": { "zh": "信任" }
+        }
+      ]
+    },
+    {
+      "id": "emotional-actions",
+      "category": "情绪动作",
+      "colorPreset": "sky",
+      "tiles": [
+        {
+          "id": "cry",
+          "languageCode": "ko",
+          "text": "울다",
+          "translations": { "zh": "哭" }
+        },
+        {
+          "id": "laugh",
+          "languageCode": "ko",
+          "text": "웃다",
+          "translations": { "zh": "笑" }
+        },
+        {
+          "id": "sigh",
+          "languageCode": "ko",
+          "text": "한숨짓다",
+          "translations": { "zh": "叹气" }
+        },
+        {
+          "id": "shout",
+          "languageCode": "ko",
+          "text": "외치다",
+          "translations": { "zh": "呼喊" }
+        }
+      ]
+    },
+    {
+      "id": "measurement-dimensions",
+      "category": "衡量维度",
+      "colorPreset": "purple",
+      "tiles": [
+        {
+          "id": "weight",
+          "languageCode": "ko",
+          "text": "무게",
+          "translations": { "zh": "重量" }
+        },
+        {
+          "id": "length",
+          "languageCode": "ko",
+          "text": "길이",
+          "translations": { "zh": "长度" }
+        },
+        {
+          "id": "area",
+          "languageCode": "ko",
+          "text": "넓이",
+          "translations": { "zh": "面积" }
+        },
+        {
+          "id": "volume",
+          "languageCode": "ko",
+          "text": "부피",
+          "translations": { "zh": "体积" }
+        }
+      ]
+    }
+  ]
+}
+

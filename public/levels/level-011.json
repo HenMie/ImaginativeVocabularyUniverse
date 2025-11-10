@@ -1,0 +1,76 @@
+{
+  "id": "level-011",
+  "name": "关卡11",
+  "difficulty": "easy",
+  "version": 1,
+  "languageCodes": ["ko", "zh"],
+  "groups": [
+    {
+      "id": "fruits",
+      "category": "水果",
+      "colorPreset": "lilac",
+      "tiles": [
+        { "id": "apple", "languageCode": "ko", "text": "사과", "translations": { "zh": "苹果" } },
+        { "id": "banana", "languageCode": "ko", "text": "바나나", "translations": { "zh": "香蕉" } },
+        { "id": "strawberry", "languageCode": "ko", "text": "딸기", "translations": { "zh": "草莓" } },
+        { "id": "watermelon", "languageCode": "ko", "text": "수박", "translations": { "zh": "西瓜" } }
+      ]
+    },
+    {
+      "id": "colors",
+      "category": "颜色",
+      "colorPreset": "mint",
+      "tiles": [
+        { "id": "red", "languageCode": "ko", "text": "빨강", "translations": { "zh": "红色" } },
+        { "id": "blue", "languageCode": "ko", "text": "파랑", "translations": { "zh": "蓝色" } },
+        { "id": "yellow", "languageCode": "ko", "text": "노랑", "translations": { "zh": "黄色" } },
+        { "id": "green", "languageCode": "ko", "text": "초록", "translations": { "zh": "绿色" } }
+      ]
+    },
+    {
+      "id": "numbers",
+      "category": "数字",
+      "colorPreset": "sunset",
+      "tiles": [
+        { "id": "one", "languageCode": "ko", "text": "하나", "translations": { "zh": "一" } },
+        { "id": "two", "languageCode": "ko", "text": "둘", "translations": { "zh": "二" } },
+        { "id": "three", "languageCode": "ko", "text": "셋", "translations": { "zh": "三" } },
+        { "id": "four", "languageCode": "ko", "text": "넷", "translations": { "zh": "四" } }
+      ]
+    },
+    {
+      "id": "body-parts",
+      "category": "身体部位",
+      "colorPreset": "rose",
+      "tiles": [
+        { "id": "hand", "languageCode": "ko", "text": "손", "translations": { "zh": "手" } },
+        { "id": "foot", "languageCode": "ko", "text": "발", "translations": { "zh": "脚" } },
+        { "id": "eye", "languageCode": "ko", "text": "눈", "translations": { "zh": "眼睛" } },
+        { "id": "mouth", "languageCode": "ko", "text": "입", "translations": { "zh": "嘴" } }
+      ]
+    },
+    {
+      "id": "animals",
+      "category": "动物",
+      "colorPreset": "sky",
+      "tiles": [
+        { "id": "dog", "languageCode": "ko", "text": "개", "translations": { "zh": "狗" } },
+        { "id": "cat", "languageCode": "ko", "text": "고양이", "translations": { "zh": "猫" } },
+        { "id": "bird", "languageCode": "ko", "text": "새", "translations": { "zh": "鸟" } },
+        { "id": "fish", "languageCode": "ko", "text": "물고기", "translations": { "zh": "鱼" } }
+      ]
+    },
+    {
+      "id": "directions",
+      "category": "方向",
+      "colorPreset": "purple",
+      "tiles": [
+        { "id": "left", "languageCode": "ko", "text": "왼쪽", "translations": { "zh": "左边" } },
+        { "id": "right", "languageCode": "ko", "text": "오른쪽", "translations": { "zh": "右边" } },
+        { "id": "front", "languageCode": "ko", "text": "앞", "translations": { "zh": "前面" } },
+        { "id": "back", "languageCode": "ko", "text": "뒤", "translations": { "zh": "后面" } }
+      ]
+    }
+  ]
+}
+

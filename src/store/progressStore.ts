@@ -6,12 +6,11 @@ import {
   type LevelProgressSnapshot,
   type PlayerProgress,
 } from '../types/progress'
-import { getHintCost, type HintCostKey } from '../constants/economy'
+import { getTotalHintCostForUsage, type HintCostKey } from '../constants/economy'
 
 const makeDefaultProgress = (): PlayerProgress => ({
   version: CURRENT_PROGRESS_VERSION,
   coins: 120,
-  totalStars: 0,
   unlockedLevelIds: ['level-001'],
   activeLanguage: 'ko',
   seenTutorials: [],
@@ -31,9 +30,66 @@ const createDefaultSnapshot = (levelId: string): LevelProgressSnapshot => ({
   hintsUsed: {},
   hintCosts: {},
   lastPlayedAt: new Date().toISOString(),
-  starsEarned: 0,
   coinsEarned: 0,
+  completed: false,
 })
+
+const normalizeSnapshot = (
+  levelId: string,
+  snapshot?: Partial<LevelProgressSnapshot> & Record<string, unknown>,
+): LevelProgressSnapshot => {
+  if (!snapshot) {
+    return createDefaultSnapshot(levelId)
+  }
+  const base = createDefaultSnapshot(levelId)
+  const completedGroupIds = Array.isArray(snapshot.completedGroupIds)
+    ? [...snapshot.completedGroupIds]
+    : base.completedGroupIds
+  const remainingTileIds = Array.isArray(snapshot.remainingTileIds)
+    ? [...snapshot.remainingTileIds]
+    : base.remainingTileIds
+  const hintsUsed =
+    snapshot.hintsUsed && typeof snapshot.hintsUsed === 'object'
+      ? { ...base.hintsUsed, ...(snapshot.hintsUsed as Record<string, number>) }
+      : base.hintsUsed
+  const hintCosts =
+    snapshot.hintCosts && typeof snapshot.hintCosts === 'object'
+      ? { ...base.hintCosts, ...(snapshot.hintCosts as Record<string, number>) }
+      : base.hintCosts
+  const legacyStars = Number((snapshot as Record<string, unknown>).starsEarned ?? 0)
+  const completed =
+    typeof snapshot.completed === 'boolean'
+      ? snapshot.completed
+      : legacyStars > 0
+  const lastPlayedAt =
+    typeof snapshot.lastPlayedAt === 'string' ? snapshot.lastPlayedAt : base.lastPlayedAt
+  const coinsEarned =
+    typeof snapshot.coinsEarned === 'number' ? snapshot.coinsEarned : base.coinsEarned
+  const completedAt =
+    completed && typeof snapshot.completedAt === 'string'
+      ? snapshot.completedAt
+      : completed
+      ? lastPlayedAt
+      : undefined
+
+  const normalized: LevelProgressSnapshot = {
+    levelId,
+    completedGroupIds,
+    remainingTileIds,
+    hintsUsed,
+    hintCosts,
+    lastPlayedAt,
+    coinsEarned,
+    completed,
+    completedAt,
+  }
+
+  if (typeof snapshot.bestTimeMs === 'number') {
+    normalized.bestTimeMs = snapshot.bestTimeMs
+  }
+
+  return normalized
+}
 
 const storage = createJSONStorage<PlayerProgress>(() => {
   if (typeof window === 'undefined') {
@@ -51,6 +107,7 @@ const storage = createJSONStorage<PlayerProgress>(() => {
 
 interface ProgressState {
   progress: PlayerProgress
+  debugMode: boolean
   setProgress: (data: Partial<PlayerProgress>) => void
   resetProgress: () => void
   importProgress: (payload: PlayerProgress) => void
@@ -62,18 +119,22 @@ interface ProgressState {
     levelId: string
     completedGroupIds: string[]
     coinsReward: number
-    starsReward: number
     hintsUsed: Record<string, number>
+    unlockLevelId?: string | null
+    freeHintMode?: boolean
   }) => void
   spendCoins: (amount: number) => boolean
   refundCoins: (amount: number) => void
   markTutorialSeen: (tutorialId: string) => void
+  toggleDebugMode: () => void
+  isLevelUnlocked: (levelId: string) => boolean
 }
 
 export const useProgressStore = create<ProgressState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       progress: makeDefaultProgress(),
+      debugMode: false,
       setProgress: (data) =>
         set((state) => ({
           progress: {
@@ -121,19 +182,26 @@ export const useProgressStore = create<ProgressState>()(
             },
           }
         }),
-      completeLevel: ({ levelId, completedGroupIds, coinsReward, starsReward, hintsUsed }) => {
+      completeLevel: ({
+        levelId,
+        completedGroupIds,
+        coinsReward,
+        hintsUsed,
+        unlockLevelId,
+        freeHintMode,
+      }) => {
         set((state) => {
           const snapshot =
             state.progress.levelSnapshots[levelId] ?? createDefaultSnapshot(levelId)
-          const starsEarned = Math.max(snapshot.starsEarned, starsReward)
           const hintCosts = Object.entries(hintsUsed).reduce<Record<string, number>>((acc, [type, count]) => {
             if (count > 0) {
               const hintKey = type as HintCostKey
-              const cost = getHintCost(hintKey)
-              acc[hintKey] = (acc[hintKey] ?? 0) + cost * count
+              const cost = freeHintMode ? 0 : getTotalHintCostForUsage(hintKey, count)
+              acc[hintKey] = (acc[hintKey] ?? 0) + cost
             }
             return acc
           }, snapshot.hintCosts ? { ...snapshot.hintCosts } : {})
+          const now = new Date().toISOString()
           const updatedSnapshot: LevelProgressSnapshot = {
             ...snapshot,
             completedGroupIds,
@@ -143,24 +211,22 @@ export const useProgressStore = create<ProgressState>()(
               ...hintsUsed,
             },
             hintCosts,
-            starsEarned,
             coinsEarned: snapshot.coinsEarned + coinsReward,
-            lastPlayedAt: new Date().toISOString(),
+            completed: true,
+            completedAt: snapshot.completedAt ?? now,
+            lastPlayedAt: now,
           }
 
-          const totalStars =
-            state.progress.totalStars - snapshot.starsEarned + starsEarned
-
-          const unlockedLevelIds = Array.from(
-            new Set([...state.progress.unlockedLevelIds, levelId]),
-          )
+          const unlockedSet = new Set([...state.progress.unlockedLevelIds, levelId])
+          if (unlockLevelId) {
+            unlockedSet.add(unlockLevelId)
+          }
 
           return {
             progress: {
               ...state.progress,
               coins: state.progress.coins + coinsReward,
-              totalStars,
-              unlockedLevelIds,
+              unlockedLevelIds: Array.from(unlockedSet),
               levelSnapshots: {
                 ...state.progress.levelSnapshots,
                 [levelId]: updatedSnapshot,
@@ -171,6 +237,9 @@ export const useProgressStore = create<ProgressState>()(
       },
       spendCoins: (amount) => {
         if (amount <= 0) return true
+        const state = get()
+        // 调试模式下金币消耗总是成功
+        if (state.debugMode) return true
         let success = false
         set((state) => {
           if (state.progress.coins < amount) {
@@ -208,6 +277,15 @@ export const useProgressStore = create<ProgressState>()(
             },
           }
         }),
+      toggleDebugMode: () =>
+        set((state) => ({
+          debugMode: !state.debugMode,
+        })),
+      isLevelUnlocked: (levelId: string) => {
+        const state = get()
+        if (state.debugMode) return true
+        return state.progress.unlockedLevelIds.includes(levelId)
+      },
     }),
     {
       name: STORAGE_KEY,
@@ -216,17 +294,40 @@ export const useProgressStore = create<ProgressState>()(
       partialize: (state) => state.progress as PlayerProgress,
       merge: (persisted, current) => {
         const restored = (persisted ?? {}) as PlayerProgress
+        const normalizedSnapshots = Object.entries(restored.levelSnapshots ?? {}).reduce<
+          Record<string, LevelProgressSnapshot>
+        >((acc, [levelId, snapshot]) => {
+          acc[levelId] = normalizeSnapshot(
+            levelId,
+            snapshot as Partial<LevelProgressSnapshot> & Record<string, unknown>,
+          )
+          return acc
+        }, {})
+        const unlockedSet = new Set([
+          ...current.progress.unlockedLevelIds,
+          ...(restored.unlockedLevelIds ?? []),
+        ])
+        if (!unlockedSet.size) {
+          unlockedSet.add('level-001')
+        }
+        const mergedProgress: PlayerProgress = {
+          ...current.progress,
+          ...restored,
+          version: CURRENT_PROGRESS_VERSION,
+          coins: restored.coins ?? current.progress.coins,
+          unlockedLevelIds: Array.from(unlockedSet),
+          levelSnapshots: {
+            ...current.progress.levelSnapshots,
+            ...normalizedSnapshots,
+          },
+          settings: {
+            ...current.progress.settings,
+            ...(restored.settings ?? {}),
+          },
+        }
         return {
           ...current,
-          progress: {
-            ...current.progress,
-            ...restored,
-            version: CURRENT_PROGRESS_VERSION,
-            settings: {
-              ...current.progress.settings,
-              ...restored.settings,
-            },
-          },
+          progress: mergedProgress,
         }
       },
     },

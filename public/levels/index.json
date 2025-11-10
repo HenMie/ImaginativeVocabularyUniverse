@@ -5,28 +5,121 @@
       "id": "level-001",
       "name": "关卡1",
       "difficulty": "easy",
-      "requiredStars": 0,
-      "rewards": { "coins": 200, "stars": 1 },
-      "file": "level-001.json",
-      "preview": { "highlightGroup": "drinks" }
+      "file": "level-001.json"
     },
     {
       "id": "level-002",
       "name": "关卡2",
+      "difficulty": "easy",
+      "file": "level-002.json"
+    },
+    {
+      "id": "level-003",
+      "name": "关卡3",
       "difficulty": "medium",
-      "requiredStars": 1,
-      "rewards": { "coins": 210, "stars": 2 },
-      "file": "level-002.json",
-      "preview": { "highlightGroup": "transport" }
+      "file": "level-003.json"
     },
     {
       "id": "level-004",
       "name": "关卡4",
+      "difficulty": "medium",
+      "file": "level-004.json"
+    },
+    {
+      "id": "level-005",
+      "name": "关卡5",
       "difficulty": "hard",
-      "requiredStars": 3,
-      "rewards": { "coins": 230, "stars": 3 },
-      "file": "level-004.json",
-      "preview": { "highlightGroup": "animals" }
+      "file": "level-005.json"
+    },
+    {
+      "id": "level-006",
+      "name": "关卡6",
+      "difficulty": "easy",
+      "file": "level-006.json"
+    },
+    {
+      "id": "level-007",
+      "name": "关卡7",
+      "difficulty": "easy",
+      "file": "level-007.json"
+    },
+    {
+      "id": "level-008",
+      "name": "关卡8",
+      "difficulty": "medium",
+      "file": "level-008.json"
+    },
+    {
+      "id": "level-009",
+      "name": "关卡9",
+      "difficulty": "medium",
+      "file": "level-009.json"
+    },
+    {
+      "id": "level-010",
+      "name": "关卡10",
+      "difficulty": "hard",
+      "file": "level-010.json"
+    },
+    {
+      "id": "level-011",
+      "name": "关卡11",
+      "difficulty": "easy",
+      "file": "level-011.json"
+    },
+    {
+      "id": "level-012",
+      "name": "关卡12",
+      "difficulty": "easy",
+      "file": "level-012.json"
+    },
+    {
+      "id": "level-013",
+      "name": "关卡13",
+      "difficulty": "medium",
+      "file": "level-013.json"
+    },
+    {
+      "id": "level-014",
+      "name": "关卡14",
+      "difficulty": "medium",
+      "file": "level-014.json"
+    },
+    {
+      "id": "level-015",
+      "name": "关卡15",
+      "difficulty": "hard",
+      "file": "level-015.json"
+    },
+    {
+      "id": "level-016",
+      "name": "关卡16",
+      "difficulty": "easy",
+      "file": "level-016.json"
+    },
+    {
+      "id": "level-017",
+      "name": "关卡17",
+      "difficulty": "easy",
+      "file": "level-017.json"
+    },
+    {
+      "id": "level-018",
+      "name": "关卡18",
+      "difficulty": "medium",
+      "file": "level-018.json"
+    },
+    {
+      "id": "level-019",
+      "name": "关卡19",
+      "difficulty": "medium",
+      "file": "level-019.json"
+    },
+    {
+      "id": "level-020",
+      "name": "关卡20",
+      "difficulty": "hard",
+      "file": "level-020.json"
     }
   ]
 }

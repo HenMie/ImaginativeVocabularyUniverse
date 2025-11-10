@@ -1,0 +1,76 @@
+{
+  "id": "level-013",
+  "name": "关卡13",
+  "difficulty": "medium",
+  "version": 1,
+  "languageCodes": ["ko", "zh"],
+  "groups": [
+    {
+      "id": "invisible-things",
+      "category": "看不见的",
+      "colorPreset": "indigo",
+      "tiles": [
+        { "id": "air", "languageCode": "ko", "text": "공기", "translations": { "zh": "空气" } },
+        { "id": "sound", "languageCode": "ko", "text": "소리", "translations": { "zh": "声音" } },
+        { "id": "smell", "languageCode": "ko", "text": "냄새", "translations": { "zh": "气味" } },
+        { "id": "shadow", "languageCode": "ko", "text": "그림자", "translations": { "zh": "影子" } }
+      ]
+    },
+    {
+      "id": "pair-things",
+      "category": "成双成对",
+      "colorPreset": "orange",
+      "tiles": [
+        { "id": "chopsticks", "languageCode": "ko", "text": "젓가락", "translations": { "zh": "筷子" } },
+        { "id": "gloves", "languageCode": "ko", "text": "장갑", "translations": { "zh": "手套" } },
+        { "id": "socks", "languageCode": "ko", "text": "양말", "translations": { "zh": "袜子" } },
+        { "id": "earrings", "languageCode": "ko", "text": "귀걸이", "translations": { "zh": "耳环" } }
+      ]
+    },
+    {
+      "id": "circular-objects",
+      "category": "圆形物",
+      "colorPreset": "gold",
+      "tiles": [
+        { "id": "wheel", "languageCode": "ko", "text": "바퀴", "translations": { "zh": "轮子" } },
+        { "id": "clock", "languageCode": "ko", "text": "시계", "translations": { "zh": "钟表" } },
+        { "id": "coin", "languageCode": "ko", "text": "동전", "translations": { "zh": "硬币" } },
+        { "id": "button", "languageCode": "ko", "text": "단추", "translations": { "zh": "纽扣" } }
+      ]
+    },
+    {
+      "id": "breaking-sound",
+      "category": "破碎声",
+      "colorPreset": "teal",
+      "tiles": [
+        { "id": "glass", "languageCode": "ko", "text": "유리", "translations": { "zh": "玻璃" } },
+        { "id": "pottery", "languageCode": "ko", "text": "도자기", "translations": { "zh": "陶瓷" } },
+        { "id": "ice", "languageCode": "ko", "text": "얼음", "translations": { "zh": "冰" } },
+        { "id": "egg", "languageCode": "ko", "text": "계란", "translations": { "zh": "鸡蛋" } }
+      ]
+    },
+    {
+      "id": "sticky-things",
+      "category": "有粘性的",
+      "colorPreset": "emerald",
+      "tiles": [
+        { "id": "glue", "languageCode": "ko", "text": "풀", "translations": { "zh": "胶水" } },
+        { "id": "tape", "languageCode": "ko", "text": "테이프", "translations": { "zh": "胶带" } },
+        { "id": "honey", "languageCode": "ko", "text": "꿀", "translations": { "zh": "蜂蜜" } },
+        { "id": "rice-cake", "languageCode": "ko", "text": "떡", "translations": { "zh": "年糕" } }
+      ]
+    },
+    {
+      "id": "growth-process",
+      "category": "生长过程",
+      "colorPreset": "rose",
+      "tiles": [
+        { "id": "seed", "languageCode": "ko", "text": "씨앗", "translations": { "zh": "种子" } },
+        { "id": "sprout", "languageCode": "ko", "text": "싹", "translations": { "zh": "芽" } },
+        { "id": "flower", "languageCode": "ko", "text": "꽃", "translations": { "zh": "花" } },
+        { "id": "fruit", "languageCode": "ko", "text": "열매", "translations": { "zh": "果实" } }
+      ]
+    }
+  ]
+}
+

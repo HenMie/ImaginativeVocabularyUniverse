@@ -14,25 +14,25 @@ export const GroupRow = ({ group, colorPreset }: GroupRowProps) => {
 
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-3xl border px-4 py-3 shadow-sm"
+      className="flex w-full flex-col gap-1.5 rounded-2xl border px-3 py-2 shadow-sm"
       style={{ backgroundColor: background, borderColor: border }}
     >
       <header className="flex items-center justify-between">
         <span
-          className="rounded-full px-3 py-[2px] text-xs font-semibold"
+          className="rounded-full px-2.5 py-0.5 text-xs font-semibold"
           style={{ backgroundColor: badgeBg, color: badgeText }}
         >
           {group.group.category}
         </span>
-        <span className="text-[11px] text-slate-500">
+        <span className="text-[10px] text-slate-500">
           {new Date(group.completedAt).toLocaleTimeString()}
         </span>
       </header>
-      <div className="grid grid-cols-2 gap-2 text-sm sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-1.5 text-sm sm:grid-cols-4">
         {group.tiles.map((tile) => (
           <div
             key={tile.instanceId}
-            className="rounded-2xl bg-white/80 px-3 py-2 text-center shadow-inner"
+            className="rounded-xl bg-white/80 px-2 py-1 text-center shadow-inner"
             style={{ color: colorPreset?.text ?? '#1F2937' }}
           >
             <div className="text-sm font-semibold">{tile.data.text}</div>
@@ -42,12 +42,6 @@ export const GroupRow = ({ group, colorPreset }: GroupRowProps) => {
           </div>
         ))}
       </div>
-      {group.group.resultTile && (
-        <div className="rounded-2xl bg-white px-4 py-2 text-center text-xs text-slate-500 shadow-inner">
-          合成词块：{group.group.resultTile.text}（
-          {group.group.resultTile.translations.zh ?? '——'}）
-        </div>
-      )}
     </div>
   )
 }

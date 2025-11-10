@@ -1,0 +1,76 @@
+{
+  "id": "level-014",
+  "name": "关卡14",
+  "difficulty": "medium",
+  "version": 1,
+  "languageCodes": ["ko", "zh"],
+  "groups": [
+    {
+      "id": "light-sources",
+      "category": "光源",
+      "colorPreset": "indigo",
+      "tiles": [
+        { "id": "sun", "languageCode": "ko", "text": "태양", "translations": { "zh": "太阳" } },
+        { "id": "lamp", "languageCode": "ko", "text": "램프", "translations": { "zh": "灯" } },
+        { "id": "candle", "languageCode": "ko", "text": "촛불", "translations": { "zh": "蜡烛" } },
+        { "id": "flashlight", "languageCode": "ko", "text": "손전등", "translations": { "zh": "手电筒" } }
+      ]
+    },
+    {
+      "id": "cooling-methods",
+      "category": "降温方式",
+      "colorPreset": "orange",
+      "tiles": [
+        { "id": "fan", "languageCode": "ko", "text": "선풍기", "translations": { "zh": "电风扇" } },
+        { "id": "air-conditioner", "languageCode": "ko", "text": "에어컨", "translations": { "zh": "空调" } },
+        { "id": "ice-water", "languageCode": "ko", "text": "얼음물", "translations": { "zh": "冰水" } },
+        { "id": "shade", "languageCode": "ko", "text": "그늘", "translations": { "zh": "阴凉处" } }
+      ]
+    },
+    {
+      "id": "documentation",
+      "category": "证明文件",
+      "colorPreset": "gold",
+      "tiles": [
+        { "id": "id-card", "languageCode": "ko", "text": "신분증", "translations": { "zh": "身份证" } },
+        { "id": "passport", "languageCode": "ko", "text": "여권", "translations": { "zh": "护照" } },
+        { "id": "license", "languageCode": "ko", "text": "면허증", "translations": { "zh": "执照" } },
+        { "id": "certificate", "languageCode": "ko", "text": "증명서", "translations": { "zh": "证明书" } }
+      ]
+    },
+    {
+      "id": "connecting-tools",
+      "category": "连接工具",
+      "colorPreset": "teal",
+      "tiles": [
+        { "id": "nail", "languageCode": "ko", "text": "못", "translations": { "zh": "钉子" } },
+        { "id": "screw", "languageCode": "ko", "text": "나사", "translations": { "zh": "螺丝" } },
+        { "id": "rope", "languageCode": "ko", "text": "밧줄", "translations": { "zh": "绳子" } },
+        { "id": "clip", "languageCode": "ko", "text": "클립", "translations": { "zh": "夹子" } }
+      ]
+    },
+    {
+      "id": "texture-adjectives",
+      "category": "质感",
+      "colorPreset": "emerald",
+      "tiles": [
+        { "id": "soft", "languageCode": "ko", "text": "부드럽다", "translations": { "zh": "柔软" } },
+        { "id": "hard", "languageCode": "ko", "text": "딱딱하다", "translations": { "zh": "坚硬" } },
+        { "id": "rough", "languageCode": "ko", "text": "거칠다", "translations": { "zh": "粗糙" } },
+        { "id": "smooth", "languageCode": "ko", "text": "매끄럽다", "translations": { "zh": "光滑" } }
+      ]
+    },
+    {
+      "id": "preservation-methods",
+      "category": "保存方式",
+      "colorPreset": "rose",
+      "tiles": [
+        { "id": "refrigerate", "languageCode": "ko", "text": "냉장", "translations": { "zh": "冷藏" } },
+        { "id": "freeze", "languageCode": "ko", "text": "냉동", "translations": { "zh": "冷冻" } },
+        { "id": "dry", "languageCode": "ko", "text": "건조", "translations": { "zh": "干燥" } },
+        { "id": "pickle", "languageCode": "ko", "text": "절임", "translations": { "zh": "腌制" } }
+      ]
+    }
+  ]
+}
+

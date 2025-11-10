@@ -1,0 +1,77 @@
+{
+  "id": "level-005",
+  "name": "关卡5",
+  "difficulty": "hard",
+  "version": 1,
+  "languageCodes": ["ko", "zh"],
+  "groups": [
+    {
+      "id": "procrastination",
+      "category": "拖延行为",
+      "colorPreset": "indigo",
+      "tiles": [
+        { "id": "procrastinate", "languageCode": "ko", "text": "미루다", "translations": { "zh": "拖延" } },
+        { "id": "deadline", "languageCode": "ko", "text": "마감일", "translations": { "zh": "截止日期" } },
+        { "id": "all-nighter", "languageCode": "ko", "text": "밤샘", "translations": { "zh": "熬夜" } },
+        { "id": "cramming", "languageCode": "ko", "text": "벼락치기", "translations": { "zh": "临时抱佛脚" } }
+      ]
+    },
+    {
+      "id": "internet-slang",
+      "category": "网络用语",
+      "colorPreset": "gold",
+      "tiles": [
+        { "id": "meme", "languageCode": "ko", "text": "밈", "translations": { "zh": "梗" } },
+        { "id": "viral", "languageCode": "ko", "text": "바이럴", "translations": { "zh": "病毒式传播" } },
+        { "id": "trending", "languageCode": "ko", "text": "트렌딩", "translations": { "zh": "热搜" } },
+        { "id": "hashtag", "languageCode": "ko", "text": "해시태그", "translations": { "zh": "话题标签" } }
+      ]
+    },
+    {
+      "id": "tech-trends",
+      "category": "科技趋势",
+      "colorPreset": "teal",
+      "tiles": [
+        { "id": "ai", "languageCode": "ko", "text": "인공지능", "translations": { "zh": "人工智能" } },
+        { "id": "algorithm", "languageCode": "ko", "text": "알고리즘", "translations": { "zh": "算法" } },
+        { "id": "big-data", "languageCode": "ko", "text": "빅데이터", "translations": { "zh": "大数据" } },
+        { "id": "cloud", "languageCode": "ko", "text": "클라우드", "translations": { "zh": "云计算" } }
+      ]
+    },
+    {
+      "id": "academic-integrity",
+      "category": "学术规范",
+      "colorPreset": "rose",
+      "tiles": [
+        { "id": "plagiarism", "languageCode": "ko", "text": "표절", "translations": { "zh": "抄袭" } },
+        { "id": "citation", "languageCode": "ko", "text": "인용", "translations": { "zh": "引用" } },
+        { "id": "source", "languageCode": "ko", "text": "출처", "translations": { "zh": "来源" } },
+        { "id": "footnote", "languageCode": "ko", "text": "각주", "translations": { "zh": "脚注" } }
+      ]
+    },
+    {
+      "id": "coffee-culture",
+      "category": "咖啡文化",
+      "colorPreset": "sky",
+      "tiles": [
+        { "id": "espresso", "languageCode": "ko", "text": "에스프레소", "translations": { "zh": "浓缩咖啡" } },
+        { "id": "latte", "languageCode": "ko", "text": "라떼", "translations": { "zh": "拿铁" } },
+        { "id": "take-out", "languageCode": "ko", "text": "테이크아웃", "translations": { "zh": "外带" } },
+        { "id": "refill", "languageCode": "ko", "text": "리필", "translations": { "zh": "续杯" } }
+      ]
+    },
+    {
+      "id": "civic-engagement",
+      "category": "公民参与",
+      "colorPreset": "emerald",
+      "tiles": [
+        { "id": "vote", "languageCode": "ko", "text": "투표", "translations": { "zh": "投票" } },
+        { "id": "petition", "languageCode": "ko", "text": "청원", "translations": { "zh": "请愿" } },
+        { "id": "public-forum", "languageCode": "ko", "text": "공론장", "translations": { "zh": "公共讨论场" } },
+        { "id": "volunteering", "languageCode": "ko", "text": "자원봉사", "translations": { "zh": "志愿服务" } }
+      ]
+    }
+  ]
+}
+
+

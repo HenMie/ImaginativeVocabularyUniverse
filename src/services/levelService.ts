@@ -1,5 +1,4 @@
 import type { LevelFile, LevelIndexEntry } from '../types/levels'
-import { getRewardsForDifficulty } from '../constants/levels'
 
 const INDEX_PATH = '/levels/index.json'
 
@@ -13,16 +12,18 @@ const ensureResponse = async (response: Response, resource: string) => {
   return response
 }
 
+export const clearLevelCache = () => {
+  levelCache.clear()
+  cachedIndex = null
+}
+
 export const fetchLevelIndex = async (): Promise<LevelIndexEntry[]> => {
   if (cachedIndex) {
     return cachedIndex
   }
   const response = await ensureResponse(await fetch(INDEX_PATH, { cache: 'no-cache' }), INDEX_PATH)
   const payload = (await response.json()) as { levels: LevelIndexEntry[] }
-  cachedIndex = payload.levels.map((level) => ({
-    ...level,
-    rewards: getRewardsForDifficulty(level.difficulty),
-  }))
+  cachedIndex = payload.levels
   return cachedIndex
 }
 
@@ -33,11 +34,7 @@ export const fetchLevelData = async (file: string): Promise<LevelFile> => {
   const resourcePath = `/levels/${file}`
   const response = await ensureResponse(await fetch(resourcePath, { cache: 'no-cache' }), resourcePath)
   const payload = (await response.json()) as LevelFile
-  const normalized: LevelFile = {
-    ...payload,
-    rewards: getRewardsForDifficulty(payload.difficulty),
-  }
-  levelCache.set(file, normalized)
-  return normalized
+  levelCache.set(file, payload)
+  return payload
 }
 

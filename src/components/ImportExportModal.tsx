@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { STORAGE_EXPORT_FILENAME } from '../constants/storage'
 import { useProgressStore } from '../store/progressStore'
-import type { PlayerProgress } from '../types/progress'
+import { decodeProgressPayload, encodeProgressPayload } from '../utils/progressCodec'
 
 interface ImportExportModalProps {
   open: boolean
@@ -18,7 +18,7 @@ export const ImportExportModal = ({ open, onClose }: ImportExportModalProps) => 
 
   useEffect(() => {
     if (open) {
-      setRaw(JSON.stringify(progress, null, 2))
+      setRaw(encodeProgressPayload(progress))
       setError(null)
       setCopied(false)
     }
@@ -27,8 +27,9 @@ export const ImportExportModal = ({ open, onClose }: ImportExportModalProps) => 
   if (!open) return null
 
   const handleExport = () => {
-    const blob = new Blob([JSON.stringify(progress, null, 2)], {
-      type: 'application/json',
+    const payload = encodeProgressPayload(progress)
+    const blob = new Blob([payload], {
+      type: 'text/plain;charset=utf-8',
     })
     const url = URL.createObjectURL(blob)
     const anchor = document.createElement('a')
@@ -43,19 +44,19 @@ export const ImportExportModal = ({ open, onClose }: ImportExportModalProps) => 
       return
     }
     try {
-      const parsed = JSON.parse(raw) as PlayerProgress
+      const parsed = decodeProgressPayload(raw)
       importProgress(parsed)
       setError(null)
       onClose()
     } catch (err) {
       console.error(err)
-      setError('导入失败，请确认 JSON 格式无误')
+      setError('导入失败，请确认文本内容完整且未被破坏')
     }
   }
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(raw)
+      await navigator.clipboard.writeText(raw.trim())
       setCopied(true)
       window.setTimeout(() => setCopied(false), 2000)
     } catch (err) {
@@ -78,11 +79,12 @@ export const ImportExportModal = ({ open, onClose }: ImportExportModalProps) => 
           </button>
         </header>
         <p className="text-xs text-slate-500">
-          可复制 JSON 文本备份，或粘贴导入。导入会覆盖当前进度，请谨慎操作。
+          复制保存或粘贴导入，导入会覆盖当前进度，请谨慎操作。
         </p>
         <textarea
           value={raw}
           onChange={(event) => setRaw(event.target.value)}
+          spellCheck={false}
           className="h-64 w-full rounded-2xl border border-slate-200 bg-white p-3 font-mono text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary/40"
         />
         {error && <p className="text-xs text-red-500">{error}</p>}
@@ -93,7 +95,7 @@ export const ImportExportModal = ({ open, onClose }: ImportExportModalProps) => 
               onClick={handleCopy}
               className="rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary hover:bg-primary/20"
             >
-              {copied ? '已复制' : '复制 JSON'}
+              {copied ? '已复制' : '复制存档'}
             </button>
             <button
               type="button"

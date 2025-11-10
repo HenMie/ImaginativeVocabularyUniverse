@@ -1,20 +1,14 @@
 {
   "id": "level-001",
   "name": "关卡1",
-  "theme": "",
   "difficulty": "easy",
   "version": 1,
   "languageCodes": ["ko", "zh"],
-  "rewards": {
-    "coins": 200,
-    "stars": 1
-  },
   "tutorialSteps": ["拖动四个词牌排成一行即可分组", "点击词牌可查看释义"],
   "groups": [
     {
       "id": "drinks",
       "category": "饮料",
-      "type": "word",
       "colorPreset": "lilac",
       "tiles": [
         {
@@ -39,15 +33,13 @@
           "id": "soda",
           "languageCode": "ko",
           "text": "탄산음료",
-          "translations": { "zh": "汽水" },
-          "hint": "汽泡饮料"
+          "translations": { "zh": "汽水" }
         }
       ]
     },
     {
       "id": "fruits",
       "category": "水果",
-      "type": "word",
       "colorPreset": "mint",
       "tiles": [
         {
@@ -79,7 +71,6 @@
     {
       "id": "colors",
       "category": "颜色",
-      "type": "word",
       "colorPreset": "sunset",
       "tiles": [
         {
@@ -111,7 +102,6 @@
     {
       "id": "tableware",
       "category": "餐具",
-      "type": "word",
       "colorPreset": "rose",
       "tiles": [
         {

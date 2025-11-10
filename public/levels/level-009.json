@@ -1,0 +1,166 @@
+{
+  "id": "level-009",
+  "name": "关卡9",
+  "difficulty": "medium",
+  "version": 1,
+  "languageCodes": ["ko", "zh"],
+  "groups": [
+    {
+      "id": "natural-cycles",
+      "category": "自然循环",
+      "colorPreset": "indigo",
+      "tiles": [
+        {
+          "id": "evaporation",
+          "languageCode": "ko",
+          "text": "증발",
+          "translations": { "zh": "蒸发" }
+        },
+        {
+          "id": "condensation",
+          "languageCode": "ko",
+          "text": "응결",
+          "translations": { "zh": "凝结" }
+        },
+        {
+          "id": "erosion",
+          "languageCode": "ko",
+          "text": "침식",
+          "translations": { "zh": "侵蚀" }
+        },
+        {
+          "id": "deposition",
+          "languageCode": "ko",
+          "text": "퇴적",
+          "translations": { "zh": "沉积" }
+        }
+      ]
+    },
+    {
+      "id": "policy-tools",
+      "category": "政策工具",
+      "colorPreset": "orange",
+      "tiles": [
+        {
+          "id": "subsidy",
+          "languageCode": "ko",
+          "text": "보조금",
+          "translations": { "zh": "补贴" }
+        },
+        {
+          "id": "regulation",
+          "languageCode": "ko",
+          "text": "규제",
+          "translations": { "zh": "监管" }
+        },
+        {
+          "id": "taxation",
+          "languageCode": "ko",
+          "text": "과세",
+          "translations": { "zh": "征税" }
+        },
+        {
+          "id": "incentive",
+          "languageCode": "ko",
+          "text": "인센티브",
+          "translations": { "zh": "激励" }
+        }
+      ]
+    },
+    {
+      "id": "psych-processes",
+      "category": "心理过程",
+      "colorPreset": "gold",
+      "tiles": [
+        {
+          "id": "attention",
+          "languageCode": "ko",
+          "text": "주의",
+          "translations": { "zh": "注意" }
+        },
+        {
+          "id": "memory",
+          "languageCode": "ko",
+          "text": "기억",
+          "translations": { "zh": "记忆" }
+        },
+        {
+          "id": "learning",
+          "languageCode": "ko",
+          "text": "학습",
+          "translations": { "zh": "学习" }
+        },
+        {
+          "id": "motivation",
+          "languageCode": "ko",
+          "text": "동기",
+          "translations": { "zh": "动机" }
+        }
+      ]
+    },
+    {
+      "id": "risk-management",
+      "category": "风险管理",
+      "colorPreset": "teal",
+      "tiles": [
+        {
+          "id": "risk",
+          "languageCode": "ko",
+          "text": "리스크",
+          "translations": { "zh": "风险" }
+        },
+        {
+          "id": "uncertainty",
+          "languageCode": "ko",
+          "text": "불확실성",
+          "translations": { "zh": "不确定性" }
+        },
+        {
+          "id": "mitigation",
+          "languageCode": "ko",
+          "text": "완화",
+          "translations": { "zh": "缓解" }
+        },
+        {
+          "id": "resilience",
+          "languageCode": "ko",
+          "text": "회복탄력성",
+          "translations": { "zh": "韧性" }
+        }
+      ]
+    },
+    {
+      "id": "energy-types",
+      "category": "能源类型",
+      "colorPreset": "emerald",
+      "tiles": [
+        {
+          "id": "renewable-energy",
+          "languageCode": "ko",
+          "text": "재생에너지",
+          "translations": { "zh": "可再生能源" }
+        },
+        {
+          "id": "fossil-fuel",
+          "languageCode": "ko",
+          "text": "화석연료",
+          "translations": { "zh": "化石燃料" }
+        },
+        {
+          "id": "electricity",
+          "languageCode": "ko",
+          "text": "전력",
+          "translations": { "zh": "电力" }
+        },
+        {
+          "id": "hydrogen",
+          "languageCode": "ko",
+          "text": "수소",
+          "translations": { "zh": "氢" }
+        }
+      ]
+    }
+  ]
+}
+
+

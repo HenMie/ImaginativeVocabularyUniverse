@@ -1,0 +1,76 @@
+{
+  "id": "level-018",
+  "name": "关卡18",
+  "difficulty": "medium",
+  "version": 1,
+  "languageCodes": ["ko", "zh"],
+  "groups": [
+    {
+      "id": "transparent-things",
+      "category": "透明的",
+      "colorPreset": "indigo",
+      "tiles": [
+        { "id": "window", "languageCode": "ko", "text": "창문", "translations": { "zh": "窗户" } },
+        { "id": "glasses", "languageCode": "ko", "text": "안경", "translations": { "zh": "眼镜" } },
+        { "id": "plastic-bag", "languageCode": "ko", "text": "비닐봉지", "translations": { "zh": "塑料袋" } },
+        { "id": "aquarium", "languageCode": "ko", "text": "수족관", "translations": { "zh": "水族箱" } }
+      ]
+    },
+    {
+      "id": "folding-things",
+      "category": "可折叠",
+      "colorPreset": "orange",
+      "tiles": [
+        { "id": "umbrella", "languageCode": "ko", "text": "우산", "translations": { "zh": "雨伞" } },
+        { "id": "fan-handheld", "languageCode": "ko", "text": "부채", "translations": { "zh": "扇子" } },
+        { "id": "newspaper", "languageCode": "ko", "text": "신문", "translations": { "zh": "报纸" } },
+        { "id": "map", "languageCode": "ko", "text": "지도", "translations": { "zh": "地图" } }
+      ]
+    },
+    {
+      "id": "burning-fuel",
+      "category": "燃料",
+      "colorPreset": "gold",
+      "tiles": [
+        { "id": "wood", "languageCode": "ko", "text": "나무", "translations": { "zh": "木头" } },
+        { "id": "coal", "languageCode": "ko", "text": "석탄", "translations": { "zh": "煤炭" } },
+        { "id": "oil", "languageCode": "ko", "text": "석유", "translations": { "zh": "石油" } },
+        { "id": "gas", "languageCode": "ko", "text": "가스", "translations": { "zh": "天然气" } }
+      ]
+    },
+    {
+      "id": "recording-tools",
+      "category": "记录工具",
+      "colorPreset": "teal",
+      "tiles": [
+        { "id": "camera", "languageCode": "ko", "text": "카메라", "translations": { "zh": "相机" } },
+        { "id": "voice-recorder", "languageCode": "ko", "text": "녹음기", "translations": { "zh": "录音笔" } },
+        { "id": "diary", "languageCode": "ko", "text": "일기장", "translations": { "zh": "日记本" } },
+        { "id": "memo", "languageCode": "ko", "text": "메모", "translations": { "zh": "备忘录" } }
+      ]
+    },
+    {
+      "id": "speed-levels",
+      "category": "速度层级",
+      "colorPreset": "emerald",
+      "tiles": [
+        { "id": "slow", "languageCode": "ko", "text": "느리다", "translations": { "zh": "慢" } },
+        { "id": "moderate", "languageCode": "ko", "text": "보통", "translations": { "zh": "中速" } },
+        { "id": "fast", "languageCode": "ko", "text": "빠르다", "translations": { "zh": "快" } },
+        { "id": "urgent", "languageCode": "ko", "text": "급하다", "translations": { "zh": "急" } }
+      ]
+    },
+    {
+      "id": "cutting-tools",
+      "category": "切割工具",
+      "colorPreset": "rose",
+      "tiles": [
+        { "id": "kitchen-knife", "languageCode": "ko", "text": "식칼", "translations": { "zh": "菜刀" } },
+        { "id": "scissors", "languageCode": "ko", "text": "가위", "translations": { "zh": "剪刀" } },
+        { "id": "saw", "languageCode": "ko", "text": "톱", "translations": { "zh": "锯子" } },
+        { "id": "cutter", "languageCode": "ko", "text": "커터칼", "translations": { "zh": "美工刀" } }
+      ]
+    }
+  ]
+}
+

@@ -1,0 +1,76 @@
+{
+  "id": "level-015",
+  "name": "关卡15",
+  "difficulty": "hard",
+  "version": 1,
+  "languageCodes": ["ko", "zh"],
+  "groups": [
+    {
+      "id": "work-life-balance",
+      "category": "工作生活",
+      "colorPreset": "indigo",
+      "tiles": [
+        { "id": "burnout", "languageCode": "ko", "text": "번아웃", "translations": { "zh": "职业倦怠" } },
+        { "id": "overtime", "languageCode": "ko", "text": "야근", "translations": { "zh": "加班" } },
+        { "id": "work-from-home", "languageCode": "ko", "text": "재택근무", "translations": { "zh": "居家办公" } },
+        { "id": "flexible-hours", "languageCode": "ko", "text": "탄력근무", "translations": { "zh": "弹性工作" } }
+      ]
+    },
+    {
+      "id": "social-media",
+      "category": "社交媒体",
+      "colorPreset": "gold",
+      "tiles": [
+        { "id": "like", "languageCode": "ko", "text": "좋아요", "translations": { "zh": "点赞" } },
+        { "id": "comment", "languageCode": "ko", "text": "댓글", "translations": { "zh": "评论" } },
+        { "id": "share", "languageCode": "ko", "text": "공유", "translations": { "zh": "分享" } },
+        { "id": "follow", "languageCode": "ko", "text": "팔로우", "translations": { "zh": "关注" } }
+      ]
+    },
+    {
+      "id": "relationships",
+      "category": "关系状态",
+      "colorPreset": "teal",
+      "tiles": [
+        { "id": "dating", "languageCode": "ko", "text": "연애", "translations": { "zh": "恋爱" } },
+        { "id": "breakup", "languageCode": "ko", "text": "이별", "translations": { "zh": "分手" } },
+        { "id": "reconciliation", "languageCode": "ko", "text": "화해", "translations": { "zh": "和好" } },
+        { "id": "long-distance", "languageCode": "ko", "text": "원거리", "translations": { "zh": "异地" } }
+      ]
+    },
+    {
+      "id": "mental-health",
+      "category": "心理健康",
+      "colorPreset": "rose",
+      "tiles": [
+        { "id": "stress", "languageCode": "ko", "text": "스트레스", "translations": { "zh": "压力" } },
+        { "id": "anxiety", "languageCode": "ko", "text": "불안", "translations": { "zh": "焦虑" } },
+        { "id": "depression", "languageCode": "ko", "text": "우울", "translations": { "zh": "抑郁" } },
+        { "id": "healing", "languageCode": "ko", "text": "힐링", "translations": { "zh": "疗愈" } }
+      ]
+    },
+    {
+      "id": "dorm-life",
+      "category": "宿舍生活",
+      "colorPreset": "sky",
+      "tiles": [
+        { "id": "roommate", "languageCode": "ko", "text": "룸메이트", "translations": { "zh": "室友" } },
+        { "id": "curfew", "languageCode": "ko", "text": "통금", "translations": { "zh": "门禁" } },
+        { "id": "communal-kitchen", "languageCode": "ko", "text": "공용 주방", "translations": { "zh": "公共厨房" } },
+        { "id": "laundry-room", "languageCode": "ko", "text": "세탁실", "translations": { "zh": "洗衣房" } }
+      ]
+    },
+    {
+      "id": "exam-prep",
+      "category": "备考",
+      "colorPreset": "emerald",
+      "tiles": [
+        { "id": "mock-exam", "languageCode": "ko", "text": "모의고사", "translations": { "zh": "模拟考" } },
+        { "id": "study-group", "languageCode": "ko", "text": "스터디 그룹", "translations": { "zh": "学习小组" } },
+        { "id": "review", "languageCode": "ko", "text": "복습", "translations": { "zh": "复习" } },
+        { "id": "cheat-sheet", "languageCode": "ko", "text": "요약 노트", "translations": { "zh": "复习笔记" } }
+      ]
+    }
+  ]
+}
+

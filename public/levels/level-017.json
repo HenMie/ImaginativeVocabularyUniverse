@@ -1,0 +1,65 @@
+{
+  "id": "level-017",
+  "name": "关卡17",
+  "difficulty": "easy",
+  "version": 1,
+  "languageCodes": ["ko", "zh"],
+  "groups": [
+    {
+      "id": "shops",
+      "category": "商店",
+      "colorPreset": "lilac",
+      "tiles": [
+        { "id": "bakery", "languageCode": "ko", "text": "빵집", "translations": { "zh": "面包店" } },
+        { "id": "bookstore", "languageCode": "ko", "text": "서점", "translations": { "zh": "书店" } },
+        { "id": "convenience-store", "languageCode": "ko", "text": "편의점", "translations": { "zh": "便利店" } },
+        { "id": "flower-shop", "languageCode": "ko", "text": "꽃집", "translations": { "zh": "花店" } }
+      ]
+    },
+    {
+      "id": "electronics",
+      "category": "电子产品",
+      "colorPreset": "mint",
+      "tiles": [
+        { "id": "phone", "languageCode": "ko", "text": "휴대폰", "translations": { "zh": "手机" } },
+        { "id": "computer", "languageCode": "ko", "text": "컴퓨터", "translations": { "zh": "电脑" } },
+        { "id": "tablet", "languageCode": "ko", "text": "태블릿", "translations": { "zh": "平板" } },
+        { "id": "earphones", "languageCode": "ko", "text": "이어폰", "translations": { "zh": "耳机" } }
+      ]
+    },
+    {
+      "id": "musical-instruments",
+      "category": "乐器",
+      "colorPreset": "sunset",
+      "tiles": [
+        { "id": "piano", "languageCode": "ko", "text": "피아노", "translations": { "zh": "钢琴" } },
+        { "id": "guitar", "languageCode": "ko", "text": "기타", "translations": { "zh": "吉他" } },
+        { "id": "drum", "languageCode": "ko", "text": "드럼", "translations": { "zh": "鼓" } },
+        { "id": "violin", "languageCode": "ko", "text": "바이올린", "translations": { "zh": "小提琴" } }
+      ]
+    },
+    {
+      "id": "sports",
+      "category": "运动",
+      "colorPreset": "rose",
+      "tiles": [
+        { "id": "soccer", "languageCode": "ko", "text": "축구", "translations": { "zh": "足球" } },
+        { "id": "basketball", "languageCode": "ko", "text": "농구", "translations": { "zh": "篮球" } },
+        { "id": "baseball", "languageCode": "ko", "text": "야구", "translations": { "zh": "棒球" } },
+        { "id": "swimming", "languageCode": "ko", "text": "수영", "translations": { "zh": "游泳" } }
+      ]
+    },
+    {
+      "id": "cooking-methods",
+      "category": "烹饪方式",
+      "colorPreset": "sky",
+      "tiles": [
+        { "id": "boil", "languageCode": "ko", "text": "삶다", "translations": { "zh": "煮" } },
+        { "id": "fry", "languageCode": "ko", "text": "튀기다", "translations": { "zh": "炸" } },
+        { "id": "grill", "languageCode": "ko", "text": "굽다", "translations": { "zh": "烤" } },
+        { "id": "steam", "languageCode": "ko", "text": "찌다", "translations": { "zh": "蒸" } }
+      ]
+    }
+  ]
+}
+

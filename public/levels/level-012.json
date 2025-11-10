@@ -1,0 +1,65 @@
+{
+  "id": "level-012",
+  "name": "关卡12",
+  "difficulty": "easy",
+  "version": 1,
+  "languageCodes": ["ko", "zh"],
+  "groups": [
+    {
+      "id": "rooms",
+      "category": "房间",
+      "colorPreset": "lilac",
+      "tiles": [
+        { "id": "bedroom", "languageCode": "ko", "text": "침실", "translations": { "zh": "卧室" } },
+        { "id": "kitchen", "languageCode": "ko", "text": "부엌", "translations": { "zh": "厨房" } },
+        { "id": "bathroom", "languageCode": "ko", "text": "화장실", "translations": { "zh": "洗手间" } },
+        { "id": "living-room", "languageCode": "ko", "text": "거실", "translations": { "zh": "客厅" } }
+      ]
+    },
+    {
+      "id": "daily-actions",
+      "category": "日常动作",
+      "colorPreset": "mint",
+      "tiles": [
+        { "id": "eat", "languageCode": "ko", "text": "먹다", "translations": { "zh": "吃" } },
+        { "id": "drink", "languageCode": "ko", "text": "마시다", "translations": { "zh": "喝" } },
+        { "id": "sleep", "languageCode": "ko", "text": "자다", "translations": { "zh": "睡觉" } },
+        { "id": "walk", "languageCode": "ko", "text": "걷다", "translations": { "zh": "走" } }
+      ]
+    },
+    {
+      "id": "nature",
+      "category": "自然",
+      "colorPreset": "sunset",
+      "tiles": [
+        { "id": "mountain", "languageCode": "ko", "text": "산", "translations": { "zh": "山" } },
+        { "id": "river", "languageCode": "ko", "text": "강", "translations": { "zh": "江/河" } },
+        { "id": "sea", "languageCode": "ko", "text": "바다", "translations": { "zh": "海" } },
+        { "id": "tree", "languageCode": "ko", "text": "나무", "translations": { "zh": "树" } }
+      ]
+    },
+    {
+      "id": "emotions",
+      "category": "情绪",
+      "colorPreset": "rose",
+      "tiles": [
+        { "id": "happy", "languageCode": "ko", "text": "행복하다", "translations": { "zh": "幸福" } },
+        { "id": "sad", "languageCode": "ko", "text": "슬프다", "translations": { "zh": "难过" } },
+        { "id": "angry", "languageCode": "ko", "text": "화나다", "translations": { "zh": "生气" } },
+        { "id": "scared", "languageCode": "ko", "text": "무섭다", "translations": { "zh": "害怕" } }
+      ]
+    },
+    {
+      "id": "meals",
+      "category": "三餐",
+      "colorPreset": "sky",
+      "tiles": [
+        { "id": "breakfast", "languageCode": "ko", "text": "아침", "translations": { "zh": "早餐" } },
+        { "id": "lunch", "languageCode": "ko", "text": "점심", "translations": { "zh": "午餐" } },
+        { "id": "dinner", "languageCode": "ko", "text": "저녁", "translations": { "zh": "晚餐" } },
+        { "id": "snack", "languageCode": "ko", "text": "간식", "translations": { "zh": "零食" } }
+      ]
+    }
+  ]
+}
+

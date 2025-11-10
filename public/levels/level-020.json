@@ -1,0 +1,76 @@
+{
+  "id": "level-020",
+  "name": "关卡20",
+  "difficulty": "hard",
+  "version": 1,
+  "languageCodes": ["ko", "zh"],
+  "groups": [
+    {
+      "id": "streaming-platforms",
+      "category": "流媒体",
+      "colorPreset": "indigo",
+      "tiles": [
+        { "id": "subscription", "languageCode": "ko", "text": "구독", "translations": { "zh": "订阅" } },
+        { "id": "recommendation", "languageCode": "ko", "text": "추천", "translations": { "zh": "推荐" } },
+        { "id": "algorithm", "languageCode": "ko", "text": "알고리즘", "translations": { "zh": "算法" } },
+        { "id": "autoplay", "languageCode": "ko", "text": "자동재생", "translations": { "zh": "自动播放" } }
+      ]
+    },
+    {
+      "id": "online-shopping",
+      "category": "网购行为",
+      "colorPreset": "gold",
+      "tiles": [
+        { "id": "cart", "languageCode": "ko", "text": "장바구니", "translations": { "zh": "购物车" } },
+        { "id": "wishlist", "languageCode": "ko", "text": "찜", "translations": { "zh": "收藏" } },
+        { "id": "review", "languageCode": "ko", "text": "리뷰", "translations": { "zh": "评价" } },
+        { "id": "return", "languageCode": "ko", "text": "반품", "translations": { "zh": "退货" } }
+      ]
+    },
+    {
+      "id": "freelance-work",
+      "category": "自由职业",
+      "colorPreset": "teal",
+      "tiles": [
+        { "id": "freelancer", "languageCode": "ko", "text": "프리랜서", "translations": { "zh": "自由职业者" } },
+        { "id": "portfolio", "languageCode": "ko", "text": "포트폴리오", "translations": { "zh": "作品集" } },
+        { "id": "client", "languageCode": "ko", "text": "클라이언트", "translations": { "zh": "客户" } },
+        { "id": "deadline", "languageCode": "ko", "text": "마감 기한", "translations": { "zh": "截止期限" } }
+      ]
+    },
+    {
+      "id": "campus-life",
+      "category": "校园生活",
+      "colorPreset": "rose",
+      "tiles": [
+        { "id": "orientation", "languageCode": "ko", "text": "오리엔테이션", "translations": { "zh": "迎新" } },
+        { "id": "club", "languageCode": "ko", "text": "동아리", "translations": { "zh": "社团" } },
+        { "id": "festival", "languageCode": "ko", "text": "축제", "translations": { "zh": "校园节" } },
+        { "id": "graduate", "languageCode": "ko", "text": "졸업", "translations": { "zh": "毕业" } }
+      ]
+    },
+    {
+      "id": "self-improvement",
+      "category": "自我提升",
+      "colorPreset": "sky",
+      "tiles": [
+        { "id": "online-course", "languageCode": "ko", "text": "온라인 강의", "translations": { "zh": "线上课程" } },
+        { "id": "certification", "languageCode": "ko", "text": "자격증", "translations": { "zh": "资格证" } },
+        { "id": "side-project", "languageCode": "ko", "text": "사이드 프로젝트", "translations": { "zh": "副业项目" } },
+        { "id": "networking", "languageCode": "ko", "text": "네트워킹", "translations": { "zh": "人脉拓展" } }
+      ]
+    },
+    {
+      "id": "minimalism",
+      "category": "极简主义",
+      "colorPreset": "emerald",
+      "tiles": [
+        { "id": "declutter", "languageCode": "ko", "text": "정리정돈", "translations": { "zh": "断舍离" } },
+        { "id": "simple-living", "languageCode": "ko", "text": "미니멀 라이프", "translations": { "zh": "极简生活" } },
+        { "id": "essential", "languageCode": "ko", "text": "필수품", "translations": { "zh": "必需品" } },
+        { "id": "sustainable", "languageCode": "ko", "text": "지속가능", "translations": { "zh": "可持续" } }
+      ]
+    }
+  ]
+}
+

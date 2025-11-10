@@ -1,20 +1,13 @@
 {
   "id": "level-002",
   "name": "关卡2",
-  "theme": "",
-  "difficulty": "medium",
+  "difficulty": "easy",
   "version": 1,
   "languageCodes": ["ko", "zh"],
-  "rewards": {
-    "coins": 210,
-    "stars": 2
-  },
-  "tutorialSteps": ["留意不同类别，一次完成四个词更快"],
   "groups": [
     {
       "id": "transport",
       "category": "公共交通",
-      "type": "word",
       "colorPreset": "sky",
       "tiles": [
         { "id": "subway", "languageCode": "ko", "text": "지하철", "translations": { "zh": "地铁" } },
@@ -26,7 +19,6 @@
     {
       "id": "essentials",
       "category": "随身物品",
-      "type": "word",
       "colorPreset": "mint",
       "tiles": [
         { "id": "transit-card", "languageCode": "ko", "text": "교통카드", "translations": { "zh": "交通卡" } },
@@ -38,7 +30,6 @@
     {
       "id": "street-food",
       "category": "街头小吃",
-      "type": "word",
       "colorPreset": "sunset",
       "tiles": [
         { "id": "fish-cake", "languageCode": "ko", "text": "어묵", "translations": { "zh": "鱼糕" } },
@@ -50,7 +41,6 @@
     {
       "id": "skincare",
       "category": "护肤补给",
-      "type": "word",
       "colorPreset": "lilac",
       "tiles": [
         { "id": "eye-cream", "languageCode": "ko", "text": "아이크림", "translations": { "zh": "眼霜" } },

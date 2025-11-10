@@ -1,0 +1,77 @@
+{
+  "id": "level-010",
+  "name": "关卡10",
+  "difficulty": "hard",
+  "version": 1,
+  "languageCodes": ["ko", "zh"],
+  "groups": [
+    {
+      "id": "sleep-deprived",
+      "category": "睡眠不足",
+      "colorPreset": "indigo",
+      "tiles": [
+        { "id": "insomnia", "languageCode": "ko", "text": "불면증", "translations": { "zh": "失眠症" } },
+        { "id": "yawn", "languageCode": "ko", "text": "하품", "translations": { "zh": "打哈欠" } },
+        { "id": "drowsy", "languageCode": "ko", "text": "졸리다", "translations": { "zh": "困" } },
+        { "id": "nap", "languageCode": "ko", "text": "낮잠", "translations": { "zh": "午睡" } }
+      ]
+    },
+    {
+      "id": "binge-watching",
+      "category": "追剧文化",
+      "colorPreset": "gold",
+      "tiles": [
+        { "id": "binge-watch", "languageCode": "ko", "text": "몰아보기", "translations": { "zh": "刷剧" } },
+        { "id": "spoiler", "languageCode": "ko", "text": "스포일러", "translations": { "zh": "剧透" } },
+        { "id": "cliffhanger", "languageCode": "ko", "text": "막장", "translations": { "zh": "悬念" } },
+        { "id": "plot-twist", "languageCode": "ko", "text": "반전", "translations": { "zh": "反转" } }
+      ]
+    },
+    {
+      "id": "food-delivery",
+      "category": "外卖文化",
+      "colorPreset": "teal",
+      "tiles": [
+        { "id": "food-delivery", "languageCode": "ko", "text": "배달", "translations": { "zh": "外卖" } },
+        { "id": "delivery-app", "languageCode": "ko", "text": "배달앱", "translations": { "zh": "外卖软件" } },
+        { "id": "packaging", "languageCode": "ko", "text": "포장", "translations": { "zh": "打包" } },
+        { "id": "tip", "languageCode": "ko", "text": "팁", "translations": { "zh": "小费" } }
+      ]
+    },
+    {
+      "id": "academic-skills",
+      "category": "学术与表达",
+      "colorPreset": "rose",
+      "tiles": [
+        { "id": "critical-thinking", "languageCode": "ko", "text": "비판적 사고", "translations": { "zh": "批判性思维" } },
+        { "id": "evidence", "languageCode": "ko", "text": "근거", "translations": { "zh": "依据" } },
+        { "id": "summary", "languageCode": "ko", "text": "요약", "translations": { "zh": "摘要" } },
+        { "id": "persuasion", "languageCode": "ko", "text": "설득", "translations": { "zh": "说服" } }
+      ]
+    },
+    {
+      "id": "fitness-trend",
+      "category": "健身热潮",
+      "colorPreset": "sky",
+      "tiles": [
+        { "id": "gym", "languageCode": "ko", "text": "헬스장", "translations": { "zh": "健身房" } },
+        { "id": "personal-trainer", "languageCode": "ko", "text": "퍼스널 트레이너", "translations": { "zh": "私教" } },
+        { "id": "protein", "languageCode": "ko", "text": "단백질", "translations": { "zh": "蛋白质" } },
+        { "id": "muscle-pain", "languageCode": "ko", "text": "근육통", "translations": { "zh": "肌肉酸痛" } }
+      ]
+    },
+    {
+      "id": "intercultural",
+      "category": "文化理解",
+      "colorPreset": "emerald",
+      "tiles": [
+        { "id": "multicultural", "languageCode": "ko", "text": "다문화", "translations": { "zh": "多元文化" } },
+        { "id": "prejudice", "languageCode": "ko", "text": "편견", "translations": { "zh": "偏见" } },
+        { "id": "culture-shock", "languageCode": "ko", "text": "문화충격", "translations": { "zh": "文化冲击" } },
+        { "id": "inclusion", "languageCode": "ko", "text": "포용", "translations": { "zh": "包容" } }
+      ]
+    }
+  ]
+}
+
+

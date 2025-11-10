@@ -1,4 +1,8 @@
-import type { GroupDefinition, LevelFile, TileDefinition } from '../types/levels'
+import type {
+  GroupDefinition,
+  LevelFile,
+  TileDefinition,
+} from '../types/levels'
 
 export type TileStatus = 'available' | 'locked' | 'completed'
 
@@ -46,6 +50,62 @@ export const createTileInstances = (level: LevelFile, shuffle = true): TileInsta
   )
 
   return shuffle ? fisherShuffle(instances) : instances
+}
+
+/**
+ * 智能选择初始卡片：优先选择完整的主题组（4张一组）
+ * @param level 关卡数据
+ * @param maxVisible 最大可见卡片数（通常是 columns * rows）
+ * @returns { visible: 可见的卡片, reserve: 储备的卡片 }
+ */
+export const createSmartInitialTiles = (
+  level: LevelFile,
+  maxVisible: number,
+): { visible: TileInstance[]; reserve: TileInstance[] } => {
+  // 创建所有卡片实例
+  const allInstances = level.groups.map((group) => ({
+    groupId: group.id,
+    tiles: group.tiles.map((tile, index) => ({
+      instanceId: makeInstanceId(group.id, tile.id, index),
+      tileId: tile.id,
+      groupId: group.id,
+      data: tile,
+      status: 'available' as TileStatus,
+    })),
+  }))
+
+  // 随机打乱主题组的顺序
+  const shuffledGroups = fisherShuffle(allInstances)
+
+  const visibleTiles: TileInstance[] = []
+  const reserveTiles: TileInstance[] = []
+
+  // 第一轮：优先选择完整的主题组（整组4张卡片）
+  for (const group of shuffledGroups) {
+    if (visibleTiles.length + group.tiles.length <= maxVisible) {
+      visibleTiles.push(...group.tiles)
+    } else {
+      reserveTiles.push(...group.tiles)
+    }
+  }
+
+  // 第二轮：如果还有空位，从储备中随机抽取卡片补充
+  if (visibleTiles.length < maxVisible && reserveTiles.length > 0) {
+    const needed = maxVisible - visibleTiles.length
+    const shuffledReserve = fisherShuffle(reserveTiles)
+    const supplement = shuffledReserve.slice(0, needed)
+    const remaining = shuffledReserve.slice(needed)
+    visibleTiles.push(...supplement)
+    // 更新储备区为剩余的卡片
+    reserveTiles.length = 0
+    reserveTiles.push(...remaining)
+  }
+
+  // 最终打乱可见卡片的顺序（让玩家看不出规律）
+  return {
+    visible: fisherShuffle(visibleTiles),
+    reserve: reserveTiles,
+  }
 }
 
 export const reorderTiles = (

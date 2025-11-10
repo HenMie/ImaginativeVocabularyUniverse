@@ -6,14 +6,14 @@ export interface LevelProgressSnapshot {
   hintCosts?: Record<string, number>
   bestTimeMs?: number
   lastPlayedAt: string
-  starsEarned: number
   coinsEarned: number
+  completed: boolean
+  completedAt?: string
 }
 
 export interface PlayerProgress {
   version: number
   coins: number
-  totalStars: number
   unlockedLevelIds: string[]
   activeLanguage: string
   seenTutorials: string[]
@@ -26,5 +26,5 @@ export interface PlayerProgress {
   lastBackupAt?: string
 }
 
-export const CURRENT_PROGRESS_VERSION = 1
+export const CURRENT_PROGRESS_VERSION = 2
 

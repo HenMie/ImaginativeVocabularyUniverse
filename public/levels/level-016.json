@@ -1,0 +1,76 @@
+{
+  "id": "level-016",
+  "name": "关卡16",
+  "difficulty": "easy",
+  "version": 1,
+  "languageCodes": ["ko", "zh"],
+  "groups": [
+    {
+      "id": "vegetables",
+      "category": "蔬菜",
+      "colorPreset": "lilac",
+      "tiles": [
+        { "id": "carrot", "languageCode": "ko", "text": "당근", "translations": { "zh": "胡萝卜" } },
+        { "id": "onion", "languageCode": "ko", "text": "양파", "translations": { "zh": "洋葱" } },
+        { "id": "potato", "languageCode": "ko", "text": "감자", "translations": { "zh": "土豆" } },
+        { "id": "cabbage", "languageCode": "ko", "text": "배추", "translations": { "zh": "白菜" } }
+      ]
+    },
+    {
+      "id": "seasons",
+      "category": "季节",
+      "colorPreset": "mint",
+      "tiles": [
+        { "id": "spring", "languageCode": "ko", "text": "봄", "translations": { "zh": "春天" } },
+        { "id": "summer", "languageCode": "ko", "text": "여름", "translations": { "zh": "夏天" } },
+        { "id": "autumn", "languageCode": "ko", "text": "가을", "translations": { "zh": "秋天" } },
+        { "id": "winter", "languageCode": "ko", "text": "겨울", "translations": { "zh": "冬天" } }
+      ]
+    },
+    {
+      "id": "drinks",
+      "category": "饮料",
+      "colorPreset": "sunset",
+      "tiles": [
+        { "id": "water", "languageCode": "ko", "text": "물", "translations": { "zh": "水" } },
+        { "id": "juice", "languageCode": "ko", "text": "주스", "translations": { "zh": "果汁" } },
+        { "id": "milk", "languageCode": "ko", "text": "우유", "translations": { "zh": "牛奶" } },
+        { "id": "tea", "languageCode": "ko", "text": "차", "translations": { "zh": "茶" } }
+      ]
+    },
+    {
+      "id": "school-subjects",
+      "category": "学科",
+      "colorPreset": "rose",
+      "tiles": [
+        { "id": "math", "languageCode": "ko", "text": "수학", "translations": { "zh": "数学" } },
+        { "id": "english", "languageCode": "ko", "text": "영어", "translations": { "zh": "英语" } },
+        { "id": "science", "languageCode": "ko", "text": "과학", "translations": { "zh": "科学" } },
+        { "id": "history", "languageCode": "ko", "text": "역사", "translations": { "zh": "历史" } }
+      ]
+    },
+    {
+      "id": "adjectives-size",
+      "category": "大小",
+      "colorPreset": "sky",
+      "tiles": [
+        { "id": "big", "languageCode": "ko", "text": "크다", "translations": { "zh": "大" } },
+        { "id": "small", "languageCode": "ko", "text": "작다", "translations": { "zh": "小" } },
+        { "id": "tall", "languageCode": "ko", "text": "높다", "translations": { "zh": "高" } },
+        { "id": "short", "languageCode": "ko", "text": "낮다", "translations": { "zh": "矮/低" } }
+      ]
+    },
+    {
+      "id": "stationery",
+      "category": "文具",
+      "colorPreset": "purple",
+      "tiles": [
+        { "id": "pencil-case", "languageCode": "ko", "text": "필통", "translations": { "zh": "笔袋" } },
+        { "id": "glue-stick", "languageCode": "ko", "text": "풀", "translations": { "zh": "固体胶" } },
+        { "id": "marker", "languageCode": "ko", "text": "마커", "translations": { "zh": "马克笔" } },
+        { "id": "tape-dispenser", "languageCode": "ko", "text": "테이프 커터", "translations": { "zh": "胶带座" } }
+      ]
+    }
+  ]
+}
+

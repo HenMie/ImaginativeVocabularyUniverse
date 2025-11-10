@@ -1,0 +1,76 @@
+{
+  "id": "level-019",
+  "name": "关卡19",
+  "difficulty": "medium",
+  "version": 1,
+  "languageCodes": ["ko", "zh"],
+  "groups": [
+    {
+      "id": "water-states",
+      "category": "水的形态",
+      "colorPreset": "indigo",
+      "tiles": [
+        { "id": "liquid-water", "languageCode": "ko", "text": "물", "translations": { "zh": "水" } },
+        { "id": "ice", "languageCode": "ko", "text": "얼음", "translations": { "zh": "冰" } },
+        { "id": "steam", "languageCode": "ko", "text": "수증기", "translations": { "zh": "水蒸气" } },
+        { "id": "snow", "languageCode": "ko", "text": "눈", "translations": { "zh": "雪" } }
+      ]
+    },
+    {
+      "id": "communication-tools",
+      "category": "通讯工具",
+      "colorPreset": "orange",
+      "tiles": [
+        { "id": "letter", "languageCode": "ko", "text": "편지", "translations": { "zh": "信" } },
+        { "id": "phone-call", "languageCode": "ko", "text": "전화", "translations": { "zh": "电话" } },
+        { "id": "text-message", "languageCode": "ko", "text": "문자", "translations": { "zh": "短信" } },
+        { "id": "email", "languageCode": "ko", "text": "이메일", "translations": { "zh": "邮件" } }
+      ]
+    },
+    {
+      "id": "crowd-sizes",
+      "category": "人群规模",
+      "colorPreset": "gold",
+      "tiles": [
+        { "id": "alone", "languageCode": "ko", "text": "혼자", "translations": { "zh": "独自" } },
+        { "id": "couple", "languageCode": "ko", "text": "둘이", "translations": { "zh": "两人" } },
+        { "id": "small-group", "languageCode": "ko", "text": "소수", "translations": { "zh": "小群" } },
+        { "id": "crowd", "languageCode": "ko", "text": "무리", "translations": { "zh": "一群人" } }
+      ]
+    },
+    {
+      "id": "decision-process",
+      "category": "决策过程",
+      "colorPreset": "teal",
+      "tiles": [
+        { "id": "consideration", "languageCode": "ko", "text": "고려", "translations": { "zh": "考虑" } },
+        { "id": "comparison", "languageCode": "ko", "text": "비교", "translations": { "zh": "比较" } },
+        { "id": "choice", "languageCode": "ko", "text": "선택", "translations": { "zh": "选择" } },
+        { "id": "determination", "languageCode": "ko", "text": "결정", "translations": { "zh": "决定" } }
+      ]
+    },
+    {
+      "id": "payment-methods",
+      "category": "支付方式",
+      "colorPreset": "emerald",
+      "tiles": [
+        { "id": "cash", "languageCode": "ko", "text": "현금", "translations": { "zh": "现金" } },
+        { "id": "card", "languageCode": "ko", "text": "카드", "translations": { "zh": "卡" } },
+        { "id": "mobile-pay", "languageCode": "ko", "text": "모바일 결제", "translations": { "zh": "手机支付" } },
+        { "id": "installment", "languageCode": "ko", "text": "할부", "translations": { "zh": "分期" } }
+      ]
+    },
+    {
+      "id": "temperature-feel",
+      "category": "温度感受",
+      "colorPreset": "rose",
+      "tiles": [
+        { "id": "freezing", "languageCode": "ko", "text": "얼다", "translations": { "zh": "冻僵" } },
+        { "id": "cold", "languageCode": "ko", "text": "춥다", "translations": { "zh": "冷" } },
+        { "id": "hot", "languageCode": "ko", "text": "덥다", "translations": { "zh": "热" } },
+        { "id": "burning", "languageCode": "ko", "text": "뜨겁다", "translations": { "zh": "烫" } }
+      ]
+    }
+  ]
+}
+

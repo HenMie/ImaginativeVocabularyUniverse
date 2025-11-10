@@ -11,14 +11,9 @@ import {
 const sampleLevel: LevelFile = {
   id: 'test',
   name: 'Test Level',
-  theme: '测试主题',
   difficulty: 'easy',
   version: 1,
   languageCodes: ['ko', 'zh'],
-  rewards: {
-    coins: 100,
-    stars: 1,
-  },
   groups: [
     {
       id: 'alpha',

@@ -29,6 +29,7 @@ interface WordTileProps {
     | 'verify-reveal-success'
     | 'verify-reveal-fail'
     | 'complete'
+    | 'result'
   highlightPreset?: GroupColorPreset
   groupColor?: GroupColorPreset
   tileOverrideColor?: GroupColorPreset
@@ -47,7 +48,7 @@ export const WordTile = ({
 }: WordTileProps) => {
   const ref = useRef<HTMLDivElement>(null)
   const isCompleted = tile.status === 'completed'
-  const isDraggable = tile.status === 'available'
+  const isDraggable = tile.status === 'available' && !isCompleted
 
   const [, drop] = useDrop<DragItem>({
     accept: DND_ITEM_TYPES.TILE,
@@ -129,7 +130,11 @@ export const WordTile = ({
         highlightContext === 'verify-reveal-fail'
           ? '0 0 0 3px rgba(248,113,113,0.45)'
           : '0 0 0 3px rgba(16,185,129,0.35)'
-    } else if (highlightContext === 'hint' || highlightContext === 'assemble') {
+    } else if (
+      highlightContext === 'hint' ||
+      highlightContext === 'assemble' ||
+      highlightContext === 'result'
+    ) {
       baseStyle.boxShadow = `0 0 0 4px ${palette?.accent ?? 'rgba(59,130,246,0.35)'}`
     }
   }
@@ -153,7 +158,7 @@ export const WordTile = ({
         }
       }}
       className={clsx(
-        'word-tile relative flex min-h-[68px] w-full select-none flex-col items-center justify-center rounded-xl border-2 px-3 py-2 text-center text-base font-semibold shadow-md transition-transform duration-150 ease-out focus:outline-none focus:ring-4 focus:ring-primary/30',
+        'word-tile relative flex min-h-[44px] w-full select-none flex-col items-center justify-center rounded-xl border-2 px-2 py-1 text-center text-base font-semibold shadow-md transition-transform duration-150 ease-out focus:outline-none focus:ring-4 focus:ring-primary/30',
         !isDraggable ? 'cursor-default' : 'cursor-grab active:cursor-grabbing',
         isDragging && 'opacity-0',
         highlightRing,
@@ -162,7 +167,7 @@ export const WordTile = ({
     >
       <span
         className={clsx(
-          'px-1 text-balance',
+          'px-0.5 text-balance',
           (tile.data.text?.length ?? 0) > 6 && 'text-sm',
         )}
       >

@@ -75,7 +75,7 @@ export const TileDragLayer = () => {
       }}
     >
       <div
-        className="pointer-events-none flex h-full w-full select-none items-center justify-center rounded-xl border-2 px-3 py-2 text-center text-base font-semibold shadow-2xl"
+        className="pointer-events-none flex h-full w-full select-none items-center justify-center rounded-xl border-2 px-2 py-1 text-center text-base font-semibold shadow-2xl"
         style={{
           backgroundColor: background,
           borderColor: border,
@@ -84,7 +84,7 @@ export const TileDragLayer = () => {
       >
         <span
           className={clsx(
-            'px-1 text-balance',
+            'px-0.5 text-balance',
             (tile.data.text?.length ?? 0) > 6 && 'text-sm',
           )}
         >
