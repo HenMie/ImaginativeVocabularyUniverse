@@ -1,0 +1,64 @@
+{
+  "id": "level-002",
+  "name": "关卡2",
+  "theme": "",
+  "difficulty": "medium",
+  "version": 1,
+  "languageCodes": ["ko", "zh"],
+  "rewards": {
+    "coins": 210,
+    "stars": 2
+  },
+  "tutorialSteps": ["留意不同类别，一次完成四个词更快"],
+  "groups": [
+    {
+      "id": "transport",
+      "category": "公共交通",
+      "type": "word",
+      "colorPreset": "sky",
+      "tiles": [
+        { "id": "subway", "languageCode": "ko", "text": "지하철", "translations": { "zh": "地铁" } },
+        { "id": "bus", "languageCode": "ko", "text": "버스", "translations": { "zh": "公交车" } },
+        { "id": "taxi", "languageCode": "ko", "text": "택시", "translations": { "zh": "出租车" } },
+        { "id": "bike", "languageCode": "ko", "text": "자전거", "translations": { "zh": "自行车" } }
+      ]
+    },
+    {
+      "id": "essentials",
+      "category": "随身物品",
+      "type": "word",
+      "colorPreset": "mint",
+      "tiles": [
+        { "id": "transit-card", "languageCode": "ko", "text": "교통카드", "translations": { "zh": "交通卡" } },
+        { "id": "map", "languageCode": "ko", "text": "지도", "translations": { "zh": "地图" } },
+        { "id": "umbrella", "languageCode": "ko", "text": "우산", "translations": { "zh": "雨伞" } },
+        { "id": "backpack", "languageCode": "ko", "text": "배낭", "translations": { "zh": "背包" } }
+      ]
+    },
+    {
+      "id": "street-food",
+      "category": "街头小吃",
+      "type": "word",
+      "colorPreset": "sunset",
+      "tiles": [
+        { "id": "fish-cake", "languageCode": "ko", "text": "어묵", "translations": { "zh": "鱼糕" } },
+        { "id": "tteokbokki", "languageCode": "ko", "text": "떡볶이", "translations": { "zh": "辣炒年糕" } },
+        { "id": "hotteok", "languageCode": "ko", "text": "호떡", "translations": { "zh": "糖饼" } },
+        { "id": "bungeoppang", "languageCode": "ko", "text": "붕어빵", "translations": { "zh": "鲫鱼饼" } }
+      ]
+    },
+    {
+      "id": "skincare",
+      "category": "护肤补给",
+      "type": "word",
+      "colorPreset": "lilac",
+      "tiles": [
+        { "id": "eye-cream", "languageCode": "ko", "text": "아이크림", "translations": { "zh": "眼霜" } },
+        { "id": "sheet-mask", "languageCode": "ko", "text": "마스크팩", "translations": { "zh": "面膜" } },
+        { "id": "face-cream", "languageCode": "ko", "text": "크림", "translations": { "zh": "面霜" } },
+        { "id": "serum", "languageCode": "ko", "text": "에센스", "translations": { "zh": "精华液" } }
+      ]
+    }
+  ]
+}
+

@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "languages": [
+    {
+      "code": "ko",
+      "name": "韩语",
+      "nativeName": "한국어",
+      "direction": "ltr",
+      "preferredFonts": ["'Noto Sans KR'", "sans-serif"],
+      "tts": {
+        "voiceId": "ko-KR-Standard-A",
+        "rate": 0.95
+      }
+    },
+    {
+      "code": "zh",
+      "name": "中文",
+      "nativeName": "中文",
+      "direction": "ltr",
+      "preferredFonts": ["'Noto Sans SC'", "'PingFang SC'", "sans-serif"],
+      "tts": {
+        "voiceId": "cmn-CN-Standard-A"
+      }
+    },
+    {
+      "code": "en",
+      "name": "英语",
+      "nativeName": "English",
+      "direction": "ltr",
+      "preferredFonts": ["'Inter'", "'Segoe UI'", "sans-serif"],
+      "tts": {
+        "voiceId": "en-US-Standard-C"
+      }
+    }
+  ]
+}
+

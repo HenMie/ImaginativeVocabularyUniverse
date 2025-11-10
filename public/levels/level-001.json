@@ -1,0 +1,145 @@
+{
+  "id": "level-001",
+  "name": "关卡1",
+  "theme": "",
+  "difficulty": "easy",
+  "version": 1,
+  "languageCodes": ["ko", "zh"],
+  "rewards": {
+    "coins": 200,
+    "stars": 1
+  },
+  "tutorialSteps": ["拖动四个词牌排成一行即可分组", "点击词牌可查看释义"],
+  "groups": [
+    {
+      "id": "drinks",
+      "category": "饮料",
+      "type": "word",
+      "colorPreset": "lilac",
+      "tiles": [
+        {
+          "id": "milk",
+          "languageCode": "ko",
+          "text": "우유",
+          "translations": { "zh": "牛奶" }
+        },
+        {
+          "id": "juice",
+          "languageCode": "ko",
+          "text": "주스",
+          "translations": { "zh": "果汁" }
+        },
+        {
+          "id": "tea",
+          "languageCode": "ko",
+          "text": "차",
+          "translations": { "zh": "茶" }
+        },
+        {
+          "id": "soda",
+          "languageCode": "ko",
+          "text": "탄산음료",
+          "translations": { "zh": "汽水" },
+          "hint": "汽泡饮料"
+        }
+      ]
+    },
+    {
+      "id": "fruits",
+      "category": "水果",
+      "type": "word",
+      "colorPreset": "mint",
+      "tiles": [
+        {
+          "id": "orange",
+          "languageCode": "ko",
+          "text": "오렌지",
+          "translations": { "zh": "橙子" }
+        },
+        {
+          "id": "watermelon",
+          "languageCode": "ko",
+          "text": "수박",
+          "translations": { "zh": "西瓜" }
+        },
+        {
+          "id": "apple",
+          "languageCode": "ko",
+          "text": "사과",
+          "translations": { "zh": "苹果" }
+        },
+        {
+          "id": "banana",
+          "languageCode": "ko",
+          "text": "바나나",
+          "translations": { "zh": "香蕉" }
+        }
+      ]
+    },
+    {
+      "id": "colors",
+      "category": "颜色",
+      "type": "word",
+      "colorPreset": "sunset",
+      "tiles": [
+        {
+          "id": "red",
+          "languageCode": "ko",
+          "text": "빨강",
+          "translations": { "zh": "红色" }
+        },
+        {
+          "id": "blue",
+          "languageCode": "ko",
+          "text": "파랑",
+          "translations": { "zh": "蓝色" }
+        },
+        {
+          "id": "yellow",
+          "languageCode": "ko",
+          "text": "노랑",
+          "translations": { "zh": "黄色" }
+        },
+        {
+          "id": "green",
+          "languageCode": "ko",
+          "text": "초록",
+          "translations": { "zh": "绿色" }
+        }
+      ]
+    },
+    {
+      "id": "tableware",
+      "category": "餐具",
+      "type": "word",
+      "colorPreset": "rose",
+      "tiles": [
+        {
+          "id": "fork",
+          "languageCode": "ko",
+          "text": "포크",
+          "translations": { "zh": "叉子" }
+        },
+        {
+          "id": "spoon",
+          "languageCode": "ko",
+          "text": "숟가락",
+          "translations": { "zh": "勺子" }
+        },
+        {
+          "id": "plate",
+          "languageCode": "ko",
+          "text": "접시",
+          "translations": { "zh": "盘子" }
+        },
+        {
+          "id": "chopsticks",
+          "languageCode": "ko",
+          "text": "젓가락",
+          "translations": { "zh": "筷子" }
+        }
+      ]
+    }
+  ]
+}
+

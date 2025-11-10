@@ -1,0 +1,104 @@
+{
+  "id": "level-004",
+  "name": "关卡4",
+  "theme": "",
+  "difficulty": "hard",
+  "version": 1,
+  "languageCodes": ["emoji", "zh"],
+  "rewards": {
+    "coins": 230,
+    "stars": 3
+  },
+  "board": {
+    "columns": 4
+  },
+  "groups": [
+    {
+      "id": "sports",
+      "category": "运动",
+      "type": "image",
+      "colorPreset": "sky",
+      "tiles": [
+        {
+          "id": "basketball",
+          "languageCode": "emoji",
+          "text": "🏀",
+          "translations": { "zh": "篮球" }
+        },
+        {
+          "id": "pingpong",
+          "languageCode": "emoji",
+          "text": "🏓",
+          "translations": { "zh": "乒乓球" }
+        },
+        {
+          "id": "soccer",
+          "languageCode": "emoji",
+          "text": "⚽",
+          "translations": { "zh": "足球" }
+        },
+        {
+          "id": "tennis",
+          "languageCode": "emoji",
+          "text": "🎾",
+          "translations": { "zh": "网球" }
+        }
+      ],
+      "resultTile": {
+        "id": "sports-badge",
+        "languageCode": "emoji",
+        "text": "🏆",
+        "translations": { "zh": "运动徽章" }
+      }
+    },
+    {
+      "id": "seafood",
+      "category": "海鲜",
+      "type": "image",
+      "colorPreset": "crimson",
+      "tiles": [
+        { "id": "crab", "languageCode": "emoji", "text": "🦀", "translations": { "zh": "螃蟹" } },
+        { "id": "shrimp", "languageCode": "emoji", "text": "🦐", "translations": { "zh": "虾" } },
+        { "id": "lobster", "languageCode": "emoji", "text": "🦞", "translations": { "zh": "龙虾" } },
+        { "id": "squid", "languageCode": "emoji", "text": "🦑", "translations": { "zh": "鱿鱼" } }
+      ]
+    },
+    {
+      "id": "animals",
+      "category": "动物",
+      "type": "image",
+      "colorPreset": "mint",
+      "tiles": [
+        { "id": "cat", "languageCode": "emoji", "text": "🐱", "translations": { "zh": "猫" } },
+        { "id": "monkey", "languageCode": "emoji", "text": "🐵", "translations": { "zh": "猴子" } },
+        { "id": "panda", "languageCode": "emoji", "text": "🐼", "translations": { "zh": "熊猫" } },
+        { "id": "lion", "languageCode": "emoji", "text": "🦁", "translations": { "zh": "狮子" } }
+      ]
+    },
+    {
+      "id": "dessert",
+      "category": "甜品",
+      "type": "image",
+      "colorPreset": "sunset",
+      "tiles": [
+        { "id": "icecream", "languageCode": "emoji", "text": "🍦", "translations": { "zh": "冰淇淋" } },
+        { "id": "cupcake", "languageCode": "emoji", "text": "🧁", "translations": { "zh": "纸杯蛋糕" } },
+        { "id": "shavedice", "languageCode": "emoji", "text": "🍧", "translations": { "zh": "刨冰" } },
+        { "id": "dessert-bowl", "languageCode": "emoji", "text": "🍨", "translations": { "zh": "圣代" } }
+      ]
+    },
+    {
+      "id": "fruit",
+      "category": "水果",
+      "type": "image",
+      "colorPreset": "lilac",
+      "tiles": [
+        { "id": "pineapple", "languageCode": "emoji", "text": "🍍", "translations": { "zh": "菠萝" } },
+        { "id": "peach", "languageCode": "emoji", "text": "🍑", "translations": { "zh": "桃子" } },
+        { "id": "grape", "languageCode": "emoji", "text": "🍇", "translations": { "zh": "葡萄" } },
+        { "id": "watermelon", "languageCode": "emoji", "text": "🍉", "translations": { "zh": "西瓜" } }
+      ]
+    }
+  ]
+}
+

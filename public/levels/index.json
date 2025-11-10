@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "levels": [
+    {
+      "id": "level-001",
+      "name": "关卡1",
+      "difficulty": "easy",
+      "requiredStars": 0,
+      "rewards": { "coins": 200, "stars": 1 },
+      "file": "level-001.json",
+      "preview": { "highlightGroup": "drinks" }
+    },
+    {
+      "id": "level-002",
+      "name": "关卡2",
+      "difficulty": "medium",
+      "requiredStars": 1,
+      "rewards": { "coins": 210, "stars": 2 },
+      "file": "level-002.json",
+      "preview": { "highlightGroup": "transport" }
+    },
+    {
+      "id": "level-004",
+      "name": "关卡4",
+      "difficulty": "hard",
+      "requiredStars": 3,
+      "rewards": { "coins": 230, "stars": 3 },
+      "file": "level-004.json",
+      "preview": { "highlightGroup": "animals" }
+    }
+  ]
+}
+
