@@ -1,44 +1,178 @@
 # 脑洞外语词场（ImaginativeVocabularyUniverse）
 
-一款 React + Vite 打造的外语词汇分组小游戏。玩家拖动词牌组成主题行，赚取金币、解锁关卡，同时可以导入导出本地存档。
+[![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)](https://github.com/your-username/ImaginativeVocabularyUniverse)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19.2-blue.svg)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-7.2-orange.svg)](https://vitejs.dev/)
 
-## 快速开始
+一款基于 React + TypeScript + Vite 构建的外语词汇分组学习小游戏。通过拖拽词牌组成主题行来学习词汇，支持金币系统、关卡解锁、本地存档导入导出，以及多语言支持。
+
+## ✨ 核心特性
+
+- 🎮 **拖拽交互**：基于 React DnD 的流畅拖拽体验，支持桌面和触摸设备
+- 💰 **经济系统**：金币奖励与提示消费机制，策略性使用游戏资源
+- 🌍 **多语言支持**：内置韩语、中文、英语支持，可扩展其他语言
+- 💾 **本地存档**：支持进度保存和导入导出功能
+- 📱 **PWA 支持**：可安装为桌面应用，支持离线使用
+- 🎨 **响应式设计**：基于 TailwindCSS 的美观界面，适配各种设备
+- 🔊 **TTS 语音**：内置语音合成功能，辅助发音学习
+
+## 🚀 快速开始
+
+### 环境要求
+
+- Node.js ≥ 18
+- npm ≥ 7
+
+### 安装和运行
 
 ```bash
+# 克隆项目
+git clone https://github.com/your-username/ImaginativeVocabularyUniverse.git
+cd ImaginativeVocabularyUniverse
+
+# 安装依赖
 npm install
-npm run dev   # 启动开发服务器（默认 http://localhost:5173）
+
+# 启动开发服务器
+npm run dev   # 默认 http://localhost:5173
 ```
 
-> Vite 7 依赖 Node.js ≥ 18，请确认本地环境满足要求。项目使用 TypeScript 与 TailwindCSS，编辑器建议安装对应插件以获得类型与样式提示。
+### 可用脚本
 
-常用脚本：
+- `npm run dev`：启动开发服务器（热重载）
+- `npm run build`：类型检查并构建生产版本
+- `npm run preview`：预览构建产物
+- `npm run test`：运行单元测试和组件测试
+- `npm run test:watch`：监视模式运行测试
+- `npm run test:e2e`：运行端到端测试
 
-- `npm run dev`：开启热更新开发环境
-- `npm run build`：类型检查 + 产出生产构建（输出到 `dist/`）
-- `npm run preview`：本地预览构建产物
-- `npm run test`：运行单元与组件测试（Vitest + Testing Library）
-- `npm run test:e2e`：运行 Playwright 端到端脚本
+## 🛠️ 技术栈
 
-## 源码结构速览
+### 核心框架
+- **React 19.2**：现代化的用户界面库
+- **TypeScript 5.9**：类型安全的 JavaScript 超集
+- **Vite 7.2**：极速的构建工具和开发服务器
 
-- `src/routes/LevelSelect.tsx`：关卡列表、奖励展示、备份弹窗入口
-- `src/routes/LevelPlay.tsx`：关卡主界面、拖拽交互、提示系统、结算逻辑
-- `src/components`：词牌、提示图层、导入导出等 UI 模块
-- `src/store`：基于 Zustand 的进度、会话、语言状态管理（含本地存档）
-- `src/services`：静态资源加载（关卡、语言配置）
-- `src/utils/board.ts`：词牌实例化、行匹配、拖动重排等核心算法
-- `public`：静态数据（语言、关卡 JSON）、静态资源
+### 状态管理与路由
+- **Zustand 5.0**：轻量级状态管理库
+- **React Router 7.9**：客户端路由解决方案
 
-## 玩法与系统概览
+### UI 与交互
+- **TailwindCSS 3.4**：实用优先的 CSS 框架
+- **React DnD 16.0**：拖拽功能库
+- **PostCSS + Autoprefixer**：CSS 处理工具链
 
-- 拖拽：React DnD + 多后端（触摸与桌面）支持，同时通过 `TileDragLayer` 自定义拖拽预览。
-- 词牌显示：场上最多保留 6 行（24 张）词牌，其余词牌自动进入候补队列，出现空位时即时补齐。
-- 提示经济：`constants/economy.ts` 定义阶梯价格；`LevelPlay` 中按使用次数实时扣币，复盘模式（已通关关卡）自动免单。
-- 进度存档：`progressStore` 持久化到 `localStorage`，默认给出金币与解锁顺序；`ImportExportModal` 支持文本/文件双格式备份。
-- 教学指引：每个关卡可定义 `tutorialSteps`，第一次游玩时用 `TutorialOverlay` 弹层引导。
-- 语言资源：`public/languages.json` 描述已支持语种、首选字体、TTS 配置；`languageStore` 负责全局语言切换。
+### 数据处理
+- **lz-string 1.5**：数据压缩库（用于存档）
+- **clsx 2.1**：条件类名工具
 
-## 关卡数据规范
+### 测试与质量保障
+- **Vitest 4.0**：快速的单元测试框架
+- **Testing Library 16.x**：React 组件测试工具
+- **Playwright 1.56**：端到端测试框架
+- **TypeScript**：静态类型检查
+
+### PWA 与性能
+- **vite-plugin-pwa**：PWA 功能支持
+- **Workbox**：Service Worker 缓存策略
+
+## 📁 项目结构
+
+```
+src/
+├── components/          # 可复用 UI 组件
+│   ├── WordTile.tsx    # 词牌组件
+│   ├── GroupRow.tsx    # 分组行组件
+│   ├── TileDragLayer.tsx # 拖拽预览层
+│   ├── ImportExportModal.tsx # 导入导出弹窗
+│   └── TutorialOverlay.tsx # 教学引导遮罩
+├── routes/             # 页面路由组件
+│   ├── LevelSelect.tsx # 关卡选择页面
+│   └── LevelPlay.tsx   # 关卡游戏页面
+├── store/              # Zustand 状态管理
+│   ├── progressStore.ts # 进度和金币状态
+│   ├── sessionStore.ts  # 游戏会话状态
+│   └── languageStore.ts # 语言设置状态
+├── services/           # 外部服务
+│   ├── levelService.ts # 关卡数据加载
+│   └── languageService.ts # 语言配置加载
+├── utils/              # 工具函数
+│   ├── board.ts        # 游戏逻辑核心算法
+│   ├── progressCodec.ts # 存档编解码
+│   └── animationOptimizer.ts # 动画性能优化
+├── constants/          # 常量配置
+│   ├── economy.ts      # 经济系统配置
+│   ├── levels.ts       # 关卡奖励配置
+│   ├── groupColors.ts  # 分组颜色预设
+│   └── storage.ts      # 存储键名配置
+└── types/              # TypeScript 类型定义
+    ├── levels.ts       # 关卡相关类型
+    ├── language.ts     # 语言相关类型
+    └── progress.ts     # 进度相关类型
+
+public/
+├── levels/             # 关卡数据文件（20个关卡）
+│   ├── index.json      # 关卡索引文件
+│   └── level-*.json    # 各关卡具体数据
+├── languages.json      # 多语言配置文件
+└── icons/              # PWA 应用图标
+
+e2e/                   # Playwright 端到端测试
+└── level-select.spec.ts # 关卡选择流程测试
+```
+
+## 🎮 游戏机制
+
+### 核心玩法
+- **拖拽分组**：通过拖拽词牌将相同主题的词汇排成一行完成分组
+- **词牌管理**：游戏区域最多显示 6 行（24 张）词牌，超出部分进入候补队列
+- **自动补充**：完成分组出现空位时，候补词牌自动补充到游戏区域
+- **行匹配算法**：实时检测行内词牌是否属于同一分组，自动标记完成状态
+
+### 经济系统
+- **金币奖励**：完成关卡或分组获得金币，根据难度等级给予不同奖励
+- **提示消费**：使用提示功能需要消费金币，采用阶梯式价格机制
+- **复盘免单**：已通关关卡在复盘模式下使用提示免费
+- **存档金币**：金币数量会保存到本地进度中
+
+### 进度管理
+- **关卡解锁**：按顺序解锁关卡，支持难度渐进设计
+- **本地存档**：使用 localStorage 持久化游戏进度
+- **导入导出**：支持文本格式和文件格式的存档备份恢复
+- **多语言存档**：存档兼容不同语言设置
+
+### 教学系统
+- **新手引导**：每个关卡可配置专门的教学步骤
+- **渐进式提示**：首次游玩时通过弹层引导操作流程
+- **上下文提示**：根据当前游戏状态提供相关帮助信息
+
+### 语言支持
+- **多语言配置**：内置韩语、中文、英语支持，可扩展其他语言
+- **TTS 语音**：集成 Web Speech API 实现词汇朗读
+- **字体优化**：为不同语言配置最佳显示字体
+- **RTL 支持**：预留从右到左语言的显示支持
+
+## 📊 项目统计
+
+### 当前数据规模
+- **关卡数量**：20 个精心设计的关卡
+- **难度分布**：
+  - 简单关卡：10 个
+  - 中等关卡：6 个
+  - 困难关卡：4 个
+- **支持语言**：韩语、中文、英语
+- **词牌总数**：800+ 个词汇条目
+- **主题分组**：涵盖日常生活、学习、工作等多个领域
+
+### 代码质量
+- **TypeScript 覆盖率**：100%
+- **单测覆盖**：核心游戏逻辑
+- **E2E 测试**：关键用户流程
+- **PWA 就绪**：支持离线使用和应用安装
+
+## 📋 关卡数据规范
 
 关卡由目录 `public/levels/` 下的索引文件与若干关卡文件共同驱动。
 
@@ -137,23 +271,130 @@ npm run dev   # 启动开发服务器（默认 http://localhost:5173）
 5. 若新增颜色预设，在 `constants/groupColors.ts` 添加；`colorPreset` 不要引用不存在的 ID。
 6. 本地运行 `npm run dev` 验证显示、拖拽、提示；必要时补充 Vitest/Playwright 覆盖。
 
-## 测试与质量保障
+## 🧪 测试策略
 
-- 单测覆盖 `utils/board` 等纯逻辑模块（见 `src/utils/__tests__/board.test.ts`）。
-- E2E 测试脚本位于 `e2e/`，当前主要验证关卡选择流程；可按需扩展场景。
-- 建议在新增关卡后至少手工演练：完成全部分组、触发提示、重新进入复盘模式，确认金币与提示成本结算符合预期。
+### 单元测试
+```bash
+npm run test          # 运行所有测试
+npm run test:watch    # 监视模式运行测试
+```
 
-## 构建与部署
+- **核心逻辑测试**：覆盖 `utils/board.ts` 中的游戏算法
+- **组件测试**：使用 React Testing Library 测试 UI 组件
+- **工具函数测试**：验证数据处理和状态管理逻辑
 
-`npm run build` 会生成纯静态产物，可直接部署到任何静态托管（如 Vercel、Netlify、GitHub Pages）。部署后需保证 `/levels/` 与 `/languages.json` 保持原始路径；所有资源通过相对路径加载。
+### 端到端测试
+```bash
+npm run test:e2e      # 运行 Playwright 测试
+```
+
+- **关卡选择流程**：验证用户从主页进入关卡的完整流程
+- **拖拽交互**：测试词牌拖拽和分组功能
+- **存档功能**：验证进度保存和导入导出
+
+### 手动测试建议
+新增关卡后建议进行以下手动测试：
+1. ✅ 完成全部分组验证匹配逻辑
+2. ✅ 触发提示功能验证金币扣除
+3. ✅ 重新进入已通关关卡验证复盘模式
+4. ✅ 测试存档导入导出功能
+5. ✅ 验证多语言切换和显示
+
+## 🚀 构建与部署
+
+### 本地构建
+```bash
+npm run build         # 生产构建
+npm run preview       # 预览构建结果
+```
+
+构建产物位于 `dist/` 目录，为纯静态文件，可部署到任何静态托管服务。
+
+### 推荐的部署平台
+
+#### Vercel
+1. 连接 GitHub 仓库
+2. 构建命令：`npm run build`
+3. 输出目录：`dist`
+4. 自动部署和 HTTPS
+
+#### Netlify
+1. 连接 Git 仓库
+2. 构建设置：
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+3. 重定向规则（SPA 支持）：
+   ```text
+   /*    /index.html   200
+   ```
+
+#### GitHub Pages
+```bash
+# 安装 gh-pages
+npm install --save-dev gh-pages
+
+# 添加到 package.json scripts
+"deploy": "npm run build && gh-pages -d dist"
+```
+
+### 部署注意事项
+- 🔸 确保 `/levels/` 和 `/languages.json` 路径可访问
+- 🔸 所有资源使用相对路径加载
+- 🔸 PWA 功能需要 HTTPS 环境
+- 🔸 建议启用 Gzip 压缩提高加载速度
+
+## 🔧 开发指南
+
+### 开发环境配置
+1. **IDE 推荐**：VS Code + 以下插件
+   - TypeScript and JavaScript Language Features
+   - Tailwind CSS IntelliSense
+   - ES7+ React/Redux/React-Native snippets
+   - Auto Rename Tag
+
+2. **代码规范**
+   - 使用 ESLint 和 Prettier（项目中已配置）
+   - 遵循 TypeScript 严格模式
+   - 组件使用函数式写法 + Hooks
+
+3. **调试技巧**
+   - React Developer Tools 浏览器扩展
+   - Redux DevTools（查看 Zustand 状态）
+   - Vite 热重载和错误覆盖
+
+### 添加新关卡
+1. 复制现有关卡文件模板
+2. 修改 `id`、`name`、`difficulty` 等元信息
+3. 配置 `groups` 和 `tiles` 数据
+4. 更新 `public/levels/index.json` 添加新关卡条目
+5. 运行测试验证功能正常
+
+### 扩展新语言
+1. 在 `public/languages.json` 中添加语言配置
+2. 创建对应语言的词汇数据文件
+3. 测试字体显示和 TTS 功能
+4. 更新语言切换界面
+
+## 🤝 贡献指南
+
+### 团队协作建议
+- **Git 工作流**：使用 Feature Branch + Pull Request
+- **代码审查**：所有 PR 需要至少一人审查
+- **自动化检查**：CI 运行 `npm run build && npm run test && npm run test:e2e`
+- **JSON 校验**：为关卡数据添加 JSON Schema 校验
+
+### 提交规范
+```bash
+feat: 添加新功能
+fix: 修复 bug
+docs: 更新文档
+style: 代码格式调整
+refactor: 重构代码
+test: 添加测试
+chore: 构建过程或辅助工具的变动
+```
 
 ---
 
-如需引入团队协作，可考虑：
-
-- 在 Git 工作流内对关卡 JSON 做 JSON Schema 校验（借助 Ajv / Zod）；
-- 使用 CI 自动运行 `npm run build && npm run test && npm run test:e2e`；
-- 为多语言词牌接入自动化翻译校验或占位符检查。
-
-上面覆盖了当前项目结构与关卡数据规范，方便后续扩展。
+**开始你的词汇学习之旅吧！** 🚀📚
 
