@@ -5,6 +5,7 @@ import { useDragLayer } from 'react-dnd'
 import { DND_ITEM_TYPES } from '../constants/dnd'
 import type { GroupColorPreset } from '../constants/groupColors'
 import type { TileInstance } from '../utils/board'
+import { useSimpleTouchControl } from '../hooks/useSimpleTouchControl'
 
 interface DragLayerItem {
   instanceId: string
@@ -32,6 +33,9 @@ export const TileDragLayer = () => {
       initialClientOffset: monitor.getInitialClientOffset(),
       initialSourceOffset: monitor.getInitialSourceClientOffset(),
     }))
+
+  // 使用轻量级触摸控制，避免画面倾斜
+  useSimpleTouchControl(isDragging && itemType === DND_ITEM_TYPES.TILE)
 
   const style = useMemo(() => {
     if (!item || !currentOffset) return null

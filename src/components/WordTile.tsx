@@ -6,6 +6,7 @@ import { getEmptyImage } from 'react-dnd-html5-backend'
 import { DND_ITEM_TYPES } from '../constants/dnd'
 import type { TileInstance } from '../utils/board'
 import type { GroupColorPreset } from '../constants/groupColors'
+import { useSimpleTouchControl } from '../hooks/useSimpleTouchControl'
 
 interface DragItem {
   type: string
@@ -91,6 +92,9 @@ export const WordTile = ({
 
   drag(drop(ref))
 
+  // 使用简化的触摸控制，避免画面倾斜
+  useSimpleTouchControl(isDragging)
+
   useEffect(() => {
     preview(getEmptyImage(), { captureDraggingState: true })
   }, [preview])
@@ -172,6 +176,8 @@ export const WordTile = ({
         isHighlighted && highlightContext === 'verify-reveal-success' && 'success-pulse',
         isHighlighted && highlightContext === 'verify-reveal-fail' && 'error-shake',
         highlightRing,
+        // 移动端优化
+        isDraggable && 'touch-none',
       )}
       style={baseStyle}
     >

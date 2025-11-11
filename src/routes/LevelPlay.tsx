@@ -687,8 +687,13 @@ export const LevelPlay = () => {
             className={clsx(
               'grid gap-2 rounded-3xl bg-surface/70 p-3 shadow-inner backdrop-blur',
               tiles.length === 0 && 'place-items-center py-16',
+              // 移动端优化
+              'touch-manipulation'
             )}
-            style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
+            style={{
+              gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
+              touchAction: 'manipulation'
+            }}
           >
             {tiles.length === 0 ? (
               <div className="text-sm text-slate-500">词场已清空，等待庆祝🎉</div>
@@ -838,7 +843,7 @@ export const LevelPlay = () => {
         <>
           {showCompletionPanel && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 px-3 py-4 backdrop-blur sm:px-4 sm:py-10">
-              <div className="flex w-full max-w-4xl flex-col gap-3 overflow-hidden rounded-3xl bg-white/95 p-4 shadow-2xl ring-1 ring-slate-100 sm:gap-5 sm:rounded-4xl sm:p-6 md:p-8">
+              <div className="flex w-full max-w-4xl flex-col gap-3 overflow-hidden rounded-3xl bg-white/95 p-4 shadow-2xl ring-1 ring-slate-100 sm:gap-5 sm:rounded-4xl sm:p-6 md:p-8 mx-4 max-h-[90vh] overflow-y-auto">
                 <header className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
                   <div className="space-y-1.5 sm:space-y-2">
                     <div className="text-xs font-semibold text-primary sm:text-sm">🎉 关卡完成</div>
@@ -986,8 +991,8 @@ export const LevelPlay = () => {
       )}
 
       {toolDialog && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/50 backdrop-blur">
-          <div className="flex w-full max-w-md flex-col gap-4 rounded-3xl bg-white p-6 shadow-2xl">
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/50 backdrop-blur p-4">
+          <div className="flex w-full max-w-sm mx-4 flex-col gap-4 rounded-3xl bg-white p-4 sm:p-6 shadow-2xl sm:max-w-md">
             <header className="flex items-center justify-between">
               <h2 className="text-lg font-semibold text-slate-800">
                 {TOOL_CONFIG[toolDialog.type].title}
@@ -1112,8 +1117,8 @@ export const LevelPlay = () => {
       />
 
       {showRestartConfirm && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/50 backdrop-blur">
-          <div className="flex w-full max-w-md flex-col gap-4 rounded-3xl bg-white p-6 shadow-2xl">
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/50 backdrop-blur p-4">
+          <div className="flex w-full max-w-sm mx-4 flex-col gap-4 rounded-3xl bg-white p-4 sm:p-6 shadow-2xl sm:max-w-md">
             <header className="flex items-center justify-between">
               <h2 className="text-lg font-semibold text-slate-800">确认重新开始？</h2>
               <button

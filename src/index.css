@@ -69,6 +69,47 @@ button {
   user-select: none;
 }
 
+/* 移动端拖拽优化 */
+.word-tile {
+  touch-action: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* 拖拽状态下移除不必要的样式，避免画面倾斜 */
+/* body.dragging 样式已移除，改为使用JS事件控制 */
+
+/* 移动端触摸优化 */
+@media (pointer: coarse) {
+  .word-tile {
+    /* 增加最小触摸区域 */
+    min-height: 48px;
+    min-width: 48px;
+
+    /* 防止缩放和高亮 */
+    touch-action: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* 防止拖拽时的默认行为 */
+  .word-tile.dragging {
+    touch-action: none;
+    pointer-events: none;
+  }
+}
+
+/* iOS Safari 特定优化 */
+@supports (-webkit-touch-callout: none) {
+  .word-tile {
+    /* 防止长按弹出菜单 */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+  }
+}
+
 @layer base {
   :root {
     --app-viewport-height: 100vh;
