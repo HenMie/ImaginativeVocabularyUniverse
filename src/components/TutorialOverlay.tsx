@@ -1,18 +1,36 @@
+import type { TranslationMap } from '../types/language'
+import { pickTranslation } from '../utils/translation'
+import { useProgressStore } from '../store/progressStore'
+
 interface TutorialOverlayProps {
   open: boolean
-  steps: string[]
+  steps: string[] | TranslationMap[]
+  gameLanguage?: string
   onClose: () => void
 }
 
 export const TutorialOverlay = ({ open, steps, onClose }: TutorialOverlayProps) => {
   if (!open) return null
 
+  // 获取用户的释义语言设置
+  const { progress } = useProgressStore()
+  const definitionLanguage = progress.languagePreferences.definitions[0]
+
+  // 处理多语言步骤
+  const processedSteps = steps.map((step) => {
+    if (typeof step === 'string') {
+      return step
+    }
+    // 使用用户的第一个释义语言，而不是游戏语言
+    return pickTranslation(step, definitionLanguage)
+  })
+
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/50 backdrop-blur">
       <div className="w-full max-w-md rounded-3xl bg-surface p-6 shadow-2xl">
         <h2 className="text-lg font-semibold text-slate-800">快速上手</h2>
         <ol className="mt-4 space-y-3 text-sm text-slate-600">
-          {steps.map((step, index) => (
+          {processedSteps.map((step, index) => (
             <li key={step} className="flex gap-3">
               <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
                 {index + 1}

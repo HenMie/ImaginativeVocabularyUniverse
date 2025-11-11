@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import type { LevelFile } from '../types/levels'
+import type { TranslationMap } from '../types/language'
 import { getHintCostForUsage } from '../constants/economy'
 import { getGroupColorByIndex } from '../constants/groupColors'
 import { useProgressStore } from './progressStore'
@@ -65,20 +66,20 @@ interface LevelSessionState {
         success: true
         groupId: string
         tileIds: string[]
-        category: string
-        sample: { text?: string; translation?: string }
+        category: TranslationMap
+        sample: { text: TranslationMap; translation: string }
       }
     | { success: false; reason: 'insufficient-coins' | 'no-groups' }
   useAutoComplete: () =>
     | {
         success: true
         groupId: string
-        category: string
+        category: TranslationMap
         tileIds: string[]
       }
     | { success: false; reason: 'insufficient-coins' | 'no-groups' }
   revealTheme: () =>
-    | { success: true; topics: string[] }
+    | { success: true; topics: TranslationMap[] }
     | { success: false; reason: 'insufficient-coins' | 'no-groups' }
   beginRowVerification: () =>
     | { success: true }
@@ -301,9 +302,9 @@ export const useSessionStore = create<LevelSessionState>()(
 
         const revealedSet = new Set(state.revealedCategories)
         matches.forEach((match) => {
-          const category = grouped[match.groupId]?.category
-          if (category) {
-            revealedSet.add(category)
+          // 使用group ID作为已揭示类别的标识，因为category现在是TranslationMap
+          if (match.groupId) {
+            revealedSet.add(match.groupId)
           }
           assignGroupColor(match.groupId)
         })
@@ -514,7 +515,7 @@ export const useSessionStore = create<LevelSessionState>()(
             return { success: false as const, reason: 'insufficient-coins' as const }
           }
           const revealedSet = new Set(state.revealedCategories)
-          const prioritized = availableGroups.filter((group) => !revealedSet.has(group.category))
+          const prioritized = availableGroups.filter((group) => !revealedSet.has(group.id))
           const pool = prioritized.length > 0 ? prioritized : availableGroups
           const group = pool[Math.floor(Math.random() * pool.length)]
           const availableTiles = state.tiles.filter(
@@ -532,9 +533,7 @@ export const useSessionStore = create<LevelSessionState>()(
             useProgressStore.getState().progress.languagePreferences.definitions
           const preferredLanguage = definitionLanguages[0]
           const updatedRevealed = new Set(state.revealedCategories)
-          if (group.category) {
-            updatedRevealed.add(group.category)
-          }
+          updatedRevealed.add(group.id)
           set({
             hints: {
               ...state.hints,
@@ -557,7 +556,7 @@ export const useSessionStore = create<LevelSessionState>()(
             category: group.category,
             sample: {
               text: sampleTile?.text,
-              translation: pickTranslation(sampleTile?.translations, preferredLanguage),
+              translation: pickTranslation(sampleTile?.text, preferredLanguage),
             },
           }
         },
@@ -641,9 +640,7 @@ export const useSessionStore = create<LevelSessionState>()(
               : state.tiles.filter((tile) => tile.groupId === group.id).map((tile) => tile.instanceId)
           assignGroupColor(group.id)
           const updatedRevealed = new Set(state.revealedCategories)
-          if (group.category) {
-            updatedRevealed.add(group.category)
-          }
+          updatedRevealed.add(group.id)
           set({
             hints: {
               ...state.hints,
@@ -668,22 +665,21 @@ export const useSessionStore = create<LevelSessionState>()(
           if (!charge.success) {
             return { success: false as const, reason: 'insufficient-coins' as const }
           }
-          const topics = Array.from(
-            new Set(state.level.groups.map((group) => group.category ?? '')),
-          ).filter(Boolean)
-          if (topics.length === 0) {
+          const groups = state.level.groups
+          if (groups.length === 0) {
             if (charge.amount > 0) {
               useProgressStore.getState().refundCoins(charge.amount)
             }
             return { success: false as const, reason: 'no-groups' as const }
           }
           const revealedSet = new Set(state.revealedCategories)
-          const unrevealedTopics = shuffle(topics.filter((topic) => !revealedSet.has(topic)))
-          const revealedTopics = shuffle(topics.filter((topic) => revealedSet.has(topic)))
-          const ordered = [...unrevealedTopics, ...revealedTopics]
-          const picks = ordered.slice(0, Math.min(2, ordered.length))
+          const unrevealedGroups = shuffle(groups.filter((group) => !revealedSet.has(group.id)))
+          const revealedGroups = shuffle(groups.filter((group) => revealedSet.has(group.id)))
+          const ordered = [...unrevealedGroups, ...revealedGroups]
+          const pickedGroups = ordered.slice(0, Math.min(2, ordered.length))
+          const picks = pickedGroups.map((group) => group.category)
           const updatedRevealed = new Set(state.revealedCategories)
-          picks.forEach((topic) => updatedRevealed.add(topic))
+          pickedGroups.forEach((group) => updatedRevealed.add(group.id))
           set({
             hints: {
               ...state.hints,
@@ -765,14 +761,10 @@ export const useSessionStore = create<LevelSessionState>()(
             overrides[tile.instanceId] = presetId
           })
           let nextRevealed = state.revealedCategories
-          if (success && baseGroupId) {
-            const category =
-              state.level?.groups.find((group) => group.id === baseGroupId)?.category ?? ''
-            if (category && !state.revealedCategories.includes(category)) {
-              const updated = new Set(state.revealedCategories)
-              updated.add(category)
-              nextRevealed = Array.from(updated)
-            }
+          if (success && baseGroupId && !state.revealedCategories.includes(baseGroupId)) {
+            const updated = new Set(state.revealedCategories)
+            updated.add(baseGroupId)
+            nextRevealed = Array.from(updated)
           }
           set({
             hintState: {

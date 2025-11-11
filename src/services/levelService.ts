@@ -1,11 +1,4 @@
 import type { LevelFile, LevelIndexEntry } from '../types/levels'
-import {
-  DEFAULT_DEFINITION_LANGUAGES,
-  DEFAULT_GAME_LANGUAGE,
-  DEFAULT_LEVEL_LANGUAGE_PROFILE,
-  MAX_DEFINITION_LANGUAGES,
-  MIN_DEFINITION_LANGUAGES,
-} from '../constants/languages'
 
 const INDEX_PATH = '/levels/index.json'
 
@@ -19,61 +12,30 @@ const ensureResponse = async (response: Response, resource: string) => {
   return response
 }
 
-const collectDefinitionLanguages = (level: LevelFile): string[] => {
-  const codes = new Set<string>()
+// 新的数据结构不需要复杂的多语言配置处理，直接返回即可
+const validateLevelData = (level: LevelFile): LevelFile => {
+  // 验证必要字段
+  if (!level.id || !level.language || !Array.isArray(level.language)) {
+    throw new Error(`关卡数据格式错误: ${level.id}`)
+  }
+
+  // 验证分组数据
+  if (!level.groups || !Array.isArray(level.groups)) {
+    throw new Error(`关卡分组数据错误: ${level.id}`)
+  }
+
+  // 验证每个分组的词牌数据
   level.groups.forEach((group) => {
+    if (!group.tiles || !Array.isArray(group.tiles)) {
+      throw new Error(`分组词牌数据错误: ${group.id}`)
+    }
+
     group.tiles.forEach((tile) => {
-      Object.keys(tile.translations ?? {}).forEach((code) => {
-        if (code) {
-          codes.add(code)
-        }
-      })
+      if (!tile.text || typeof tile.text !== 'object') {
+        throw new Error(`词牌文本数据错误: ${tile.id}`)
+      }
     })
   })
-  return Array.from(codes)
-}
-
-const normalizeLevelLanguageProfile = (level: LevelFile): LevelFile => {
-  const sampleTile = level.groups[0]?.tiles[0]
-  const fallbackGame = sampleTile?.languageCode ?? DEFAULT_GAME_LANGUAGE
-  const fallbackDefinitions = collectDefinitionLanguages(level)
-
-  const profile = level.languageProfile ?? DEFAULT_LEVEL_LANGUAGE_PROFILE
-  const gameDefault = profile.game?.default ?? fallbackGame
-  const gameOptions =
-    profile.game?.options?.length && profile.game.options.includes(gameDefault)
-      ? profile.game.options
-      : [gameDefault]
-
-  const definitionOptions =
-    profile.definitions?.options?.length && profile.definitions.options.length > 0
-      ? profile.definitions.options
-      : fallbackDefinitions.length
-      ? fallbackDefinitions
-      : DEFAULT_DEFINITION_LANGUAGES
-
-  let definitionDefaults =
-    profile.definitions?.defaults?.filter((code) => definitionOptions.includes(code)) ??
-    fallbackDefinitions.slice(0, Math.max(1, Math.min(2, fallbackDefinitions.length)))
-  if (!definitionDefaults.length) {
-    definitionDefaults = definitionOptions.slice(0, 1)
-  }
-  if (!definitionDefaults.length) {
-    definitionDefaults = [...DEFAULT_DEFINITION_LANGUAGES]
-  }
-
-  level.languageProfile = {
-    game: {
-      default: gameDefault,
-      options: gameOptions,
-    },
-    definitions: {
-      defaults: definitionDefaults.slice(0, MAX_DEFINITION_LANGUAGES),
-      options: definitionOptions,
-      min: profile.definitions?.min ?? MIN_DEFINITION_LANGUAGES,
-      max: profile.definitions?.max ?? MAX_DEFINITION_LANGUAGES,
-    },
-  }
 
   return level
 }
@@ -100,7 +62,7 @@ export const fetchLevelData = async (file: string): Promise<LevelFile> => {
   const resourcePath = `/levels/${file}`
   const response = await ensureResponse(await fetch(resourcePath, { cache: 'no-cache' }), resourcePath)
   const payload = (await response.json()) as LevelFile
-  const normalized = normalizeLevelLanguageProfile(payload)
-  levelCache.set(file, normalized)
-  return normalized
+  const validated = validateLevelData(payload)
+  levelCache.set(file, validated)
+  return validated
 }

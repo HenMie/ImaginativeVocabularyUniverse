@@ -19,18 +19,20 @@ import {
   formatLevelTitle,
 } from '../constants/levels'
 import { getRewardsForDifficulty } from '../constants/levels'
-import { getTileDisplayText, pickTranslation, resolveEffectiveLanguages } from '../utils/translation'
+import { getTileDisplayText, pickTranslation, getCategoryText, getTileHintText } from '../utils/translation'
+import type { TranslationMap } from '../types/language'
 
 type ToolType = 'group' | 'theme' | 'assemble' | 'verify'
 type ToolDialogStage = 'preview' | 'result'
 
+// 为了向后兼容，保持现有的返回结构，但在内部使用多语言数据
 type ToolResult =
-  | { type: 'group'; category: string; sample?: { text?: string; translation?: string } }
-  | { type: 'theme'; topics: string[] }
+  | { type: 'group'; category: TranslationMap; sample?: { text: TranslationMap; translation: string } }
+  | { type: 'theme'; topics: TranslationMap[] }
   | {
       type: 'assemble'
-      category: string
-      words: { id: string; text?: string; translation?: string }[]
+      category: TranslationMap
+      words: { id: string; text: TranslationMap; translation: string }[]
     }
 
 interface ToolDialogState {
@@ -63,11 +65,6 @@ const TOOL_CONFIG: Record<ToolType, { title: string; description: string; costKe
 }
 
 const TOOL_ORDER: ToolType[] = ['group', 'theme', 'assemble', 'verify']
-
-const resolvePrimaryTranslation = (
-  translations: Record<string, string>,
-  preferredLanguages?: string[],
-) => pickTranslation(translations, preferredLanguages?.[0], preferredLanguages?.slice(1))
 
 export const LevelPlay = () => {
   const { levelId } = useParams<{ levelId: string }>()
@@ -117,11 +114,20 @@ export const LevelPlay = () => {
   const seenTutorials = useProgressStore((state) => state.progress.seenTutorials)
   const playerProgress = useProgressStore((state) => state.progress)
   const languagePreferences = useProgressStore((state) => state.progress.languagePreferences)
-  const languageProfile = level?.languageProfile
-  const { game: gameLanguage, definitions: definitionLanguages } = useMemo(
-    () => resolveEffectiveLanguages(languageProfile, languagePreferences),
-    [languageProfile, languagePreferences],
-  )
+  // 简化语言处理：直接使用用户偏好，确保关卡支持该语言
+  const gameLanguage = useMemo(() => {
+    const preferred = languagePreferences.game
+    // 如果关卡支持用户偏好语言，则使用它，否则使用关卡默认支持的第一种语言
+    return level?.language?.includes(preferred) ? preferred : level?.language?.[0] || 'ko'
+  }, [languagePreferences.game, level?.language])
+
+  const definitionLanguages = useMemo(() => {
+    const preferred = languagePreferences.definitions
+    // 过滤出关卡支持的语言
+    const supported = preferred?.filter(lang => level?.language?.includes(lang)) || []
+    // 如果没有支持的语言，使用关卡支持的前两种语言
+    return supported.length > 0 ? supported : (level?.language?.slice(0, 2) || ['zh'])
+  }, [languagePreferences.definitions, level?.language])
   const primaryDefinitionLanguage = definitionLanguages[0]
   const debugMode = useProgressStore((state) => state.debugMode)
   const isLevelUnlocked = useProgressStore((state) => state.isLevelUnlocked)
@@ -373,11 +379,12 @@ export const LevelPlay = () => {
     { key: 'verify', label: '查验', value: hints.verify },
   ]
 
-  const title = levelId ? formatLevelTitle(levelId) : level?.name ?? levelMeta?.name ?? '关卡'
+  const title = levelId ? formatLevelTitle(levelId) : levelMeta?.name ?? '关卡'
 
   const getGroupCategory = (groupId?: string) => {
     if (!groupId || !level) return '同组'
-    return level.groups.find((group) => group.id === groupId)?.category ?? '同组'
+    const category = level.groups.find((group) => group.id === groupId)?.category
+    return category ? getCategoryText(category, gameLanguage) : '同组'
   }
 
   const getToolCost = (type: ToolType) => {
@@ -451,7 +458,7 @@ export const LevelPlay = () => {
           sample: result.sample,
         },
       })
-      setMessage(`已为主题「${result.category}」着色，快去找齐一行！`)
+      setMessage(`已为主题「${getCategoryText(result.category, gameLanguage)}」着色，快去找齐一行！`)
       return
     }
 
@@ -476,7 +483,7 @@ export const LevelPlay = () => {
           topics: result.topics,
         },
       })
-      setMessage(`给你两个灵感：${result.topics.join(' · ')}`)
+      setMessage(`给你两个灵感：${result.topics.map(topic => getCategoryText(topic, gameLanguage)).join(' · ')}`)
       return
     }
 
@@ -499,7 +506,7 @@ export const LevelPlay = () => {
           id: tile.id,
           text: tile.text,
           translation: pickTranslation(
-            tile.translations,
+            tile.text,
             primaryDefinitionLanguage,
             definitionLanguages.slice(1),
           ),
@@ -511,7 +518,7 @@ export const LevelPlay = () => {
             id: tile!.instanceId,
             text: tile!.data.text,
             translation: pickTranslation(
-              tile!.data.translations,
+              tile!.data.text,
               primaryDefinitionLanguage,
               definitionLanguages.slice(1),
             ),
@@ -526,7 +533,7 @@ export const LevelPlay = () => {
           words,
         },
       })
-      setMessage(`主题「${result.category}」的词块已点亮`)
+      setMessage(`主题「${getCategoryText(result.category, gameLanguage)}」的词块已点亮`)
       return
     }
 
@@ -809,15 +816,15 @@ export const LevelPlay = () => {
                   <div className="mt-0.5 text-2xl font-semibold text-slate-800">
                     {activeTileDisplayText}
                   </div>
-                  {activeTile.data.languageCode !== gameLanguage && activeTile.data.text && (
+                  {activeTile.data.text && activeTile.data.text[gameLanguage] && activeTileDisplayText !== activeTile.data.text[gameLanguage] && (
                     <div className="text-xs text-slate-500">
-                      原文（{activeTile.data.languageCode.toUpperCase()}）：{activeTile.data.text}
+                      {gameLanguage.toUpperCase()}：{activeTile.data.text[gameLanguage]}
                     </div>
                   )}
                 </div>
                 <div className="space-y-1.5">
                   {definitionLanguages.map((lang) => {
-                    const text = activeTile.data.translations?.[lang]
+                    const text = activeTile.data.text?.[lang]
                     const isPreferred = lang === primaryDefinitionLanguage
                     return (
                       <div
@@ -841,7 +848,7 @@ export const LevelPlay = () => {
                 </div>
                 {activeTile.data.hint && (
                   <div className="rounded-xl bg-yellow-100/70 px-2.5 py-1.5 text-sm text-yellow-700">
-                    提示：{activeTile.data.hint}
+                    提示：{getTileHintText(activeTile.data, gameLanguage)}
                   </div>
                 )}
               </>
@@ -964,18 +971,19 @@ export const LevelPlay = () => {
                           <div className="flex flex-wrap items-center justify-between gap-2">
                             <div>
                               <div className="text-[10px] uppercase tracking-wide opacity-75 sm:text-xs">主题</div>
-                              <div className="text-base font-semibold sm:text-lg">{group.category}</div>
+                              <div className="text-base font-semibold sm:text-lg">{getCategoryText(group.category, gameLanguage)}</div>
                             </div>
                           </div>
                           <div className="grid grid-cols-2 gap-1.5 sm:gap-2.5">
                             {group.tiles.map((tile) => {
-                              const primaryTranslation = resolvePrimaryTranslation(
-                                tile.translations,
-                                definitionLanguages,
+                              const primaryTranslation = pickTranslation(
+                                tile.text,
+                                primaryDefinitionLanguage,
+                                definitionLanguages.slice(1),
                               )
-                              const headline = tile.text ?? primaryTranslation
+                              const headlineText = pickTranslation(tile.text, gameLanguage)
                               const secondary =
-                                tile.text && primaryTranslation !== '—' ? primaryTranslation : undefined
+                                headlineText !== primaryTranslation && primaryTranslation !== '—' ? primaryTranslation : undefined
                               return (
                                 <div
                                   key={tile.id}
@@ -987,18 +995,18 @@ export const LevelPlay = () => {
                                   }}
                                 >
                                   <span className="text-sm font-semibold sm:text-base" style={{ color: preset?.text }}>
-                                    {headline}
+                                    {headlineText}
                                   </span>
                                   {secondary && (
                                     <span className="text-xs sm:text-sm" style={{ color: preset?.text ?? '#475569', opacity: 0.8 }}>
                                       {secondary}
                                     </span>
                                   )}
-                                  {!tile.text && primaryTranslation === '—' && (
+                                  {primaryTranslation === '—' && (
                                     <span className="text-[10px] opacity-70 sm:text-xs">该词牌为图片或特殊类型</span>
                                   )}
                                   {tile.hint && (
-                                    <span className="text-[10px] text-amber-600 sm:text-xs">提示：{tile.hint}</span>
+                                    <span className="text-[10px] text-amber-600 sm:text-xs">提示：{pickTranslation(tile.hint, gameLanguage)}</span>
                                   )}
                                 </div>
                               )
@@ -1077,11 +1085,11 @@ export const LevelPlay = () => {
                   <div className="space-y-3">
                     <div className="text-sm text-slate-600">取到了主题线索：</div>
                     <div className="rounded-2xl bg-primary/10 px-4 py-3 text-sm font-semibold text-primary">
-                      {toolDialog.result.category}
+                      {getCategoryText(toolDialog.result.category, gameLanguage)}
                     </div>
                     {toolDialog.result.sample?.text && (
                       <div className="rounded-2xl bg-slate-100 px-4 py-3 text-sm text-slate-600">
-                        例词：{toolDialog.result.sample.text}
+                        例词：{pickTranslation(toolDialog.result.sample.text, gameLanguage)}
                         {toolDialog.result.sample.translation
                           ? `（${toolDialog.result.sample.translation}）`
                           : ''}
@@ -1093,12 +1101,12 @@ export const LevelPlay = () => {
                   <div className="space-y-3">
                     <div className="text-sm text-slate-600">当前可能的主题：</div>
                     <div className="flex flex-wrap gap-2">
-                      {toolDialog.result.topics.map((topic) => (
+                      {toolDialog.result.topics.map((topic, index) => (
                         <span
-                          key={topic}
+                          key={`topic-${index}`}
                           className="rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-700"
                         >
-                          {topic}
+                          {getCategoryText(topic, gameLanguage)}
                         </span>
                       ))}
                     </div>
@@ -1107,7 +1115,7 @@ export const LevelPlay = () => {
                 {toolDialog.result.type === 'assemble' && (
                   <div className="space-y-3">
                     <div className="text-sm text-slate-600">
-                      主题「{toolDialog.result.category}」的全部词块：
+                      主题「{getCategoryText(toolDialog.result.category, gameLanguage)}」的全部词块：
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       {toolDialog.result.words.map((word) => (
@@ -1115,7 +1123,7 @@ export const LevelPlay = () => {
                           key={word.id}
                           className="rounded-2xl bg-emerald-50 px-3 py-2 text-sm text-emerald-700 shadow-inner"
                         >
-                          <div className="font-semibold">{word.text}</div>
+                          <div className="font-semibold">{pickTranslation(word.text, gameLanguage)}</div>
                           {word.translation && (
                             <div className="text-xs text-emerald-600">{word.translation}</div>
                           )}
@@ -1146,6 +1154,7 @@ export const LevelPlay = () => {
             ? level.tutorialSteps
             : ['拖动词块组成一行，即可完成分组', '点击词块可查看中文释义']
         }
+        gameLanguage={gameLanguage}
         onClose={() => {
           if (levelId) {
             markTutorialSeen(levelId)

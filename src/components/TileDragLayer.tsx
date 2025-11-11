@@ -8,7 +8,7 @@ import type { TileInstance } from '../utils/board'
 import { useSimpleTouchControl } from '../hooks/useSimpleTouchControl'
 import { useProgressStore } from '../store/progressStore'
 import { useSessionStore } from '../store/sessionStore'
-import { getTileDisplayText, resolveEffectiveLanguages } from '../utils/translation'
+import { getTileDisplayText } from '../utils/translation'
 
 interface DragLayerItem {
   instanceId: string
@@ -61,11 +61,12 @@ export const TileDragLayer = () => {
   }, [currentOffset, initialClientOffset, initialSourceOffset, item])
 
   const languagePreferences = useProgressStore((state) => state.progress.languagePreferences)
-  const languageProfile = useSessionStore((state) => state.level?.languageProfile)
-  const wordLanguage = useMemo(
-    () => resolveEffectiveLanguages(languageProfile, languagePreferences).game,
-    [languagePreferences, languageProfile],
-  )
+  const level = useSessionStore((state) => state.level)
+  const wordLanguage = useMemo(() => {
+    const preferred = languagePreferences.game
+    // 如果关卡支持用户偏好语言，则使用它，否则使用关卡默认支持的第一种语言
+    return level?.language?.includes(preferred) ? preferred : level?.language?.[0] || 'ko'
+  }, [languagePreferences.game, level?.language])
 
   if (!isDragging || itemType !== DND_ITEM_TYPES.TILE || !item || !style) {
     return null

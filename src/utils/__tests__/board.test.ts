@@ -10,40 +10,28 @@ import {
 
 const sampleLevel: LevelFile = {
   id: 'test',
-  name: 'Test Level',
   difficulty: 'easy',
-  version: 1,
-  languageProfile: {
-    game: {
-      default: 'ko',
-      options: ['ko'],
-    },
-    definitions: {
-      defaults: ['zh'],
-      options: ['zh'],
-      min: 1,
-      max: 3,
-    },
-  },
+  version: 2,
+  language: ['ko', 'zh'],
   groups: [
     {
       id: 'alpha',
-      category: 'Alpha',
+      category: { ko: '알파', zh: '阿尔法' },
       tiles: [
-        { id: 'a1', languageCode: 'ko', text: '가', translations: { zh: '甲' } },
-        { id: 'a2', languageCode: 'ko', text: '나', translations: { zh: '乙' } },
-        { id: 'a3', languageCode: 'ko', text: '다', translations: { zh: '丙' } },
-        { id: 'a4', languageCode: 'ko', text: '라', translations: { zh: '丁' } },
+        { id: 'a1', text: { ko: '가', zh: '甲' } },
+        { id: 'a2', text: { ko: '나', zh: '乙' } },
+        { id: 'a3', text: { ko: '다', zh: '丙' } },
+        { id: 'a4', text: { ko: '라', zh: '丁' } },
       ],
     },
     {
       id: 'beta',
-      category: 'Beta',
+      category: { ko: '베타', zh: '贝塔' },
       tiles: [
-        { id: 'b1', languageCode: 'ko', text: '마', translations: { zh: '戊' } },
-        { id: 'b2', languageCode: 'ko', text: '바', translations: { zh: '己' } },
-        { id: 'b3', languageCode: 'ko', text: '사', translations: { zh: '庚' } },
-        { id: 'b4', languageCode: 'ko', text: '아', translations: { zh: '辛' } },
+        { id: 'b1', text: { ko: '마', zh: '戊' } },
+        { id: 'b2', text: { ko: '바', zh: '己' } },
+        { id: 'b3', text: { ko: '사', zh: '庚' } },
+        { id: 'b4', text: { ko: '아', zh: '辛' } },
       ],
     },
   ],
@@ -77,6 +65,6 @@ describe('board utilities', () => {
 
   it('builds group lookup', () => {
     const map = groupLookup(sampleLevel.groups)
-    expect(map.alpha.category).toBe('Alpha')
+    expect(map.alpha.category).toEqual({ ko: '알파', zh: '阿尔法' })
   })
 })

@@ -1,11 +1,5 @@
 import type { TranslationMap } from '../types/language'
-import type { TileDefinition, LevelLanguageProfile } from '../types/levels'
-import type { LanguagePreferences } from '../types/progress'
-import {
-  DEFAULT_DEFINITION_LANGUAGES,
-  MAX_DEFINITION_LANGUAGES,
-  MIN_DEFINITION_LANGUAGES,
-} from '../constants/languages'
+import type { TileDefinition } from '../types/levels'
 
 /**
  * Picks the best translation for the preferred language with graceful fallbacks.
@@ -33,75 +27,34 @@ export const pickTranslation = (
 
 /**
  * Returns the best text to display on a tile for the given game language.
+ * 适配新的数据结构，直接从 text 字段获取多语言文本
  */
 export const getTileDisplayText = (
-  tile: Pick<TileDefinition, 'text' | 'languageCode' | 'translations'>,
+  tile: Pick<TileDefinition, 'text'>,
   preferredLanguage?: string,
 ): string => {
   if (!tile) return '—'
-  if (preferredLanguage && preferredLanguage === tile.languageCode && tile.text) {
-    return tile.text
-  }
-  if (preferredLanguage && preferredLanguage !== tile.languageCode) {
-    const alt = tile.translations?.[preferredLanguage]
-    if (alt) {
-      return alt
-    }
-  }
-  if (tile.text) {
-    return tile.text
-  }
-  return pickTranslation(tile.translations, preferredLanguage)
+  return pickTranslation(tile.text, preferredLanguage)
 }
 
-export const resolveEffectiveLanguages = (
-  profile: LevelLanguageProfile | undefined,
-  preferences: LanguagePreferences,
-): { game: string; definitions: string[] } => {
-  if (!profile) {
-    return {
-      game: preferences.game,
-      definitions: preferences.definitions.length
-        ? preferences.definitions
-        : [...DEFAULT_DEFINITION_LANGUAGES],
-    }
-  }
-  const allowedGame = profile.game.options?.length ? profile.game.options : [profile.game.default]
-  const safeGame = allowedGame.includes(preferences.game) ? preferences.game : profile.game.default
-
-  const allowedDefinitions =
-    profile.definitions.options?.length && profile.definitions.options.length > 0
-      ? profile.definitions.options
-      : preferences.definitions
-  const filteredDefinitions = preferences.definitions.filter((code) =>
-    allowedDefinitions.includes(code),
-  )
-  let baseDefinitions =
-    filteredDefinitions.length > 0
-      ? filteredDefinitions
-      : profile.definitions.defaults?.filter((code) => allowedDefinitions.includes(code)) ??
-        allowedDefinitions.slice(0, profile.definitions.min ?? MIN_DEFINITION_LANGUAGES)
-
-  if (!baseDefinitions.length) {
-    baseDefinitions = allowedDefinitions.length
-      ? allowedDefinitions
-      : [...DEFAULT_DEFINITION_LANGUAGES]
-  }
-
-  const minDefinitions = profile.definitions.min ?? MIN_DEFINITION_LANGUAGES
-  if (baseDefinitions.length < minDefinitions) {
-    const extras = allowedDefinitions.filter((code) => !baseDefinitions.includes(code))
-    baseDefinitions = [...baseDefinitions, ...extras]
-  }
-  if (!baseDefinitions.length) {
-    baseDefinitions = [...DEFAULT_DEFINITION_LANGUAGES]
-  }
-  const maxDefinitions = profile.definitions.max ?? MAX_DEFINITION_LANGUAGES
-  const limitedDefinitions =
-    baseDefinitions.length > maxDefinitions ? baseDefinitions.slice(0, maxDefinitions) : baseDefinitions
-
-  return {
-    game: safeGame,
-    definitions: limitedDefinitions,
-  }
+/**
+ * 获取词牌的提示文本
+ */
+export const getTileHintText = (
+  tile: Pick<TileDefinition, 'hint'>,
+  preferredLanguage?: string,
+): string => {
+  if (!tile || !tile.hint) return ''
+  return pickTranslation(tile.hint, preferredLanguage)
 }
+
+/**
+ * 获取分组的类别名称
+ */
+export const getCategoryText = (
+  category: TranslationMap,
+  preferredLanguage?: string,
+): string => {
+  return pickTranslation(category, preferredLanguage)
+}
+

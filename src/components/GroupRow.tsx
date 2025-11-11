@@ -1,7 +1,7 @@
 ﻿import type { GroupColorPreset } from '../constants/groupColors'
 import type { CompletedGroup } from '../utils/board'
 import { useEffect, useRef } from 'react'
-import { getTileDisplayText, pickTranslation } from '../utils/translation'
+import { getTileDisplayText, pickTranslation, getCategoryText } from '../utils/translation'
 
 interface GroupRowProps {
   group: CompletedGroup
@@ -55,7 +55,7 @@ export const GroupRow = ({
           className="rounded-full px-2.5 py-0.5 text-xs font-semibold"
           style={{ backgroundColor: badgeBg, color: badgeText }}
         >
-          {group.group.category}
+          {getCategoryText(group.group.category, wordLanguage)}
         </span>
         <span className="text-[10px] text-slate-500">
           {new Date(group.completedAt).toLocaleTimeString()}
@@ -70,7 +70,7 @@ export const GroupRow = ({
           >
             <div className="text-sm font-semibold">{getTileDisplayText(tile.data, wordLanguage)}</div>
             <div className="text-xs text-slate-500">
-              {pickTranslation(tile.data.translations, definitionLanguages?.[0])}
+              {pickTranslation(tile.data.text, definitionLanguages?.[0])}
             </div>
           </div>
         ))}

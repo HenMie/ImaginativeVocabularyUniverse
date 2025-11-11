@@ -1,6 +1,6 @@
 import type { GroupColorPreset } from '../constants/groupColors'
 import type { CompletedGroup } from '../utils/board'
-import { getTileDisplayText } from '../utils/translation'
+import { getTileDisplayText, getCategoryText } from '../utils/translation'
 
 interface CompletedRowProps {
   group: CompletedGroup
@@ -30,7 +30,7 @@ export const CompletedRow = ({ group, colorPreset, columns, wordLanguage }: Comp
           className="rounded-full px-3 py-1 text-xs font-semibold"
           style={{ backgroundColor: badgeBg, color: badgeText }}
         >
-          {group.group.category}
+          {getCategoryText(group.group.category, wordLanguage)}
         </span>
       </div>
       <div className="flex flex-1 items-center justify-around gap-1">
