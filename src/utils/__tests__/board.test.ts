@@ -13,7 +13,18 @@ const sampleLevel: LevelFile = {
   name: 'Test Level',
   difficulty: 'easy',
   version: 1,
-  languageCodes: ['ko', 'zh'],
+  languageProfile: {
+    game: {
+      default: 'ko',
+      options: ['ko'],
+    },
+    definitions: {
+      defaults: ['zh'],
+      options: ['zh'],
+      min: 1,
+      max: 3,
+    },
+  },
   groups: [
     {
       id: 'alpha',
@@ -69,4 +80,3 @@ describe('board utilities', () => {
     expect(map.alpha.category).toBe('Alpha')
   })
 })
-

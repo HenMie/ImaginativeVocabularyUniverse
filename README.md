@@ -12,7 +12,7 @@
 
 - 🎮 **拖拽交互**：基于 React DnD 的流畅拖拽体验，支持桌面和触摸设备
 - 💰 **经济系统**：金币奖励与提示消费机制，策略性使用游戏资源
-- 🌍 **多语言支持**：内置韩语、中文、英语支持，可扩展其他语言
+- 🌍 **多语言支持**：内置韩/中/英/日四种语言，可分别选择“游戏语言”和“释义语言”组合游玩
 - 💾 **本地存档**：支持进度保存和导入导出功能
 - 📱 **PWA 支持**：可安装为桌面应用，支持离线使用
 - 🎨 **响应式设计**：基于 TailwindCSS 的美观界面，适配各种设备
@@ -149,7 +149,8 @@ e2e/                   # Playwright 端到端测试
 - **上下文提示**：根据当前游戏状态提供相关帮助信息
 
 ### 语言支持
-- **多语言配置**：内置韩语、中文、英语支持，可扩展其他语言
+- **多语言配置**：内置韩语、中文、英语、日语支持，每个关卡可配置支持的语言列表
+- **原生多语言数据**：主题分类和词汇文本直接以多语言对象形式存储，支持灵活的语言切换
 - **TTS 语音**：集成 Web Speech API 实现词汇朗读
 - **字体优化**：为不同语言配置最佳显示字体
 - **RTL 支持**：预留从右到左语言的显示支持
@@ -162,7 +163,7 @@ e2e/                   # Playwright 端到端测试
   - 简单关卡：10 个
   - 中等关卡：6 个
   - 困难关卡：4 个
-- **支持语言**：韩语、中文、英语
+- **支持语言**：韩语、中文、英语、日语
 - **词牌总数**：800+ 个词汇条目
 - **主题分组**：涵盖日常生活、学习、工作等多个领域
 
@@ -209,39 +210,58 @@ e2e/                   # Playwright 端到端测试
 
 ### 2. 关卡文件（如 `public/levels/level-001.json`）
 
-每个关卡文件遵循 `LevelFile` 接口：
+每个关卡文件遵循 `LevelFile` 接口（版本 2）：
 
 - 元数据段
-  - `id`、`name`、`difficulty`：需与索引保持一致。
-  - `version`：关卡数据版本（便于未来迁移）。
-  - `languageCodes`：本关涉及的语言代码列表，应与 `languages.json` 中的 `code` 对齐。
-  - `tutorialSteps`：可选字符串数组，定义首玩时的提示文案。
+  - `id`、`difficulty`：需与索引保持一致。
+  - `version`：关卡数据版本，当前为 `2`。
+  - `language`：数组，定义本关支持的语言代码（如 `["ko", "zh", "en", "ja"]`）。
+  - `tutorialSteps`：可选数组，每个元素为多语言对象，定义首玩时的提示文案。
   - `board.columns`：可选，重写默认列数（默认 4；用于非 4×4 词场或特殊布局）。
 - `groups`：主题分组数组，每组最终对应一行需要排列到位的四个词牌。
 
 典型结构：
 
-```1:41:public/levels/level-001.json
+```1:72:public/levels/level-001.json
 {
   "id": "level-001",
-  "name": "关卡1",
   "difficulty": "easy",
-  "version": 1,
-  "languageCodes": ["ko", "zh"],
-  "tutorialSteps": ["拖动四个词牌排成一行即可分组", "点击词牌可查看释义"],
+  "version": 2,
+  "language": ["ko", "zh", "en", "ja"],
+  "tutorialSteps": [
+    {
+      "ko": "카드를 네 장 일렬로 드래그하면 그룹이 완성돼요。",
+      "zh": "拖动四个词牌排成一行即可分组。",
+      "en": "Drag four tiles into a row to form a group.",
+      "ja": "タイルを4枚一列にドラッグするとグループになります。"
+    },
+    {
+      "ko": "타일을 탭하면 뜻을 볼 수 있어요。",
+      "zh": "点击词牌可查看释义。",
+      "en": "Tap a tile to view its definition.",
+      "ja": "タイルをタップすると意味を確認できます。"
+    }
+  ],
   "groups": [
     {
       "id": "drinks",
-      "category": "饮料",
+      "category": {
+        "ko": "음료",
+        "zh": "饮料",
+        "en": "drinks",
+        "ja": "飲み物"
+      },
       "colorPreset": "lilac",
       "tiles": [
         {
           "id": "milk",
-          "languageCode": "ko",
-          "text": "우유",
-          "translations": { "zh": "牛奶" }
-        },
-        { "...": "..." }
+          "text": {
+            "ko": "우유",
+            "zh": "牛奶",
+            "en": "milk",
+            "ja": "牛乳"
+          }
+        }
       ]
     }
   ]
@@ -251,25 +271,25 @@ e2e/                   # Playwright 端到端测试
 ### 3. 分组与词牌字段
 
 - `group.id`：全局唯一，作为完成记录、颜色标识的键值。
-- `group.category`：显示给玩家的主题名称。
+- `group.category`：多语言对象，键为语言代码（如 `ko`、`zh`、`en`、`ja`），值为对应语言的主题名称。必须包含 `language` 数组中声明的所有语言。
 - `group.colorPreset`：引用 `constants/groupColors.ts` 中的预设 ID，会影响拖拽着色、完成行展示；如果省略，系统会按组索引自动分配颜色。
 
 词牌 (`tiles`) 遵循 `TileDefinition`：
 
 - `id`：组内唯一词牌标识。
-- `languageCode`：原文语言代码，必须包含在本关 `languageCodes` 中。
-- `text`：实际展示内容。
-- `hint`：可选，显示在右侧详情面板的额外线索。
-- `translations`：字典，键为语言代码，值为释义；最少提供中文释义（`"zh"`），也可以同列多语。
+- `text`：多语言对象，键为语言代码，值为对应语言的词汇文本。必须包含 `language` 数组中声明的所有语言。
+- `hint`：可选，多语言对象，显示在右侧详情面板的额外线索。
 
 ### 4. 关卡编写流程建议
 
 1. 复制现有关卡 JSON，修改基础元信息与 `groups`。
 2. 保持每组词牌数量 = `board.columns`（默认 4），否则行匹配逻辑会检测失败。
-3. 确保所有 `languageCode` 均出现在关卡 `languageCodes` 与 `languages.json` 中。
-4. 更新 `public/levels/index.json`，追加新的 `levels` 项；按目标顺序插入，并设置 `difficulty`。
-5. 若新增颜色预设，在 `constants/groupColors.ts` 添加；`colorPreset` 不要引用不存在的 ID。
-6. 本地运行 `npm run dev` 验证显示、拖拽、提示；必要时补充 Vitest/Playwright 覆盖。
+3. 确保所有语言代码均出现在关卡的 `language` 数组和 `public/languages.json` 中。
+4. 为每个 `category` 和 `text` 提供完整的多语言映射，包含 `language` 数组中声明的所有语言。
+5. `tutorialSteps` 如提供，每个步骤也需包含完整的多语言映射。
+6. 更新 `public/levels/index.json`，追加新的 `levels` 项；按目标顺序插入，并设置 `difficulty`。
+7. 若新增颜色预设，在 `constants/groupColors.ts` 添加；`colorPreset` 不要引用不存在的 ID。
+8. 本地运行 `npm run dev` 验证显示、拖拽、提示；必要时补充 Vitest/Playwright 覆盖。
 
 ## 🧪 测试策略
 
@@ -364,16 +384,18 @@ npm install --save-dev gh-pages
 
 ### 添加新关卡
 1. 复制现有关卡文件模板
-2. 修改 `id`、`name`、`difficulty` 等元信息
-3. 配置 `groups` 和 `tiles` 数据
-4. 更新 `public/levels/index.json` 添加新关卡条目
-5. 运行测试验证功能正常
+2. 修改 `id`、`difficulty`、`language` 等元信息
+3. 配置 `groups` 和 `tiles` 数据，确保所有 `category` 和 `text` 包含完整的多语言映射
+4. 如需要，添加 `tutorialSteps` 多语言提示
+5. 更新 `public/levels/index.json` 添加新关卡条目（包含 `name` 字段用于显示）
+6. 运行测试验证功能正常
 
 ### 扩展新语言
 1. 在 `public/languages.json` 中添加语言配置
-2. 创建对应语言的词汇数据文件
-3. 测试字体显示和 TTS 功能
-4. 更新语言切换界面
+2. 更新所有关卡文件的 `language` 数组，添加新语言代码
+3. 为所有关卡的 `category`、`text`、`tutorialSteps` 补充新语言的翻译
+4. 测试字体显示和 TTS 功能
+5. 更新语言切换界面
 
 ## 🤝 贡献指南
 
@@ -397,4 +419,3 @@ chore: 构建过程或辅助工具的变动
 ---
 
 **开始你的词汇学习之旅吧！** 🚀📚
-

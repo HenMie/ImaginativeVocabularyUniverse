@@ -1,13 +1,21 @@
-import type { GroupColorPreset } from '../constants/groupColors'
+﻿import type { GroupColorPreset } from '../constants/groupColors'
 import type { CompletedGroup } from '../utils/board'
 import { useEffect, useRef } from 'react'
+import { getTileDisplayText, pickTranslation } from '../utils/translation'
 
 interface GroupRowProps {
   group: CompletedGroup
   colorPreset?: GroupColorPreset
+  wordLanguage: string
+  definitionLanguages?: string[]
 }
 
-export const GroupRow = ({ group, colorPreset }: GroupRowProps) => {
+export const GroupRow = ({
+  group,
+  colorPreset,
+  wordLanguage,
+  definitionLanguages,
+}: GroupRowProps) => {
   const background = colorPreset?.rowBackground ?? '#E2E8F0'
   const border = colorPreset?.border ?? 'rgba(203,213,225,0.7)'
   const badgeBg = colorPreset?.badgeBackground ?? '#1E3A8A'
@@ -19,11 +27,9 @@ export const GroupRow = ({ group, colorPreset }: GroupRowProps) => {
     const element = ref.current
     if (!element || isVisible.current) return
 
-    // 简单的进入动画
     element.style.opacity = '0'
     element.style.transform = 'translateY(20px) scale(0.95)'
 
-    // 触发动画
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         element.style.transition = 'opacity 0.35s var(--ease-out-cubic), transform 0.35s var(--ease-out-cubic)'
@@ -41,7 +47,7 @@ export const GroupRow = ({ group, colorPreset }: GroupRowProps) => {
       style={{
         backgroundColor: background,
         borderColor: border,
-        transition: 'background-color 0.25s var(--ease-out-cubic), border-color 0.25s var(--ease-out-cubic)'
+        transition: 'background-color 0.25s var(--ease-out-cubic), border-color 0.25s var(--ease-out-cubic)',
       }}
     >
       <header className="flex items-center justify-between">
@@ -62,9 +68,9 @@ export const GroupRow = ({ group, colorPreset }: GroupRowProps) => {
             className="rounded-xl bg-white/80 px-2 py-1 text-center shadow-inner"
             style={{ color: colorPreset?.text ?? '#1F2937' }}
           >
-            <div className="text-sm font-semibold">{tile.data.text}</div>
+            <div className="text-sm font-semibold">{getTileDisplayText(tile.data, wordLanguage)}</div>
             <div className="text-xs text-slate-500">
-              {tile.data.translations.zh ?? Object.values(tile.data.translations)[0] ?? '——'}
+              {pickTranslation(tile.data.translations, definitionLanguages?.[0])}
             </div>
           </div>
         ))}
@@ -72,4 +78,3 @@ export const GroupRow = ({ group, colorPreset }: GroupRowProps) => {
     </div>
   )
 }
-

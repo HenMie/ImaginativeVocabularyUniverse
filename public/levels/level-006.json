@@ -1,197 +1,302 @@
 {
   "id": "level-006",
-  "name": "关卡6",
   "difficulty": "easy",
-  "version": 1,
-  "languageCodes": ["ko", "zh"],
+  "version": 2,
+  "language": [
+    "ko",
+    "zh",
+    "en",
+    "ja"
+  ],
+  "tutorialSteps": [],
   "groups": [
     {
       "id": "household-actions",
-      "category": "家务动作",
+      "category": {
+        "ko": "집안일 동작",
+        "zh": "家务动作",
+        "en": "household chores",
+        "ja": "家事の動作"
+      },
       "colorPreset": "lilac",
       "tiles": [
         {
           "id": "laundry",
-          "languageCode": "ko",
-          "text": "빨래",
-          "translations": { "zh": "洗衣" }
+          "text": {
+            "ko": "빨래",
+            "zh": "洗衣",
+            "en": "Laundry",
+            "ja": "ランドリー"
+          }
         },
         {
           "id": "cleaning",
-          "languageCode": "ko",
-          "text": "청소",
-          "translations": { "zh": "打扫" }
+          "text": {
+            "ko": "청소",
+            "zh": "打扫",
+            "en": "clean",
+            "ja": "クリーン"
+          }
         },
         {
           "id": "dishwashing",
-          "languageCode": "ko",
-          "text": "설거지",
-          "translations": { "zh": "洗碗" }
+          "text": {
+            "ko": "설거지",
+            "zh": "洗碗",
+            "en": "do the washing up",
+            "ja": "食器を洗う"
+          }
         },
         {
           "id": "organizing",
-          "languageCode": "ko",
-          "text": "정리",
-          "translations": { "zh": "整理" }
+          "text": {
+            "ko": "정리",
+            "zh": "整理",
+            "en": "tidy",
+            "ja": "きちんとした"
+          }
         }
       ]
     },
     {
       "id": "study-supplies",
-      "category": "学习用品",
+      "category": {
+        "ko": "학습용품",
+        "zh": "学习用品",
+        "en": "study supplies",
+        "ja": "学習用品"
+      },
       "colorPreset": "mint",
       "tiles": [
         {
           "id": "pencil",
-          "languageCode": "ko",
-          "text": "연필",
-          "translations": { "zh": "铅笔" }
+          "text": {
+            "ko": "연필",
+            "zh": "铅笔",
+            "en": "pencil",
+            "ja": "鉛筆"
+          }
         },
         {
           "id": "eraser",
-          "languageCode": "ko",
-          "text": "지우개",
-          "translations": { "zh": "橡皮" }
+          "text": {
+            "ko": "지우개",
+            "zh": "橡皮",
+            "en": "eraser",
+            "ja": "消しゴム"
+          }
         },
         {
           "id": "notebook",
-          "languageCode": "ko",
-          "text": "공책",
-          "translations": { "zh": "笔记本" }
+          "text": {
+            "ko": "공책",
+            "zh": "笔记本",
+            "en": "notebook",
+            "ja": "ノート"
+          }
         },
         {
           "id": "ruler",
-          "languageCode": "ko",
-          "text": "자",
-          "translations": { "zh": "尺子" }
+          "text": {
+            "ko": "자",
+            "zh": "尺子",
+            "en": "ruler",
+            "ja": "ルーラー"
+          }
         }
       ]
     },
     {
       "id": "bodily-feelings",
-      "category": "身体感觉",
+      "category": {
+        "ko": "신체 감각",
+        "zh": "身体感觉",
+        "en": "bodily sensations",
+        "ja": "身体の感覚"
+      },
       "colorPreset": "sunset",
       "tiles": [
         {
           "id": "hungry",
-          "languageCode": "ko",
-          "text": "배고프다",
-          "translations": { "zh": "饿" }
+          "text": {
+            "ko": "배고프다",
+            "zh": "饿",
+            "en": "Hungry",
+            "ja": "お腹がすいた"
+          }
         },
         {
           "id": "thirsty",
-          "languageCode": "ko",
-          "text": "목마르다",
-          "translations": { "zh": "渴" }
+          "text": {
+            "ko": "목마르다",
+            "zh": "渴",
+            "en": "thirsty",
+            "ja": "喉が渇いた"
+          }
         },
         {
           "id": "tired",
-          "languageCode": "ko",
-          "text": "피곤하다",
-          "translations": { "zh": "累" }
+          "text": {
+            "ko": "피곤하다",
+            "zh": "累",
+            "en": "tired",
+            "ja": "疲れた"
+          }
         },
         {
           "id": "sick",
-          "languageCode": "ko",
-          "text": "아프다",
-          "translations": { "zh": "疼/生病" }
+          "text": {
+            "ko": "아프다",
+            "zh": "疼/生病",
+            "en": "Pain/sick",
+            "ja": "痛み/病気"
+          }
         }
       ]
     },
     {
       "id": "everyday-places",
-      "category": "日常地点",
+      "category": {
+        "ko": "일상 장소",
+        "zh": "日常地点",
+        "en": "everyday places",
+        "ja": "日常的な場所"
+      },
       "colorPreset": "rose",
       "tiles": [
         {
           "id": "bank",
-          "languageCode": "ko",
-          "text": "은행",
-          "translations": { "zh": "银行" }
+          "text": {
+            "ko": "은행",
+            "zh": "银行",
+            "en": "bank",
+            "ja": "銀行"
+          }
         },
         {
           "id": "pharmacy",
-          "languageCode": "ko",
-          "text": "약국",
-          "translations": { "zh": "药店" }
+          "text": {
+            "ko": "약국",
+            "zh": "药店",
+            "en": "pharmacy",
+            "ja": "薬局"
+          }
         },
         {
           "id": "library",
-          "languageCode": "ko",
-          "text": "도서관",
-          "translations": { "zh": "图书馆" }
+          "text": {
+            "ko": "도서관",
+            "zh": "图书馆",
+            "en": "library",
+            "ja": "図書館"
+          }
         },
         {
           "id": "post-office",
-          "languageCode": "ko",
-          "text": "우체국",
-          "translations": { "zh": "邮局" }
+          "text": {
+            "ko": "우체국",
+            "zh": "邮局",
+            "en": "post office",
+            "ja": "郵便局"
+          }
         }
       ]
     },
     {
       "id": "time-words",
-      "category": "时间词",
+      "category": {
+        "ko": "시간 표현",
+        "zh": "时间词",
+        "en": "time words",
+        "ja": "時間に関する語"
+      },
       "colorPreset": "sky",
       "tiles": [
         {
           "id": "yesterday",
-          "languageCode": "ko",
-          "text": "어제",
-          "translations": { "zh": "昨天" }
+          "text": {
+            "ko": "어제",
+            "zh": "昨天",
+            "en": "yesterday",
+            "ja": "昨日"
+          }
         },
         {
           "id": "today",
-          "languageCode": "ko",
-          "text": "오늘",
-          "translations": { "zh": "今天" }
+          "text": {
+            "ko": "오늘",
+            "zh": "今天",
+            "en": "today",
+            "ja": "今日"
+          }
         },
         {
           "id": "tomorrow",
-          "languageCode": "ko",
-          "text": "내일",
-          "translations": { "zh": "明天" }
+          "text": {
+            "ko": "내일",
+            "zh": "明天",
+            "en": "tomorrow",
+            "ja": "明日"
+          }
         },
         {
           "id": "day-after-tomorrow",
-          "languageCode": "ko",
-          "text": "모레",
-          "translations": { "zh": "后天" }
+          "text": {
+            "ko": "모레",
+            "zh": "后天",
+            "en": "the day after tomorrow",
+            "ja": "明後日"
+          }
         }
       ]
     },
     {
       "id": "common-foods",
-      "category": "常见食物",
+      "category": {
+        "ko": "일상 음식",
+        "zh": "常见食物",
+        "en": "everyday foods",
+        "ja": "日常の食べ物"
+      },
       "colorPreset": "purple",
       "tiles": [
         {
           "id": "gimbap",
-          "languageCode": "ko",
-          "text": "김밥",
-          "translations": { "zh": "紫菜包饭" }
+          "text": {
+            "ko": "김밥",
+            "zh": "紫菜包饭",
+            "en": "kimbap",
+            "ja": "キンパ"
+          }
         },
         {
           "id": "ramen",
-          "languageCode": "ko",
-          "text": "라면",
-          "translations": { "zh": "拉面" }
+          "text": {
+            "ko": "라면",
+            "zh": "拉面",
+            "en": "Hand-Pulled Noodle",
+            "ja": "手延べ麺"
+          }
         },
         {
           "id": "bulgogi",
-          "languageCode": "ko",
-          "text": "불고기",
-          "translations": { "zh": "烤肉" }
+          "text": {
+            "ko": "불고기",
+            "zh": "烤肉",
+            "en": "BBQ",
+            "ja": "バーベキュー"
+          }
         },
         {
           "id": "doenjang-stew",
-          "languageCode": "ko",
-          "text": "된장찌개",
-          "translations": { "zh": "大酱汤" }
+          "text": {
+            "ko": "된장찌개",
+            "zh": "大酱汤",
+            "en": "Miso soup",
+            "ja": "味噌汁"
+          }
         }
       ]
     }
   ]
 }
-
-

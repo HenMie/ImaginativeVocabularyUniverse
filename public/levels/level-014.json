@@ -1,76 +1,302 @@
 {
   "id": "level-014",
-  "name": "关卡14",
   "difficulty": "medium",
-  "version": 1,
-  "languageCodes": ["ko", "zh"],
+  "version": 2,
+  "language": [
+    "ko",
+    "zh",
+    "en",
+    "ja"
+  ],
+  "tutorialSteps": [],
   "groups": [
     {
       "id": "light-sources",
-      "category": "光源",
+      "category": {
+        "ko": "광원",
+        "zh": "光源",
+        "en": "light sources",
+        "ja": "光源"
+      },
       "colorPreset": "indigo",
       "tiles": [
-        { "id": "sun", "languageCode": "ko", "text": "태양", "translations": { "zh": "太阳" } },
-        { "id": "lamp", "languageCode": "ko", "text": "램프", "translations": { "zh": "灯" } },
-        { "id": "candle", "languageCode": "ko", "text": "촛불", "translations": { "zh": "蜡烛" } },
-        { "id": "flashlight", "languageCode": "ko", "text": "손전등", "translations": { "zh": "手电筒" } }
+        {
+          "id": "sun",
+          "text": {
+            "ko": "태양",
+            "zh": "太阳",
+            "en": "sun",
+            "ja": "太陽"
+          }
+        },
+        {
+          "id": "lamp",
+          "text": {
+            "ko": "램프",
+            "zh": "灯",
+            "en": "lamp",
+            "ja": "ランプ"
+          }
+        },
+        {
+          "id": "candle",
+          "text": {
+            "ko": "촛불",
+            "zh": "蜡烛",
+            "en": "Candle",
+            "ja": "キャンドル"
+          }
+        },
+        {
+          "id": "flashlight",
+          "text": {
+            "ko": "손전등",
+            "zh": "手电筒",
+            "en": "flashlight",
+            "ja": "懐中電灯"
+          }
+        }
       ]
     },
     {
       "id": "cooling-methods",
-      "category": "降温方式",
+      "category": {
+        "ko": "냉각 방법",
+        "zh": "降温方式",
+        "en": "cooling methods",
+        "ja": "冷却方法"
+      },
       "colorPreset": "orange",
       "tiles": [
-        { "id": "fan", "languageCode": "ko", "text": "선풍기", "translations": { "zh": "电风扇" } },
-        { "id": "air-conditioner", "languageCode": "ko", "text": "에어컨", "translations": { "zh": "空调" } },
-        { "id": "ice-water", "languageCode": "ko", "text": "얼음물", "translations": { "zh": "冰水" } },
-        { "id": "shade", "languageCode": "ko", "text": "그늘", "translations": { "zh": "阴凉处" } }
+        {
+          "id": "fan",
+          "text": {
+            "ko": "선풍기",
+            "zh": "电风扇",
+            "en": "electric fan",
+            "ja": "扇風機"
+          }
+        },
+        {
+          "id": "air-conditioner",
+          "text": {
+            "ko": "에어컨",
+            "zh": "空调",
+            "en": "air conditioner",
+            "ja": "エアコン"
+          }
+        },
+        {
+          "id": "ice-water",
+          "text": {
+            "ko": "얼음물",
+            "zh": "冰水",
+            "en": "ice water",
+            "ja": "氷水"
+          }
+        },
+        {
+          "id": "shade",
+          "text": {
+            "ko": "그늘",
+            "zh": "阴凉处",
+            "en": "shade",
+            "ja": "シェード"
+          }
+        }
       ]
     },
     {
       "id": "documentation",
-      "category": "证明文件",
+      "category": {
+        "ko": "증명 서류",
+        "zh": "证明文件",
+        "en": "proof documents",
+        "ja": "証明書類"
+      },
       "colorPreset": "gold",
       "tiles": [
-        { "id": "id-card", "languageCode": "ko", "text": "신분증", "translations": { "zh": "身份证" } },
-        { "id": "passport", "languageCode": "ko", "text": "여권", "translations": { "zh": "护照" } },
-        { "id": "license", "languageCode": "ko", "text": "면허증", "translations": { "zh": "执照" } },
-        { "id": "certificate", "languageCode": "ko", "text": "증명서", "translations": { "zh": "证明书" } }
+        {
+          "id": "id-card",
+          "text": {
+            "ko": "신분증",
+            "zh": "身份证",
+            "en": "ID card",
+            "ja": "IDカード"
+          }
+        },
+        {
+          "id": "passport",
+          "text": {
+            "ko": "여권",
+            "zh": "护照",
+            "en": "passport",
+            "ja": "パスポート"
+          }
+        },
+        {
+          "id": "license",
+          "text": {
+            "ko": "면허증",
+            "zh": "执照",
+            "en": "license",
+            "ja": "ライセンス"
+          }
+        },
+        {
+          "id": "certificate",
+          "text": {
+            "ko": "증명서",
+            "zh": "证明书",
+            "en": "certificate",
+            "ja": "証明書"
+          }
+        }
       ]
     },
     {
       "id": "connecting-tools",
-      "category": "连接工具",
+      "category": {
+        "ko": "연결 도구",
+        "zh": "连接工具",
+        "en": "connecting tools",
+        "ja": "接続ツール"
+      },
       "colorPreset": "teal",
       "tiles": [
-        { "id": "nail", "languageCode": "ko", "text": "못", "translations": { "zh": "钉子" } },
-        { "id": "screw", "languageCode": "ko", "text": "나사", "translations": { "zh": "螺丝" } },
-        { "id": "rope", "languageCode": "ko", "text": "밧줄", "translations": { "zh": "绳子" } },
-        { "id": "clip", "languageCode": "ko", "text": "클립", "translations": { "zh": "夹子" } }
+        {
+          "id": "nail",
+          "text": {
+            "ko": "못",
+            "zh": "钉子",
+            "en": "nail",
+            "ja": "釘"
+          }
+        },
+        {
+          "id": "screw",
+          "text": {
+            "ko": "나사",
+            "zh": "螺丝",
+            "en": "screw",
+            "ja": "スクリュー"
+          }
+        },
+        {
+          "id": "rope",
+          "text": {
+            "ko": "밧줄",
+            "zh": "绳子",
+            "en": "rope",
+            "ja": "ロープ"
+          }
+        },
+        {
+          "id": "clip",
+          "text": {
+            "ko": "클립",
+            "zh": "夹子",
+            "en": "clip",
+            "ja": "クリップ"
+          }
+        }
       ]
     },
     {
       "id": "texture-adjectives",
-      "category": "质感",
+      "category": {
+        "ko": "질감",
+        "zh": "质感",
+        "en": "textures",
+        "ja": "質感"
+      },
       "colorPreset": "emerald",
       "tiles": [
-        { "id": "soft", "languageCode": "ko", "text": "부드럽다", "translations": { "zh": "柔软" } },
-        { "id": "hard", "languageCode": "ko", "text": "딱딱하다", "translations": { "zh": "坚硬" } },
-        { "id": "rough", "languageCode": "ko", "text": "거칠다", "translations": { "zh": "粗糙" } },
-        { "id": "smooth", "languageCode": "ko", "text": "매끄럽다", "translations": { "zh": "光滑" } }
+        {
+          "id": "soft",
+          "text": {
+            "ko": "부드럽다",
+            "zh": "柔软",
+            "en": "soft",
+            "ja": "柔らかい"
+          }
+        },
+        {
+          "id": "hard",
+          "text": {
+            "ko": "딱딱하다",
+            "zh": "坚硬",
+            "en": "hard",
+            "ja": "難しい"
+          }
+        },
+        {
+          "id": "rough",
+          "text": {
+            "ko": "거칠다",
+            "zh": "粗糙",
+            "en": "Rough",
+            "ja": "粗い"
+          }
+        },
+        {
+          "id": "smooth",
+          "text": {
+            "ko": "매끄럽다",
+            "zh": "光滑",
+            "en": "smooth",
+            "ja": "スムーズ"
+          }
+        }
       ]
     },
     {
       "id": "preservation-methods",
-      "category": "保存方式",
+      "category": {
+        "ko": "보관 방법",
+        "zh": "保存方式",
+        "en": "storage methods",
+        "ja": "保存方法"
+      },
       "colorPreset": "rose",
       "tiles": [
-        { "id": "refrigerate", "languageCode": "ko", "text": "냉장", "translations": { "zh": "冷藏" } },
-        { "id": "freeze", "languageCode": "ko", "text": "냉동", "translations": { "zh": "冷冻" } },
-        { "id": "dry", "languageCode": "ko", "text": "건조", "translations": { "zh": "干燥" } },
-        { "id": "pickle", "languageCode": "ko", "text": "절임", "translations": { "zh": "腌制" } }
+        {
+          "id": "refrigerate",
+          "text": {
+            "ko": "냉장",
+            "zh": "冷藏",
+            "en": "refrigeration",
+            "ja": "冷凍"
+          }
+        },
+        {
+          "id": "freeze",
+          "text": {
+            "ko": "냉동",
+            "zh": "冷冻",
+            "en": "freezing",
+            "ja": "凍結する"
+          }
+        },
+        {
+          "id": "dry",
+          "text": {
+            "ko": "건조",
+            "zh": "干燥",
+            "en": "dry",
+            "ja": "ドライ"
+          }
+        },
+        {
+          "id": "pickle",
+          "text": {
+            "ko": "절임",
+            "zh": "腌制",
+            "en": "pickled",
+            "ja": "漬け物"
+          }
+        }
       ]
     }
   ]
 }
-

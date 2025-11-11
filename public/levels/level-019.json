@@ -1,76 +1,302 @@
 {
   "id": "level-019",
-  "name": "关卡19",
   "difficulty": "medium",
-  "version": 1,
-  "languageCodes": ["ko", "zh"],
+  "version": 2,
+  "language": [
+    "ko",
+    "zh",
+    "en",
+    "ja"
+  ],
+  "tutorialSteps": [],
   "groups": [
     {
       "id": "water-states",
-      "category": "水的形态",
+      "category": {
+        "ko": "물의 형태",
+        "zh": "水的形态",
+        "en": "forms of water",
+        "ja": "水の形態"
+      },
       "colorPreset": "indigo",
       "tiles": [
-        { "id": "liquid-water", "languageCode": "ko", "text": "물", "translations": { "zh": "水" } },
-        { "id": "ice", "languageCode": "ko", "text": "얼음", "translations": { "zh": "冰" } },
-        { "id": "steam", "languageCode": "ko", "text": "수증기", "translations": { "zh": "水蒸气" } },
-        { "id": "snow", "languageCode": "ko", "text": "눈", "translations": { "zh": "雪" } }
+        {
+          "id": "liquid-water",
+          "text": {
+            "ko": "물",
+            "zh": "水",
+            "en": "water",
+            "ja": "水"
+          }
+        },
+        {
+          "id": "ice",
+          "text": {
+            "ko": "얼음",
+            "zh": "冰",
+            "en": "ice",
+            "ja": "氷"
+          }
+        },
+        {
+          "id": "steam",
+          "text": {
+            "ko": "수증기",
+            "zh": "水蒸气",
+            "en": "water vapor",
+            "ja": "水蒸気"
+          }
+        },
+        {
+          "id": "snow",
+          "text": {
+            "ko": "눈",
+            "zh": "雪",
+            "en": "Snow",
+            "ja": "雪"
+          }
+        }
       ]
     },
     {
       "id": "communication-tools",
-      "category": "通讯工具",
+      "category": {
+        "ko": "통신 도구",
+        "zh": "通讯工具",
+        "en": "communication tools",
+        "ja": "通信手段"
+      },
       "colorPreset": "orange",
       "tiles": [
-        { "id": "letter", "languageCode": "ko", "text": "편지", "translations": { "zh": "信" } },
-        { "id": "phone-call", "languageCode": "ko", "text": "전화", "translations": { "zh": "电话" } },
-        { "id": "text-message", "languageCode": "ko", "text": "문자", "translations": { "zh": "短信" } },
-        { "id": "email", "languageCode": "ko", "text": "이메일", "translations": { "zh": "邮件" } }
+        {
+          "id": "letter",
+          "text": {
+            "ko": "편지",
+            "zh": "信",
+            "en": "letter",
+            "ja": "手紙"
+          }
+        },
+        {
+          "id": "phone-call",
+          "text": {
+            "ko": "전화",
+            "zh": "电话",
+            "en": "Telephone",
+            "ja": "電話"
+          }
+        },
+        {
+          "id": "text-message",
+          "text": {
+            "ko": "문자",
+            "zh": "短信",
+            "en": "Short message",
+            "ja": "ショートメッセージ"
+          }
+        },
+        {
+          "id": "email",
+          "text": {
+            "ko": "이메일",
+            "zh": "邮件",
+            "en": "mail",
+            "ja": "郵便"
+          }
+        }
       ]
     },
     {
       "id": "crowd-sizes",
-      "category": "人群规模",
+      "category": {
+        "ko": "인원 규모",
+        "zh": "人群规模",
+        "en": "group sizes",
+        "ja": "人数規模"
+      },
       "colorPreset": "gold",
       "tiles": [
-        { "id": "alone", "languageCode": "ko", "text": "혼자", "translations": { "zh": "独自" } },
-        { "id": "couple", "languageCode": "ko", "text": "둘이", "translations": { "zh": "两人" } },
-        { "id": "small-group", "languageCode": "ko", "text": "소수", "translations": { "zh": "小群" } },
-        { "id": "crowd", "languageCode": "ko", "text": "무리", "translations": { "zh": "一群人" } }
+        {
+          "id": "alone",
+          "text": {
+            "ko": "혼자",
+            "zh": "独自",
+            "en": "alone",
+            "ja": "一人で"
+          }
+        },
+        {
+          "id": "couple",
+          "text": {
+            "ko": "둘이",
+            "zh": "两人",
+            "en": "two people",
+            "ja": "二人"
+          }
+        },
+        {
+          "id": "small-group",
+          "text": {
+            "ko": "소수",
+            "zh": "小群",
+            "en": "small group",
+            "ja": "小グループ"
+          }
+        },
+        {
+          "id": "crowd",
+          "text": {
+            "ko": "무리",
+            "zh": "一群人",
+            "en": "a group of people",
+            "ja": "人々のグループ"
+          }
+        }
       ]
     },
     {
       "id": "decision-process",
-      "category": "决策过程",
+      "category": {
+        "ko": "의사 결정 과정",
+        "zh": "决策过程",
+        "en": "decision-making processes",
+        "ja": "意思決定プロセス"
+      },
       "colorPreset": "teal",
       "tiles": [
-        { "id": "consideration", "languageCode": "ko", "text": "고려", "translations": { "zh": "考虑" } },
-        { "id": "comparison", "languageCode": "ko", "text": "비교", "translations": { "zh": "比较" } },
-        { "id": "choice", "languageCode": "ko", "text": "선택", "translations": { "zh": "选择" } },
-        { "id": "determination", "languageCode": "ko", "text": "결정", "translations": { "zh": "决定" } }
+        {
+          "id": "consideration",
+          "text": {
+            "ko": "고려",
+            "zh": "考虑",
+            "en": "consider",
+            "ja": "考慮する"
+          }
+        },
+        {
+          "id": "comparison",
+          "text": {
+            "ko": "비교",
+            "zh": "比较",
+            "en": "Compare",
+            "ja": "比較する"
+          }
+        },
+        {
+          "id": "choice",
+          "text": {
+            "ko": "선택",
+            "zh": "选择",
+            "en": "choose",
+            "ja": "選ぶ"
+          }
+        },
+        {
+          "id": "determination",
+          "text": {
+            "ko": "결정",
+            "zh": "决定",
+            "en": "Decide",
+            "ja": "決める"
+          }
+        }
       ]
     },
     {
       "id": "payment-methods",
-      "category": "支付方式",
+      "category": {
+        "ko": "결제 방식",
+        "zh": "支付方式",
+        "en": "payment methods",
+        "ja": "支払い方法"
+      },
       "colorPreset": "emerald",
       "tiles": [
-        { "id": "cash", "languageCode": "ko", "text": "현금", "translations": { "zh": "现金" } },
-        { "id": "card", "languageCode": "ko", "text": "카드", "translations": { "zh": "卡" } },
-        { "id": "mobile-pay", "languageCode": "ko", "text": "모바일 결제", "translations": { "zh": "手机支付" } },
-        { "id": "installment", "languageCode": "ko", "text": "할부", "translations": { "zh": "分期" } }
+        {
+          "id": "cash",
+          "text": {
+            "ko": "현금",
+            "zh": "现金",
+            "en": "cash",
+            "ja": "現金"
+          }
+        },
+        {
+          "id": "card",
+          "text": {
+            "ko": "카드",
+            "zh": "卡",
+            "en": "Card",
+            "ja": "カード"
+          }
+        },
+        {
+          "id": "mobile-pay",
+          "text": {
+            "ko": "모바일 결제",
+            "zh": "手机支付",
+            "en": "Mobile payment",
+            "ja": "モバイル決済"
+          }
+        },
+        {
+          "id": "installment",
+          "text": {
+            "ko": "할부",
+            "zh": "分期",
+            "en": "installment",
+            "ja": "分割払い"
+          }
+        }
       ]
     },
     {
       "id": "temperature-feel",
-      "category": "温度感受",
+      "category": {
+        "ko": "온도 감각",
+        "zh": "温度感受",
+        "en": "temperature sensations",
+        "ja": "温度の感覚"
+      },
       "colorPreset": "rose",
       "tiles": [
-        { "id": "freezing", "languageCode": "ko", "text": "얼다", "translations": { "zh": "冻僵" } },
-        { "id": "cold", "languageCode": "ko", "text": "춥다", "translations": { "zh": "冷" } },
-        { "id": "hot", "languageCode": "ko", "text": "덥다", "translations": { "zh": "热" } },
-        { "id": "burning", "languageCode": "ko", "text": "뜨겁다", "translations": { "zh": "烫" } }
+        {
+          "id": "freezing",
+          "text": {
+            "ko": "얼다",
+            "zh": "冻僵",
+            "en": "frozen",
+            "ja": "凍った"
+          }
+        },
+        {
+          "id": "cold",
+          "text": {
+            "ko": "춥다",
+            "zh": "冷",
+            "en": "cold",
+            "ja": "寒い"
+          }
+        },
+        {
+          "id": "hot",
+          "text": {
+            "ko": "덥다",
+            "zh": "热",
+            "en": "hot",
+            "ja": "熱い"
+          }
+        },
+        {
+          "id": "burning",
+          "text": {
+            "ko": "뜨겁다",
+            "zh": "烫",
+            "en": "hot",
+            "ja": "熱い"
+          }
+        }
       ]
     }
   ]
 }
-

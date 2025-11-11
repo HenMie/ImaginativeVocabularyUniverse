@@ -1,13 +1,15 @@
 import type { GroupColorPreset } from '../constants/groupColors'
 import type { CompletedGroup } from '../utils/board'
+import { getTileDisplayText } from '../utils/translation'
 
 interface CompletedRowProps {
   group: CompletedGroup
   colorPreset?: GroupColorPreset
   columns: number
+  wordLanguage: string
 }
 
-export const CompletedRow = ({ group, colorPreset, columns }: CompletedRowProps) => {
+export const CompletedRow = ({ group, colorPreset, columns, wordLanguage }: CompletedRowProps) => {
   const background = colorPreset?.rowBackground ?? '#E2E8F0'
   const border = colorPreset?.border ?? 'rgba(203,213,225,0.7)'
   const badgeBg = colorPreset?.badgeBackground ?? '#1E3A8A'
@@ -38,7 +40,7 @@ export const CompletedRow = ({ group, colorPreset, columns }: CompletedRowProps)
             className="text-base font-semibold"
             style={{ color: textColor }}
           >
-            {tile.data.text ?? '——'}
+            {getTileDisplayText(tile.data, wordLanguage)}
           </span>
         ))}
       </div>

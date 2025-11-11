@@ -6,6 +6,9 @@ import { DND_ITEM_TYPES } from '../constants/dnd'
 import type { GroupColorPreset } from '../constants/groupColors'
 import type { TileInstance } from '../utils/board'
 import { useSimpleTouchControl } from '../hooks/useSimpleTouchControl'
+import { useProgressStore } from '../store/progressStore'
+import { useSessionStore } from '../store/sessionStore'
+import { getTileDisplayText, resolveEffectiveLanguages } from '../utils/translation'
 
 interface DragLayerItem {
   instanceId: string
@@ -57,12 +60,20 @@ export const TileDragLayer = () => {
     } satisfies CSSProperties
   }, [currentOffset, initialClientOffset, initialSourceOffset, item])
 
+  const languagePreferences = useProgressStore((state) => state.progress.languagePreferences)
+  const languageProfile = useSessionStore((state) => state.level?.languageProfile)
+  const wordLanguage = useMemo(
+    () => resolveEffectiveLanguages(languageProfile, languagePreferences).game,
+    [languagePreferences, languageProfile],
+  )
+
   if (!isDragging || itemType !== DND_ITEM_TYPES.TILE || !item || !style) {
     return null
   }
 
   const { tile, groupColor } = item
   const isCompleted = tile.status === 'completed'
+  const displayText = getTileDisplayText(tile.data, wordLanguage)
 
   const background = groupColor
     ? isCompleted
@@ -90,13 +101,8 @@ export const TileDragLayer = () => {
           transform: 'scale(1.05) rotate(1deg)',
         }}
       >
-        <span
-          className={clsx(
-            'px-0.5 text-balance',
-            (tile.data.text?.length ?? 0) > 6 && 'text-sm',
-          )}
-        >
-          {tile.data.text ?? '——'}
+        <span className={clsx('px-0.5 text-balance', displayText.length > 6 && 'text-sm')}>
+          {displayText}
         </span>
       </div>
     </div>

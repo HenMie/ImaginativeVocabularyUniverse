@@ -15,6 +15,7 @@ import {
   type MatchResult,
   type TileInstance,
 } from '../utils/board'
+import { pickTranslation } from '../utils/translation'
 
 export type HintType = 'group' | 'theme' | 'autoComplete' | 'verify'
 
@@ -527,6 +528,9 @@ export const useSessionStore = create<LevelSessionState>()(
           }
           const pickedTile = availableTiles[Math.floor(Math.random() * availableTiles.length)]
           const sampleTile = pickedTile.data
+          const definitionLanguages =
+            useProgressStore.getState().progress.languagePreferences.definitions
+          const preferredLanguage = definitionLanguages[0]
           const updatedRevealed = new Set(state.revealedCategories)
           if (group.category) {
             updatedRevealed.add(group.category)
@@ -542,7 +546,7 @@ export const useSessionStore = create<LevelSessionState>()(
               highlightedTileIds: [pickedTile.instanceId],
               highlightContext: 'hint',
               pendingRowInspection: false,
-            tileHighlightPresets: {},
+              tileHighlightPresets: {},
             },
             revealedCategories: Array.from(updatedRevealed),
           })
@@ -553,8 +557,7 @@ export const useSessionStore = create<LevelSessionState>()(
             category: group.category,
             sample: {
               text: sampleTile?.text,
-              translation:
-                sampleTile?.translations.zh ?? Object.values(sampleTile?.translations ?? {})[0],
+              translation: pickTranslation(sampleTile?.translations, preferredLanguage),
             },
           }
         },
@@ -822,4 +825,3 @@ export const useSessionStore = create<LevelSessionState>()(
     },
   ),
 )
-

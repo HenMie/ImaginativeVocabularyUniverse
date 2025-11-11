@@ -19,6 +19,7 @@ import {
   formatLevelTitle,
 } from '../constants/levels'
 import { getRewardsForDifficulty } from '../constants/levels'
+import { getTileDisplayText, pickTranslation, resolveEffectiveLanguages } from '../utils/translation'
 
 type ToolType = 'group' | 'theme' | 'assemble' | 'verify'
 type ToolDialogStage = 'preview' | 'result'
@@ -63,12 +64,10 @@ const TOOL_CONFIG: Record<ToolType, { title: string; description: string; costKe
 
 const TOOL_ORDER: ToolType[] = ['group', 'theme', 'assemble', 'verify']
 
-const resolvePrimaryTranslation = (translations: Record<string, string>) => {
-  if (!translations) return '—'
-  if (translations.zh) return translations.zh
-  const entries = Object.entries(translations)
-  return entries.length > 0 ? entries[0][1] : '—'
-}
+const resolvePrimaryTranslation = (
+  translations: Record<string, string>,
+  preferredLanguages?: string[],
+) => pickTranslation(translations, preferredLanguages?.[0], preferredLanguages?.slice(1))
 
 export const LevelPlay = () => {
   const { levelId } = useParams<{ levelId: string }>()
@@ -117,8 +116,16 @@ export const LevelPlay = () => {
   const markTutorialSeen = useProgressStore((state) => state.markTutorialSeen)
   const seenTutorials = useProgressStore((state) => state.progress.seenTutorials)
   const playerProgress = useProgressStore((state) => state.progress)
+  const languagePreferences = useProgressStore((state) => state.progress.languagePreferences)
+  const languageProfile = level?.languageProfile
+  const { game: gameLanguage, definitions: definitionLanguages } = useMemo(
+    () => resolveEffectiveLanguages(languageProfile, languagePreferences),
+    [languageProfile, languagePreferences],
+  )
+  const primaryDefinitionLanguage = definitionLanguages[0]
   const debugMode = useProgressStore((state) => state.debugMode)
   const isLevelUnlocked = useProgressStore((state) => state.isLevelUnlocked)
+  const activeTileDisplayText = activeTile ? getTileDisplayText(activeTile.data, gameLanguage) : null
 
   const previousSnapshot = useMemo(
     () => (levelId ? playerProgress.levelSnapshots[levelId] : undefined),
@@ -491,7 +498,11 @@ export const LevelPlay = () => {
         targetGroup?.tiles.map((tile) => ({
           id: tile.id,
           text: tile.text,
-          translation: tile.translations.zh ?? Object.values(tile.translations)[0],
+          translation: pickTranslation(
+            tile.translations,
+            primaryDefinitionLanguage,
+            definitionLanguages.slice(1),
+          ),
         })) ??
         result.tileIds
           .map((id) => tiles.find((tile) => tile.instanceId === id))
@@ -499,8 +510,11 @@ export const LevelPlay = () => {
           .map((tile) => ({
             id: tile!.instanceId,
             text: tile!.data.text,
-            translation:
-              tile!.data.translations.zh ?? Object.values(tile!.data.translations)[0],
+            translation: pickTranslation(
+              tile!.data.translations,
+              primaryDefinitionLanguage,
+              definitionLanguages.slice(1),
+            ),
           }))
 
       setToolDialog({
@@ -718,6 +732,7 @@ export const LevelPlay = () => {
                           group={completedGroup}
                           colorPreset={colorMap.get(tile.groupId)}
                           columns={columns}
+                          wordLanguage={gameLanguage}
                         />
                       )
                     }
@@ -740,6 +755,7 @@ export const LevelPlay = () => {
                     index={index}
                     moveTile={reorder}
                     onClick={handleTileClick}
+                    wordLanguage={gameLanguage}
                     isHighlighted={highlightedSet.has(tile.instanceId)}
                     highlightContext={hintState.highlightContext}
                     highlightPreset={highlightPresetMap.get(tile.instanceId)}
@@ -791,21 +807,37 @@ export const LevelPlay = () => {
               <>
                 <div className="flex flex-col items-center rounded-2xl bg-white/90 p-3 text-center shadow">
                   <div className="mt-0.5 text-2xl font-semibold text-slate-800">
-                    {activeTile.data.text}
+                    {activeTileDisplayText}
                   </div>
+                  {activeTile.data.languageCode !== gameLanguage && activeTile.data.text && (
+                    <div className="text-xs text-slate-500">
+                      原文（{activeTile.data.languageCode.toUpperCase()}）：{activeTile.data.text}
+                    </div>
+                  )}
                 </div>
                 <div className="space-y-1.5">
-                  {Object.entries(activeTile.data.translations).map(([lang, text]) => (
-                    <div
-                      key={lang}
-                      className="flex items-center justify-between rounded-xl bg-white/70 px-2.5 py-1.5 text-sm text-slate-600"
-                    >
-                      <span className="font-medium">
-                        {lang.toLowerCase() === 'zh' ? '释义' : lang.toUpperCase()}
-                      </span>
-                      <span>{text}</span>
-                    </div>
-                  ))}
+                  {definitionLanguages.map((lang) => {
+                    const text = activeTile.data.translations?.[lang]
+                    const isPreferred = lang === primaryDefinitionLanguage
+                    return (
+                      <div
+                        key={lang}
+                        className="flex items-center justify-between rounded-xl bg-white/70 px-2.5 py-1.5 text-sm text-slate-600"
+                      >
+                        <span className={clsx('font-medium', isPreferred && 'text-primary')}>
+                          {lang.toUpperCase()}
+                        </span>
+                        <span
+                          className={clsx(
+                            isPreferred && 'text-slate-900 font-semibold',
+                            !text && 'text-slate-400',
+                          )}
+                        >
+                          {text ?? '—'}
+                        </span>
+                      </div>
+                    )
+                  })}
                 </div>
                 {activeTile.data.hint && (
                   <div className="rounded-xl bg-yellow-100/70 px-2.5 py-1.5 text-sm text-yellow-700">
@@ -831,6 +863,8 @@ export const LevelPlay = () => {
                     key={group.group.id}
                     group={group}
                     colorPreset={colorMap.get(group.group.id)}
+                    wordLanguage={gameLanguage}
+                    definitionLanguages={definitionLanguages}
                   />
                 ))}
               </div>
@@ -935,7 +969,10 @@ export const LevelPlay = () => {
                           </div>
                           <div className="grid grid-cols-2 gap-1.5 sm:gap-2.5">
                             {group.tiles.map((tile) => {
-                              const primaryTranslation = resolvePrimaryTranslation(tile.translations)
+                              const primaryTranslation = resolvePrimaryTranslation(
+                                tile.translations,
+                                definitionLanguages,
+                              )
                               const headline = tile.text ?? primaryTranslation
                               const secondary =
                                 tile.text && primaryTranslation !== '—' ? primaryTranslation : undefined
@@ -1000,9 +1037,10 @@ export const LevelPlay = () => {
               <button
                 type="button"
                 onClick={closeToolDialog}
-                className="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-500 hover:bg-slate-200"
+                className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-sm text-slate-500 hover:bg-slate-200 transition-colors"
+                aria-label="关闭"
               >
-                关闭
+                ×
               </button>
             </header>
             {toolDialog.stage === 'preview' && (
@@ -1124,9 +1162,10 @@ export const LevelPlay = () => {
               <button
                 type="button"
                 onClick={() => setShowRestartConfirm(false)}
-                className="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-500 hover:bg-slate-200"
+                className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-sm text-slate-500 hover:bg-slate-200 transition-colors"
+                aria-label="取消"
               >
-                取消
+                ×
               </button>
             </header>
             <p className="text-sm text-slate-600">
@@ -1154,5 +1193,3 @@ export const LevelPlay = () => {
     </main>
   )
 }
-
-

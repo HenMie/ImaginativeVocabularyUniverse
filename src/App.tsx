@@ -4,6 +4,7 @@ import { fetchLanguages } from './services/languageService'
 import { Footer } from './components/Footer'
 import { LevelPlay } from './routes/LevelPlay'
 import { LevelSelect } from './routes/LevelSelect'
+import { LanguageSettings } from './routes/LanguageSettings'
 import { useLanguageStore } from './store/languageStore'
 
 export const App = () => {
@@ -44,6 +45,7 @@ export const App = () => {
     <div className="flex min-h-screen flex-col bg-background">
       <Routes>
         <Route path="/" element={<LevelSelect />} />
+        <Route path="/settings" element={<LanguageSettings />} />
         <Route path="/levels/:levelId" element={<LevelPlay />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

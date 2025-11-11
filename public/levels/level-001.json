@@ -1,135 +1,219 @@
 {
   "id": "level-001",
-  "name": "关卡1",
   "difficulty": "easy",
-  "version": 1,
-  "languageCodes": ["ko", "zh"],
-  "tutorialSteps": ["拖动四个词牌排成一行即可分组", "点击词牌可查看释义"],
+  "version": 2,
+  "language": [
+    "ko",
+    "zh",
+    "en",
+    "ja"
+  ],
+  "tutorialSteps": [
+      {
+        "ko": "카드를 네 장 일렬로 드래그하면 그룹이 완성돼요。",
+        "zh": "拖动四个词牌排成一行即可分组。",
+        "en": "Drag four tiles into a row to form a group.",
+        "ja": "タイルを4枚一列にドラッグするとグループになります。"
+      },
+      {
+        "ko": "타일을 탭하면 뜻을 볼 수 있어요。",
+        "zh": "点击词牌可查看释义。",
+        "en": "Tap a tile to view its definition.",
+        "ja": "タイルをタップすると意味を確認できます。"
+      }
+  ],
   "groups": [
     {
       "id": "drinks",
-      "category": "饮料",
+      "category": {
+        "ko": "음료",
+        "zh": "饮料",
+        "en": "drinks",
+        "ja": "飲み物"
+      },
       "colorPreset": "lilac",
       "tiles": [
         {
           "id": "milk",
-          "languageCode": "ko",
-          "text": "우유",
-          "translations": { "zh": "牛奶" }
+          "text": {
+            "ko": "우유",
+            "zh": "牛奶",
+            "en": "milk",
+            "ja": "牛乳"
+          }
         },
         {
           "id": "juice",
-          "languageCode": "ko",
-          "text": "주스",
-          "translations": { "zh": "果汁" }
+          "text": {
+            "ko": "주스",
+            "zh": "果汁",
+            "en": "juice",
+            "ja": "ジュース"
+          }
         },
         {
           "id": "tea",
-          "languageCode": "ko",
-          "text": "차",
-          "translations": { "zh": "茶" }
+          "text": {
+            "ko": "차",
+            "zh": "茶",
+            "en": "tea",
+            "ja": "お茶"
+          }
         },
         {
           "id": "soda",
-          "languageCode": "ko",
-          "text": "탄산음료",
-          "translations": { "zh": "汽水" }
+          "text": {
+            "ko": "탄산음료",
+            "zh": "汽水",
+            "en": "soda",
+            "ja": "ソーダ"
+          }
         }
       ]
     },
     {
       "id": "fruits",
-      "category": "水果",
+      "category": {
+        "ko": "과일",
+        "zh": "水果",
+        "en": "fruits",
+        "ja": "果物"
+      },
       "colorPreset": "mint",
       "tiles": [
         {
           "id": "orange",
-          "languageCode": "ko",
-          "text": "오렌지",
-          "translations": { "zh": "橙子" }
+          "text": {
+            "ko": "오렌지",
+            "zh": "橙子",
+            "en": "orange",
+            "ja": "オレンジ"
+          }
         },
         {
           "id": "watermelon",
-          "languageCode": "ko",
-          "text": "수박",
-          "translations": { "zh": "西瓜" }
+          "text": {
+            "ko": "수박",
+            "zh": "西瓜",
+            "en": "watermelon",
+            "ja": "スイカ"
+          }
         },
         {
           "id": "apple",
-          "languageCode": "ko",
-          "text": "사과",
-          "translations": { "zh": "苹果" }
+          "text": {
+            "ko": "사과",
+            "zh": "苹果",
+            "en": "apple",
+            "ja": "りんご"
+          }
         },
         {
           "id": "banana",
-          "languageCode": "ko",
-          "text": "바나나",
-          "translations": { "zh": "香蕉" }
+          "text": {
+            "ko": "바나나",
+            "zh": "香蕉",
+            "en": "banana",
+            "ja": "バナナ"
+          }
         }
       ]
     },
     {
       "id": "colors",
-      "category": "颜色",
+      "category": {
+        "ko": "색깔",
+        "zh": "颜色",
+        "en": "colors",
+        "ja": "色"
+      },
       "colorPreset": "sunset",
       "tiles": [
         {
           "id": "red",
-          "languageCode": "ko",
-          "text": "빨강",
-          "translations": { "zh": "红色" }
+          "text": {
+            "ko": "빨강",
+            "zh": "红色",
+            "en": "red",
+            "ja": "赤"
+          }
         },
         {
           "id": "blue",
-          "languageCode": "ko",
-          "text": "파랑",
-          "translations": { "zh": "蓝色" }
+          "text": {
+            "ko": "파랑",
+            "zh": "蓝色",
+            "en": "blue",
+            "ja": "青"
+          }
         },
         {
           "id": "yellow",
-          "languageCode": "ko",
-          "text": "노랑",
-          "translations": { "zh": "黄色" }
+          "text": {
+            "ko": "노랑",
+            "zh": "黄色",
+            "en": "yellow",
+            "ja": "黄色"
+          }
         },
         {
           "id": "green",
-          "languageCode": "ko",
-          "text": "초록",
-          "translations": { "zh": "绿色" }
+          "text": {
+            "ko": "초록",
+            "zh": "绿色",
+            "en": "green",
+            "ja": "緑"
+          }
         }
       ]
     },
     {
       "id": "tableware",
-      "category": "餐具",
+      "category": {
+        "ko": "식기",
+        "zh": "餐具",
+        "en": "tableware",
+        "ja": "食器"
+      },
       "colorPreset": "rose",
       "tiles": [
         {
           "id": "fork",
-          "languageCode": "ko",
-          "text": "포크",
-          "translations": { "zh": "叉子" }
+          "text": {
+            "ko": "포크",
+            "zh": "叉子",
+            "en": "fork",
+            "ja": "フォーク"
+          }
         },
         {
           "id": "spoon",
-          "languageCode": "ko",
-          "text": "숟가락",
-          "translations": { "zh": "勺子" }
+          "text": {
+            "ko": "숟가락",
+            "zh": "勺子",
+            "en": "spoon",
+            "ja": "スプーン"
+          }
         },
         {
           "id": "plate",
-          "languageCode": "ko",
-          "text": "접시",
-          "translations": { "zh": "盘子" }
+          "text": {
+            "ko": "접시",
+            "zh": "盘子",
+            "en": "plate",
+            "ja": "皿"
+          }
         },
         {
           "id": "chopsticks",
-          "languageCode": "ko",
-          "text": "젓가락",
-          "translations": { "zh": "筷子" }
+          "text": {
+            "ko": "젓가락",
+            "zh": "筷子",
+            "en": "chopsticks",
+            "ja": "箸"
+          }
         }
       ]
     }
   ]
 }
-

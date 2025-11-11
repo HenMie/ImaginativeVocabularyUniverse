@@ -2,6 +2,19 @@ import type { TranslationMap } from './language'
 
 export type Difficulty = 'easy' | 'medium' | 'hard'
 
+export interface LevelLanguageProfile {
+  game: {
+    default: string
+    options: string[]
+  }
+  definitions: {
+    defaults: string[]
+    options: string[]
+    min?: number
+    max?: number
+  }
+}
+
 export interface TileDefinition {
   id: string
   languageCode: string
@@ -22,7 +35,7 @@ export interface LevelMetadata {
   name: string
   difficulty: Difficulty
   version: number
-  languageCodes: string[]
+  languageProfile?: LevelLanguageProfile
   tutorialSteps?: string[]
   board?: {
     columns?: number
@@ -39,4 +52,3 @@ export interface LevelIndexEntry {
   difficulty: Difficulty
   file: string
 }
-

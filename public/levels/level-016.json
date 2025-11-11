@@ -1,76 +1,302 @@
 {
   "id": "level-016",
-  "name": "关卡16",
   "difficulty": "easy",
-  "version": 1,
-  "languageCodes": ["ko", "zh"],
+  "version": 2,
+  "language": [
+    "ko",
+    "zh",
+    "en",
+    "ja"
+  ],
+  "tutorialSteps": [],
   "groups": [
     {
       "id": "vegetables",
-      "category": "蔬菜",
+      "category": {
+        "ko": "채소",
+        "zh": "蔬菜",
+        "en": "vegetables",
+        "ja": "野菜"
+      },
       "colorPreset": "lilac",
       "tiles": [
-        { "id": "carrot", "languageCode": "ko", "text": "당근", "translations": { "zh": "胡萝卜" } },
-        { "id": "onion", "languageCode": "ko", "text": "양파", "translations": { "zh": "洋葱" } },
-        { "id": "potato", "languageCode": "ko", "text": "감자", "translations": { "zh": "土豆" } },
-        { "id": "cabbage", "languageCode": "ko", "text": "배추", "translations": { "zh": "白菜" } }
+        {
+          "id": "carrot",
+          "text": {
+            "ko": "당근",
+            "zh": "胡萝卜",
+            "en": "carrot",
+            "ja": "ニンジン"
+          }
+        },
+        {
+          "id": "onion",
+          "text": {
+            "ko": "양파",
+            "zh": "洋葱",
+            "en": "onion",
+            "ja": "タマネギ"
+          }
+        },
+        {
+          "id": "potato",
+          "text": {
+            "ko": "감자",
+            "zh": "土豆",
+            "en": "Potato",
+            "ja": "じゃがいも"
+          }
+        },
+        {
+          "id": "cabbage",
+          "text": {
+            "ko": "배추",
+            "zh": "白菜",
+            "en": "Chinese cabbage",
+            "ja": "白菜"
+          }
+        }
       ]
     },
     {
       "id": "seasons",
-      "category": "季节",
+      "category": {
+        "ko": "계절",
+        "zh": "季节",
+        "en": "seasons",
+        "ja": "季節"
+      },
       "colorPreset": "mint",
       "tiles": [
-        { "id": "spring", "languageCode": "ko", "text": "봄", "translations": { "zh": "春天" } },
-        { "id": "summer", "languageCode": "ko", "text": "여름", "translations": { "zh": "夏天" } },
-        { "id": "autumn", "languageCode": "ko", "text": "가을", "translations": { "zh": "秋天" } },
-        { "id": "winter", "languageCode": "ko", "text": "겨울", "translations": { "zh": "冬天" } }
+        {
+          "id": "spring",
+          "text": {
+            "ko": "봄",
+            "zh": "春天",
+            "en": "spring",
+            "ja": "春"
+          }
+        },
+        {
+          "id": "summer",
+          "text": {
+            "ko": "여름",
+            "zh": "夏天",
+            "en": "summer",
+            "ja": "夏"
+          }
+        },
+        {
+          "id": "autumn",
+          "text": {
+            "ko": "가을",
+            "zh": "秋天",
+            "en": "autumn",
+            "ja": "秋"
+          }
+        },
+        {
+          "id": "winter",
+          "text": {
+            "ko": "겨울",
+            "zh": "冬天",
+            "en": "winter",
+            "ja": "冬"
+          }
+        }
       ]
     },
     {
       "id": "drinks",
-      "category": "饮料",
+      "category": {
+        "ko": "음료",
+        "zh": "饮料",
+        "en": "drinks",
+        "ja": "飲み物"
+      },
       "colorPreset": "sunset",
       "tiles": [
-        { "id": "water", "languageCode": "ko", "text": "물", "translations": { "zh": "水" } },
-        { "id": "juice", "languageCode": "ko", "text": "주스", "translations": { "zh": "果汁" } },
-        { "id": "milk", "languageCode": "ko", "text": "우유", "translations": { "zh": "牛奶" } },
-        { "id": "tea", "languageCode": "ko", "text": "차", "translations": { "zh": "茶" } }
+        {
+          "id": "water",
+          "text": {
+            "ko": "물",
+            "zh": "水",
+            "en": "water",
+            "ja": "水"
+          }
+        },
+        {
+          "id": "juice",
+          "text": {
+            "ko": "주스",
+            "zh": "果汁",
+            "en": "juice",
+            "ja": "ジュース"
+          }
+        },
+        {
+          "id": "milk",
+          "text": {
+            "ko": "우유",
+            "zh": "牛奶",
+            "en": "milk",
+            "ja": "牛乳"
+          }
+        },
+        {
+          "id": "tea",
+          "text": {
+            "ko": "차",
+            "zh": "茶",
+            "en": "Tea",
+            "ja": "お茶"
+          }
+        }
       ]
     },
     {
       "id": "school-subjects",
-      "category": "学科",
+      "category": {
+        "ko": "학과",
+        "zh": "学科",
+        "en": "academic subjects",
+        "ja": "学科"
+      },
       "colorPreset": "rose",
       "tiles": [
-        { "id": "math", "languageCode": "ko", "text": "수학", "translations": { "zh": "数学" } },
-        { "id": "english", "languageCode": "ko", "text": "영어", "translations": { "zh": "英语" } },
-        { "id": "science", "languageCode": "ko", "text": "과학", "translations": { "zh": "科学" } },
-        { "id": "history", "languageCode": "ko", "text": "역사", "translations": { "zh": "历史" } }
+        {
+          "id": "math",
+          "text": {
+            "ko": "수학",
+            "zh": "数学",
+            "en": "math",
+            "ja": "数学"
+          }
+        },
+        {
+          "id": "english",
+          "text": {
+            "ko": "영어",
+            "zh": "英语",
+            "en": "English",
+            "ja": "英語"
+          }
+        },
+        {
+          "id": "science",
+          "text": {
+            "ko": "과학",
+            "zh": "科学",
+            "en": "science",
+            "ja": "科学"
+          }
+        },
+        {
+          "id": "history",
+          "text": {
+            "ko": "역사",
+            "zh": "历史",
+            "en": "history",
+            "ja": "歴史"
+          }
+        }
       ]
     },
     {
       "id": "adjectives-size",
-      "category": "大小",
+      "category": {
+        "ko": "크기",
+        "zh": "大小",
+        "en": "sizes",
+        "ja": "大きさ"
+      },
       "colorPreset": "sky",
       "tiles": [
-        { "id": "big", "languageCode": "ko", "text": "크다", "translations": { "zh": "大" } },
-        { "id": "small", "languageCode": "ko", "text": "작다", "translations": { "zh": "小" } },
-        { "id": "tall", "languageCode": "ko", "text": "높다", "translations": { "zh": "高" } },
-        { "id": "short", "languageCode": "ko", "text": "낮다", "translations": { "zh": "矮/低" } }
+        {
+          "id": "big",
+          "text": {
+            "ko": "크다",
+            "zh": "大",
+            "en": "big",
+            "ja": "大きい"
+          }
+        },
+        {
+          "id": "small",
+          "text": {
+            "ko": "작다",
+            "zh": "小",
+            "en": "Small",
+            "ja": "小さい"
+          }
+        },
+        {
+          "id": "tall",
+          "text": {
+            "ko": "높다",
+            "zh": "高",
+            "en": "high",
+            "ja": "高い"
+          }
+        },
+        {
+          "id": "short",
+          "text": {
+            "ko": "낮다",
+            "zh": "矮/低",
+            "en": "short/low",
+            "ja": "短い/低い"
+          }
+        }
       ]
     },
     {
       "id": "stationery",
-      "category": "文具",
+      "category": {
+        "ko": "문구류",
+        "zh": "文具",
+        "en": "stationery",
+        "ja": "文房具"
+      },
       "colorPreset": "purple",
       "tiles": [
-        { "id": "pencil-case", "languageCode": "ko", "text": "필통", "translations": { "zh": "笔袋" } },
-        { "id": "glue-stick", "languageCode": "ko", "text": "풀", "translations": { "zh": "固体胶" } },
-        { "id": "marker", "languageCode": "ko", "text": "마커", "translations": { "zh": "马克笔" } },
-        { "id": "tape-dispenser", "languageCode": "ko", "text": "테이프 커터", "translations": { "zh": "胶带座" } }
+        {
+          "id": "pencil-case",
+          "text": {
+            "ko": "필통",
+            "zh": "笔袋",
+            "en": "pencil case",
+            "ja": "筆箱"
+          }
+        },
+        {
+          "id": "glue-stick",
+          "text": {
+            "ko": "풀",
+            "zh": "固体胶",
+            "en": "solid glue",
+            "ja": "固形接着剤"
+          }
+        },
+        {
+          "id": "marker",
+          "text": {
+            "ko": "마커",
+            "zh": "马克笔",
+            "en": "marker pen",
+            "ja": "マーカーペン"
+          }
+        },
+        {
+          "id": "tape-dispenser",
+          "text": {
+            "ko": "테이프 커터",
+            "zh": "胶带座",
+            "en": "Tape holder",
+            "ja": "テープホルダー"
+          }
+        }
       ]
     }
   ]
 }
-

@@ -7,6 +7,7 @@ import { DND_ITEM_TYPES } from '../constants/dnd'
 import type { TileInstance } from '../utils/board'
 import type { GroupColorPreset } from '../constants/groupColors'
 import { useSimpleTouchControl } from '../hooks/useSimpleTouchControl'
+import { getTileDisplayText } from '../utils/translation'
 
 interface DragItem {
   type: string
@@ -23,6 +24,7 @@ interface WordTileProps {
   index: number
   moveTile: (from: number, to: number) => void
   onClick: (tile: TileInstance, index: number) => void
+  wordLanguage: string
   isHighlighted?: boolean
   highlightContext?:
     | 'hint'
@@ -41,6 +43,7 @@ export const WordTile = ({
   index,
   moveTile,
   onClick,
+  wordLanguage,
   isHighlighted = false,
   highlightContext,
   highlightPreset,
@@ -100,6 +103,7 @@ export const WordTile = ({
   }, [preview])
 
   const palette = tileOverrideColor ?? groupColor
+  const displayText = getTileDisplayText(tile.data, wordLanguage)
 
   const highlightRing = isHighlighted
     ? highlightContext === 'verify-reveal-fail'
@@ -181,13 +185,8 @@ export const WordTile = ({
       )}
       style={baseStyle}
     >
-      <span
-        className={clsx(
-          'px-0.5 text-balance',
-          (tile.data.text?.length ?? 0) > 6 && 'text-sm',
-        )}
-      >
-        {tile.data.text ?? '——'}
+      <span className={clsx('px-0.5 text-balance', displayText.length > 6 && 'text-sm')}>
+        {displayText}
       </span>
     </div>
   )

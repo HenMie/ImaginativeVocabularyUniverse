@@ -1,4 +1,4 @@
-{
+﻿{
   "version": 1,
   "languages": [
     {
@@ -31,7 +31,17 @@
       "tts": {
         "voiceId": "en-US-Standard-C"
       }
+    },
+    {
+      "code": "ja",
+      "name": "日语",
+      "nativeName": "日本語",
+      "direction": "ltr",
+      "preferredFonts": ["'Noto Sans JP'", "'Yu Gothic'", "sans-serif"],
+      "tts": {
+        "voiceId": "ja-JP-Standard-A",
+        "rate": 1
+      }
     }
   ]
 }
-

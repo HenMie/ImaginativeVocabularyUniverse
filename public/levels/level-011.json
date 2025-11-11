@@ -1,76 +1,302 @@
 {
   "id": "level-011",
-  "name": "关卡11",
   "difficulty": "easy",
-  "version": 1,
-  "languageCodes": ["ko", "zh"],
+  "version": 2,
+  "language": [
+    "ko",
+    "zh",
+    "en",
+    "ja"
+  ],
+  "tutorialSteps": [],
   "groups": [
     {
       "id": "fruits",
-      "category": "水果",
+      "category": {
+        "ko": "과일",
+        "zh": "水果",
+        "en": "fruits",
+        "ja": "果物"
+      },
       "colorPreset": "lilac",
       "tiles": [
-        { "id": "apple", "languageCode": "ko", "text": "사과", "translations": { "zh": "苹果" } },
-        { "id": "banana", "languageCode": "ko", "text": "바나나", "translations": { "zh": "香蕉" } },
-        { "id": "strawberry", "languageCode": "ko", "text": "딸기", "translations": { "zh": "草莓" } },
-        { "id": "watermelon", "languageCode": "ko", "text": "수박", "translations": { "zh": "西瓜" } }
+        {
+          "id": "apple",
+          "text": {
+            "ko": "사과",
+            "zh": "苹果",
+            "en": "apple",
+            "ja": "りんご"
+          }
+        },
+        {
+          "id": "banana",
+          "text": {
+            "ko": "바나나",
+            "zh": "香蕉",
+            "en": "banana",
+            "ja": "バナナ"
+          }
+        },
+        {
+          "id": "strawberry",
+          "text": {
+            "ko": "딸기",
+            "zh": "草莓",
+            "en": "strawberry",
+            "ja": "いちご"
+          }
+        },
+        {
+          "id": "watermelon",
+          "text": {
+            "ko": "수박",
+            "zh": "西瓜",
+            "en": "watermelon",
+            "ja": "スイカ"
+          }
+        }
       ]
     },
     {
       "id": "colors",
-      "category": "颜色",
+      "category": {
+        "ko": "색",
+        "zh": "颜色",
+        "en": "colors",
+        "ja": "色"
+      },
       "colorPreset": "mint",
       "tiles": [
-        { "id": "red", "languageCode": "ko", "text": "빨강", "translations": { "zh": "红色" } },
-        { "id": "blue", "languageCode": "ko", "text": "파랑", "translations": { "zh": "蓝色" } },
-        { "id": "yellow", "languageCode": "ko", "text": "노랑", "translations": { "zh": "黄色" } },
-        { "id": "green", "languageCode": "ko", "text": "초록", "translations": { "zh": "绿色" } }
+        {
+          "id": "red",
+          "text": {
+            "ko": "빨강",
+            "zh": "红色",
+            "en": "red",
+            "ja": "赤"
+          }
+        },
+        {
+          "id": "blue",
+          "text": {
+            "ko": "파랑",
+            "zh": "蓝色",
+            "en": "blue",
+            "ja": "青"
+          }
+        },
+        {
+          "id": "yellow",
+          "text": {
+            "ko": "노랑",
+            "zh": "黄色",
+            "en": "yellow",
+            "ja": "黄色"
+          }
+        },
+        {
+          "id": "green",
+          "text": {
+            "ko": "초록",
+            "zh": "绿色",
+            "en": "green",
+            "ja": "緑"
+          }
+        }
       ]
     },
     {
       "id": "numbers",
-      "category": "数字",
+      "category": {
+        "ko": "숫자",
+        "zh": "数字",
+        "en": "numbers",
+        "ja": "数字"
+      },
       "colorPreset": "sunset",
       "tiles": [
-        { "id": "one", "languageCode": "ko", "text": "하나", "translations": { "zh": "一" } },
-        { "id": "two", "languageCode": "ko", "text": "둘", "translations": { "zh": "二" } },
-        { "id": "three", "languageCode": "ko", "text": "셋", "translations": { "zh": "三" } },
-        { "id": "four", "languageCode": "ko", "text": "넷", "translations": { "zh": "四" } }
+        {
+          "id": "one",
+          "text": {
+            "ko": "하나",
+            "zh": "一",
+            "en": "one",
+            "ja": "1つ"
+          }
+        },
+        {
+          "id": "two",
+          "text": {
+            "ko": "둘",
+            "zh": "二",
+            "en": "two",
+            "ja": "二"
+          }
+        },
+        {
+          "id": "three",
+          "text": {
+            "ko": "셋",
+            "zh": "三",
+            "en": "three",
+            "ja": "三つ"
+          }
+        },
+        {
+          "id": "four",
+          "text": {
+            "ko": "넷",
+            "zh": "四",
+            "en": "Four",
+            "ja": "4"
+          }
+        }
       ]
     },
     {
       "id": "body-parts",
-      "category": "身体部位",
+      "category": {
+        "ko": "신체 부위",
+        "zh": "身体部位",
+        "en": "body parts",
+        "ja": "身体の部位"
+      },
       "colorPreset": "rose",
       "tiles": [
-        { "id": "hand", "languageCode": "ko", "text": "손", "translations": { "zh": "手" } },
-        { "id": "foot", "languageCode": "ko", "text": "발", "translations": { "zh": "脚" } },
-        { "id": "eye", "languageCode": "ko", "text": "눈", "translations": { "zh": "眼睛" } },
-        { "id": "mouth", "languageCode": "ko", "text": "입", "translations": { "zh": "嘴" } }
+        {
+          "id": "hand",
+          "text": {
+            "ko": "손",
+            "zh": "手",
+            "en": "hand",
+            "ja": "手"
+          }
+        },
+        {
+          "id": "foot",
+          "text": {
+            "ko": "발",
+            "zh": "脚",
+            "en": "foot",
+            "ja": "足"
+          }
+        },
+        {
+          "id": "eye",
+          "text": {
+            "ko": "눈",
+            "zh": "眼睛",
+            "en": "Eye",
+            "ja": "目"
+          }
+        },
+        {
+          "id": "mouth",
+          "text": {
+            "ko": "입",
+            "zh": "嘴",
+            "en": "Mouth",
+            "ja": "口"
+          }
+        }
       ]
     },
     {
       "id": "animals",
-      "category": "动物",
+      "category": {
+        "ko": "동물",
+        "zh": "动物",
+        "en": "animals",
+        "ja": "動物"
+      },
       "colorPreset": "sky",
       "tiles": [
-        { "id": "dog", "languageCode": "ko", "text": "개", "translations": { "zh": "狗" } },
-        { "id": "cat", "languageCode": "ko", "text": "고양이", "translations": { "zh": "猫" } },
-        { "id": "bird", "languageCode": "ko", "text": "새", "translations": { "zh": "鸟" } },
-        { "id": "fish", "languageCode": "ko", "text": "물고기", "translations": { "zh": "鱼" } }
+        {
+          "id": "dog",
+          "text": {
+            "ko": "개",
+            "zh": "狗",
+            "en": "dog",
+            "ja": "犬"
+          }
+        },
+        {
+          "id": "cat",
+          "text": {
+            "ko": "고양이",
+            "zh": "猫",
+            "en": "cat",
+            "ja": "猫"
+          }
+        },
+        {
+          "id": "bird",
+          "text": {
+            "ko": "새",
+            "zh": "鸟",
+            "en": "bird",
+            "ja": "鳥"
+          }
+        },
+        {
+          "id": "fish",
+          "text": {
+            "ko": "물고기",
+            "zh": "鱼",
+            "en": "fish",
+            "ja": "魚"
+          }
+        }
       ]
     },
     {
       "id": "directions",
-      "category": "方向",
+      "category": {
+        "ko": "방향",
+        "zh": "方向",
+        "en": "directions",
+        "ja": "方向"
+      },
       "colorPreset": "purple",
       "tiles": [
-        { "id": "left", "languageCode": "ko", "text": "왼쪽", "translations": { "zh": "左边" } },
-        { "id": "right", "languageCode": "ko", "text": "오른쪽", "translations": { "zh": "右边" } },
-        { "id": "front", "languageCode": "ko", "text": "앞", "translations": { "zh": "前面" } },
-        { "id": "back", "languageCode": "ko", "text": "뒤", "translations": { "zh": "后面" } }
+        {
+          "id": "left",
+          "text": {
+            "ko": "왼쪽",
+            "zh": "左边",
+            "en": "left",
+            "ja": "左"
+          }
+        },
+        {
+          "id": "right",
+          "text": {
+            "ko": "오른쪽",
+            "zh": "右边",
+            "en": "right",
+            "ja": "右"
+          }
+        },
+        {
+          "id": "front",
+          "text": {
+            "ko": "앞",
+            "zh": "前面",
+            "en": "Front",
+            "ja": "フロント"
+          }
+        },
+        {
+          "id": "back",
+          "text": {
+            "ko": "뒤",
+            "zh": "后面",
+            "en": "later",
+            "ja": "後で"
+          }
+        }
       ]
     }
   ]
 }
-

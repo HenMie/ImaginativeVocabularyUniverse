@@ -1,196 +1,302 @@
 {
   "id": "level-004",
-  "name": "关卡4",
   "difficulty": "medium",
-  "version": 1,
-  "languageCodes": ["ko", "zh"],
+  "version": 2,
+  "language": [
+    "ko",
+    "zh",
+    "en",
+    "ja"
+  ],
+  "tutorialSteps": [],
   "groups": [
     {
-      "id": "gi-ending-words",
-      "category": "以기结尾",
+      "id": "growth-mindset",
+      "category": {
+        "ko": "성장 마인드셋",
+        "zh": "成长心态",
+        "en": "growth mindset",
+        "ja": "成長マインドセット"
+      },
       "colorPreset": "gold",
       "tiles": [
         {
           "id": "curiosity",
-          "languageCode": "ko",
-          "text": "호기심",
-          "translations": { "zh": "好奇心" }
+          "text": {
+            "ko": "호기심",
+            "zh": "好奇心",
+            "en": "curiosity",
+            "ja": "好奇心"
+          }
         },
         {
           "id": "courage",
-          "languageCode": "ko",
-          "text": "용기",
-          "translations": { "zh": "勇气" }
+          "text": {
+            "ko": "용기",
+            "zh": "勇气",
+            "en": "courage",
+            "ja": "勇気"
+          }
         },
         {
-          "id": "crisis",
-          "languageCode": "ko",
-          "text": "위기",
-          "translations": { "zh": "危机" }
+          "id": "resilience",
+          "text": {
+            "ko": "강인성",
+            "zh": "韧性",
+            "en": "resilience",
+            "ja": "回復力"
+          }
         },
         {
-          "id": "opportunity",
-          "languageCode": "ko",
-          "text": "기회",
-          "translations": { "zh": "机会" }
+          "id": "perseverance",
+          "text": {
+            "ko": "끈기",
+            "zh": "毅力",
+            "en": "perseverance",
+            "ja": "忍耐力"
+          }
         }
       ]
     },
     {
       "id": "information-spread",
-      "category": "信息传播",
+      "category": {
+        "ko": "정보 전파",
+        "zh": "信息传播",
+        "en": "information dissemination",
+        "ja": "情報伝播"
+      },
       "colorPreset": "teal",
       "tiles": [
         {
           "id": "rumor",
-          "languageCode": "ko",
-          "text": "소문",
-          "translations": { "zh": "传言" }
+          "text": {
+            "ko": "소문",
+            "zh": "传言",
+            "en": "Rumors",
+            "ja": "噂"
+          }
         },
         {
           "id": "advertisement",
-          "languageCode": "ko",
-          "text": "광고",
-          "translations": { "zh": "广告" }
+          "text": {
+            "ko": "광고",
+            "zh": "广告",
+            "en": "advertise",
+            "ja": "宣伝する"
+          }
         },
         {
           "id": "news",
-          "languageCode": "ko",
-          "text": "뉴스",
-          "translations": { "zh": "新闻" }
+          "text": {
+            "ko": "뉴스",
+            "zh": "新闻",
+            "en": "news",
+            "ja": "ニュース"
+          }
         },
         {
           "id": "word-of-mouth",
-          "languageCode": "ko",
-          "text": "입소문",
-          "translations": { "zh": "口碑" }
+          "text": {
+            "ko": "입소문",
+            "zh": "口碑",
+            "en": "word of mouth",
+            "ja": "口コミ"
+          }
         }
       ]
     },
     {
       "id": "collaborative-roles",
-      "category": "协作关系",
+      "category": {
+        "ko": "협력 관계",
+        "zh": "协作关系",
+        "en": "collaborative relationships",
+        "ja": "協力関係"
+      },
       "colorPreset": "indigo",
       "tiles": [
         {
           "id": "colleague",
-          "languageCode": "ko",
-          "text": "동료",
-          "translations": { "zh": "同事" }
+          "text": {
+            "ko": "동료",
+            "zh": "同事",
+            "en": "colleague",
+            "ja": "同僚"
+          }
         },
         {
           "id": "business-partner",
-          "languageCode": "ko",
-          "text": "동업자",
-          "translations": { "zh": "合伙人" }
+          "text": {
+            "ko": "동업자",
+            "zh": "合伙人",
+            "en": "Partner",
+            "ja": "パートナー"
+          }
         },
         {
           "id": "partner",
-          "languageCode": "ko",
-          "text": "파트너",
-          "translations": { "zh": "伙伴" }
+          "text": {
+            "ko": "파트너",
+            "zh": "伙伴",
+            "en": "partner",
+            "ja": "パートナー"
+          }
         },
         {
           "id": "collaborator",
-          "languageCode": "ko",
-          "text": "협력자",
-          "translations": { "zh": "协作者" }
+          "text": {
+            "ko": "협력자",
+            "zh": "协作者",
+            "en": "collaborator",
+            "ja": "協力者"
+          }
         }
       ]
     },
     {
       "id": "containers",
-      "category": "容器",
+      "category": {
+        "ko": "용기",
+        "zh": "容器",
+        "en": "containers",
+        "ja": "容器"
+      },
       "colorPreset": "orange",
       "tiles": [
         {
           "id": "bowl",
-          "languageCode": "ko",
-          "text": "그릇",
-          "translations": { "zh": "碗" }
+          "text": {
+            "ko": "그릇",
+            "zh": "碗",
+            "en": "bowl",
+            "ja": "ボウル"
+          }
         },
         {
           "id": "bottle",
-          "languageCode": "ko",
-          "text": "병",
-          "translations": { "zh": "瓶子" }
+          "text": {
+            "ko": "병",
+            "zh": "瓶子",
+            "en": "bottle",
+            "ja": "ボトル"
+          }
         },
         {
           "id": "bucket",
-          "languageCode": "ko",
-          "text": "통",
-          "translations": { "zh": "桶" }
+          "text": {
+            "ko": "통",
+            "zh": "桶",
+            "en": "bucket",
+            "ja": "バケツ"
+          }
         },
         {
           "id": "box",
-          "languageCode": "ko",
-          "text": "상자",
-          "translations": { "zh": "箱子" }
+          "text": {
+            "ko": "상자",
+            "zh": "箱子",
+            "en": "box",
+            "ja": "箱"
+          }
         }
       ]
     },
     {
       "id": "periodic-events",
-      "category": "周期性纪念",
+      "category": {
+        "ko": "주기적인 기념일",
+        "zh": "周期性纪念",
+        "en": "recurring observances",
+        "ja": "周期的な記念日"
+      },
       "colorPreset": "emerald",
       "tiles": [
         {
           "id": "birthday",
-          "languageCode": "ko",
-          "text": "생일",
-          "translations": { "zh": "生日" }
+          "text": {
+            "ko": "생일",
+            "zh": "生日",
+            "en": "Birthday",
+            "ja": "誕生日"
+          }
         },
         {
           "id": "anniversary",
-          "languageCode": "ko",
-          "text": "기념일",
-          "translations": { "zh": "纪念日" }
+          "text": {
+            "ko": "기념일",
+            "zh": "纪念日",
+            "en": "anniversary",
+            "ja": "周年"
+          }
         },
         {
           "id": "traditional-holiday",
-          "languageCode": "ko",
-          "text": "명절",
-          "translations": { "zh": "传统节日" }
+          "text": {
+            "ko": "명절",
+            "zh": "传统节日",
+            "en": "traditional festival",
+            "ja": "伝統的な祭り"
+          }
         },
         {
           "id": "memorial-service",
-          "languageCode": "ko",
-          "text": "제사",
-          "translations": { "zh": "祭祀" }
+          "text": {
+            "ko": "제사",
+            "zh": "祭祀",
+            "en": "sacrifice",
+            "ja": "犠牲"
+          }
         }
       ]
     },
     {
       "id": "evaluation-criteria",
-      "category": "评价标准",
+      "category": {
+        "ko": "평가 기준",
+        "zh": "评价标准",
+        "en": "evaluation criteria",
+        "ja": "評価基準"
+      },
       "colorPreset": "rainbow",
       "tiles": [
         {
           "id": "quality",
-          "languageCode": "ko",
-          "text": "품질",
-          "translations": { "zh": "品质" }
+          "text": {
+            "ko": "품질",
+            "zh": "品质",
+            "en": "quality",
+            "ja": "品質"
+          }
         },
         {
           "id": "efficiency",
-          "languageCode": "ko",
-          "text": "효율",
-          "translations": { "zh": "效率" }
+          "text": {
+            "ko": "효율",
+            "zh": "效率",
+            "en": "efficiency",
+            "ja": "効率"
+          }
         },
         {
           "id": "value",
-          "languageCode": "ko",
-          "text": "가치",
-          "translations": { "zh": "价值" }
+          "text": {
+            "ko": "가치",
+            "zh": "价值",
+            "en": "value",
+            "ja": "価値"
+          }
         },
         {
           "id": "performance",
-          "languageCode": "ko",
-          "text": "성과",
-          "translations": { "zh": "成果" }
+          "text": {
+            "ko": "성과",
+            "zh": "成果",
+            "en": "Achievements",
+            "ja": "業績"
+          }
         }
       ]
     }
   ]
 }
-

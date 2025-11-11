@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ImportExportModal } from '../components/ImportExportModal'
 import { fetchLevelIndex, clearLevelCache } from '../services/levelService'
 import type { LevelIndexEntry } from '../types/levels'
 import { useProgressStore } from '../store/progressStore'
@@ -20,8 +19,6 @@ export const LevelSelect = () => {
   const [levels, setLevels] = useState<LevelIndexEntry[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [showBackup, setShowBackup] = useState(false)
-  const [settingsOpen, setSettingsOpen] = useState(false)
   const [updateAvailable, setUpdateAvailable] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -139,7 +136,7 @@ export const LevelSelect = () => {
             </button>
           </div>
         )}
-        <header className="flex flex-col gap-4 rounded-3xl bg-surface/80 p-6 shadow-tile backdrop-blur md:flex-row md:items-center md:justify-between">
+        <header className="relative z-20 flex flex-col gap-4 rounded-3xl bg-surface/80 p-6 shadow-tile backdrop-blur md:flex-row md:items-center md:justify-between">
           <div className="space-y-2">
             <h1 className="text-3xl font-semibold text-primary">脑洞外语词场</h1>
             <p className="text-sm text-slate-600">拖动词块，为外语学习分组</p>
@@ -158,41 +155,13 @@ export const LevelSelect = () => {
                 调试模式
               </div>
             )}
-            <div className="relative z-30">
-              <button
-                type="button"
-                onClick={() => setSettingsOpen((prev) => !prev)}
-                className="relative z-30 flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary transition hover:bg-primary/20 focus:outline-none focus:ring-2 focus:ring-primary/40"
-              >
-                设置
-                <span className={`text-xs transition ${settingsOpen ? 'rotate-180' : 'rotate-0'}`}>
-                  ▼
-                </span>
-              </button>
-              {settingsOpen && (
-                <>
-                  <button
-                    type="button"
-                    aria-label="关闭设置菜单"
-                    className="fixed inset-0 z-20 cursor-default bg-transparent"
-                    onClick={() => setSettingsOpen(false)}
-                  />
-                  <div className="absolute right-0 top-full z-30 mt-2 w-52 rounded-2xl bg-white p-2 text-sm shadow-xl ring-1 ring-slate-100">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSettingsOpen(false)
-                        setShowBackup(true)
-                      }}
-                      className="flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-slate-600 transition hover:bg-primary/10 hover:text-primary"
-                    >
-                      导入 / 导出
-                      <span className="text-[11px] text-slate-400">存档</span>
-                    </button>
-                  </div>
-                </>
-              )}
-            </div>
+            <button
+              type="button"
+              onClick={() => navigate('/settings')}
+              className="flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary transition hover:bg-primary/20 focus:outline-none focus:ring-2 focus:ring-primary/40"
+            >
+              设置
+            </button>
           </div>
         </header>
 
@@ -283,8 +252,6 @@ export const LevelSelect = () => {
           })}
         </section>
       </main>
-      <ImportExportModal open={showBackup} onClose={() => setShowBackup(false)} />
     </>
   )
 }
-

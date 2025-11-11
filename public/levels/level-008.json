@@ -1,197 +1,302 @@
 {
   "id": "level-008",
-  "name": "关卡8",
   "difficulty": "medium",
-  "version": 1,
-  "languageCodes": ["ko", "zh"],
+  "version": 2,
+  "language": [
+    "ko",
+    "zh",
+    "en",
+    "ja"
+  ],
+  "tutorialSteps": [],
   "groups": [
     {
       "id": "scientific-measures",
-      "category": "科学测度",
+      "category": {
+        "ko": "과학적 측정",
+        "zh": "科学测度",
+        "en": "scientific measures",
+        "ja": "科学的測度"
+      },
       "colorPreset": "indigo",
       "tiles": [
         {
           "id": "density",
-          "languageCode": "ko",
-          "text": "밀도",
-          "translations": { "zh": "密度" }
+          "text": {
+            "ko": "밀도",
+            "zh": "密度",
+            "en": "density",
+            "ja": "密度"
+          }
         },
         {
           "id": "concentration",
-          "languageCode": "ko",
-          "text": "농도",
-          "translations": { "zh": "浓度" }
+          "text": {
+            "ko": "농도",
+            "zh": "浓度",
+            "en": "concentration",
+            "ja": "集中"
+          }
         },
         {
           "id": "pressure",
-          "languageCode": "ko",
-          "text": "압력",
-          "translations": { "zh": "压力" }
+          "text": {
+            "ko": "압력",
+            "zh": "压力",
+            "en": "pressure",
+            "ja": "プレッシャー"
+          }
         },
         {
           "id": "speed",
-          "languageCode": "ko",
-          "text": "속도",
-          "translations": { "zh": "速度" }
+          "text": {
+            "ko": "속도",
+            "zh": "速度",
+            "en": "speed",
+            "ja": "スピード"
+          }
         }
       ]
     },
     {
       "id": "social-values",
-      "category": "社会价值",
+      "category": {
+        "ko": "사회적 가치",
+        "zh": "社会价值",
+        "en": "social values",
+        "ja": "社会的価値"
+      },
       "colorPreset": "orange",
       "tiles": [
         {
           "id": "fairness",
-          "languageCode": "ko",
-          "text": "공정성",
-          "translations": { "zh": "公平性" }
+          "text": {
+            "ko": "공정성",
+            "zh": "公平性",
+            "en": "fairness",
+            "ja": "公平性"
+          }
         },
         {
           "id": "equity",
-          "languageCode": "ko",
-          "text": "형평성",
-          "translations": { "zh": "衡平性" }
+          "text": {
+            "ko": "형평성",
+            "zh": "衡平性",
+            "en": "Equilibrium",
+            "ja": "平衡"
+          }
         },
         {
           "id": "inclusiveness",
-          "languageCode": "ko",
-          "text": "포용성",
-          "translations": { "zh": "包容性" }
+          "text": {
+            "ko": "포용성",
+            "zh": "包容性",
+            "en": "inclusive",
+            "ja": "包括的"
+          }
         },
         {
           "id": "sustainability",
-          "languageCode": "ko",
-          "text": "지속가능성",
-          "translations": { "zh": "可持续性" }
+          "text": {
+            "ko": "지속가능성",
+            "zh": "可持续性",
+            "en": "sustainability",
+            "ja": "持続可能性"
+          }
         }
       ]
     },
     {
       "id": "narrative-structure",
-      "category": "叙事结构",
+      "category": {
+        "ko": "서사 구조",
+        "zh": "叙事结构",
+        "en": "narrative structures",
+        "ja": "物語構造"
+      },
       "colorPreset": "gold",
       "tiles": [
         {
           "id": "narrative",
-          "languageCode": "ko",
-          "text": "서사",
-          "translations": { "zh": "叙事" }
+          "text": {
+            "ko": "서사",
+            "zh": "叙事",
+            "en": "narrative",
+            "ja": "物語"
+          }
         },
         {
           "id": "context",
-          "languageCode": "ko",
-          "text": "맥락",
-          "translations": { "zh": "语境" }
+          "text": {
+            "ko": "맥락",
+            "zh": "语境",
+            "en": "context",
+            "ja": "コンテクスト"
+          }
         },
         {
           "id": "perspective",
-          "languageCode": "ko",
-          "text": "관점",
-          "translations": { "zh": "视角" }
+          "text": {
+            "ko": "관점",
+            "zh": "视角",
+            "en": "perspective",
+            "ja": "視点"
+          }
         },
         {
           "id": "symbol",
-          "languageCode": "ko",
-          "text": "상징",
-          "translations": { "zh": "象征" }
+          "text": {
+            "ko": "상징",
+            "zh": "象征",
+            "en": "symbol",
+            "ja": "シンボル"
+          }
         }
       ]
     },
     {
       "id": "organizational-forms",
-      "category": "组织形态",
+      "category": {
+        "ko": "조직 형태",
+        "zh": "组织形态",
+        "en": "organizational forms",
+        "ja": "組織形態"
+      },
       "colorPreset": "teal",
       "tiles": [
         {
           "id": "hierarchy",
-          "languageCode": "ko",
-          "text": "위계",
-          "translations": { "zh": "层级" }
+          "text": {
+            "ko": "위계",
+            "zh": "层级",
+            "en": "Hierarchy",
+            "ja": "階層"
+          }
         },
         {
           "id": "network",
-          "languageCode": "ko",
-          "text": "네트워크",
-          "translations": { "zh": "网络" }
+          "text": {
+            "ko": "네트워크",
+            "zh": "网络",
+            "en": "network",
+            "ja": "ネットワーク"
+          }
         },
         {
           "id": "bureaucracy",
-          "languageCode": "ko",
-          "text": "관료제",
-          "translations": { "zh": "官僚制" }
+          "text": {
+            "ko": "관료제",
+            "zh": "官僚制",
+            "en": "bureaucracy",
+            "ja": "官僚"
+          }
         },
         {
           "id": "collective",
-          "languageCode": "ko",
-          "text": "집합체",
-          "translations": { "zh": "集合体" }
+          "text": {
+            "ko": "집합체",
+            "zh": "集合体",
+            "en": "collective",
+            "ja": "集団的"
+          }
         }
       ]
     },
     {
       "id": "data-processing",
-      "category": "数据处理",
+      "category": {
+        "ko": "데이터 처리",
+        "zh": "数据处理",
+        "en": "data processing",
+        "ja": "データ処理"
+      },
       "colorPreset": "emerald",
       "tiles": [
         {
           "id": "classification",
-          "languageCode": "ko",
-          "text": "분류",
-          "translations": { "zh": "分类" }
+          "text": {
+            "ko": "분류",
+            "zh": "分类",
+            "en": "Classification",
+            "ja": "分類"
+          }
         },
         {
           "id": "regression",
-          "languageCode": "ko",
-          "text": "회귀",
-          "translations": { "zh": "回归" }
+          "text": {
+            "ko": "회귀",
+            "zh": "回归",
+            "en": "return",
+            "ja": "戻る"
+          }
         },
         {
           "id": "clustering",
-          "languageCode": "ko",
-          "text": "군집",
-          "translations": { "zh": "聚类" }
+          "text": {
+            "ko": "군집",
+            "zh": "聚类",
+            "en": "clustering",
+            "ja": "クラスタリング"
+          }
         },
         {
           "id": "prediction",
-          "languageCode": "ko",
-          "text": "예측",
-          "translations": { "zh": "预测" }
+          "text": {
+            "ko": "예측",
+            "zh": "预测",
+            "en": "predict",
+            "ja": "予測する"
+          }
         }
       ]
     },
     {
       "id": "evidence-logic",
-      "category": "证据逻辑",
+      "category": {
+        "ko": "증거 논리",
+        "zh": "证据逻辑",
+        "en": "evidence logic",
+        "ja": "証拠の論理"
+      },
       "colorPreset": "rose",
       "tiles": [
         {
           "id": "hypothesis",
-          "languageCode": "ko",
-          "text": "가설",
-          "translations": { "zh": "假设" }
+          "text": {
+            "ko": "가설",
+            "zh": "假设",
+            "en": "hypothesis",
+            "ja": "仮説"
+          }
         },
         {
           "id": "verification",
-          "languageCode": "ko",
-          "text": "검증",
-          "translations": { "zh": "验证" }
+          "text": {
+            "ko": "검증",
+            "zh": "验证",
+            "en": "verify",
+            "ja": "確認する"
+          }
         },
         {
           "id": "falsification",
-          "languageCode": "ko",
-          "text": "반증",
-          "translations": { "zh": "反证" }
+          "text": {
+            "ko": "반증",
+            "zh": "反证",
+            "en": "Counterevidence",
+            "ja": "反証"
+          }
         },
         {
           "id": "causality",
-          "languageCode": "ko",
-          "text": "인과",
-          "translations": { "zh": "因果" }
+          "text": {
+            "ko": "인과",
+            "zh": "因果",
+            "en": "cause and effect",
+            "ja": "原因と結果"
+          }
         }
       ]
     }
   ]
 }
-
-

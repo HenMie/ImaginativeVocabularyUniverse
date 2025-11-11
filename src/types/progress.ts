@@ -11,11 +11,16 @@ export interface LevelProgressSnapshot {
   completedAt?: string
 }
 
+export interface LanguagePreferences {
+  game: string
+  definitions: string[]
+}
+
 export interface PlayerProgress {
   version: number
   coins: number
   unlockedLevelIds: string[]
-  activeLanguage: string
+  languagePreferences: LanguagePreferences
   seenTutorials: string[]
   levelSnapshots: Record<string, LevelProgressSnapshot>
   settings: {
@@ -26,5 +31,5 @@ export interface PlayerProgress {
   lastBackupAt?: string
 }
 
-export const CURRENT_PROGRESS_VERSION = 2
+export const CURRENT_PROGRESS_VERSION = 4
 

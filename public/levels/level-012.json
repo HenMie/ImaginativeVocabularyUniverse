@@ -1,65 +1,254 @@
 {
   "id": "level-012",
-  "name": "关卡12",
   "difficulty": "easy",
-  "version": 1,
-  "languageCodes": ["ko", "zh"],
+  "version": 2,
+  "language": [
+    "ko",
+    "zh",
+    "en",
+    "ja"
+  ],
+  "tutorialSteps": [],
   "groups": [
     {
       "id": "rooms",
-      "category": "房间",
+      "category": {
+        "ko": "방",
+        "zh": "房间",
+        "en": "rooms",
+        "ja": "部屋"
+      },
       "colorPreset": "lilac",
       "tiles": [
-        { "id": "bedroom", "languageCode": "ko", "text": "침실", "translations": { "zh": "卧室" } },
-        { "id": "kitchen", "languageCode": "ko", "text": "부엌", "translations": { "zh": "厨房" } },
-        { "id": "bathroom", "languageCode": "ko", "text": "화장실", "translations": { "zh": "洗手间" } },
-        { "id": "living-room", "languageCode": "ko", "text": "거실", "translations": { "zh": "客厅" } }
+        {
+          "id": "bedroom",
+          "text": {
+            "ko": "침실",
+            "zh": "卧室",
+            "en": "bedroom",
+            "ja": "寝室"
+          }
+        },
+        {
+          "id": "kitchen",
+          "text": {
+            "ko": "부엌",
+            "zh": "厨房",
+            "en": "kitchen",
+            "ja": "台所"
+          }
+        },
+        {
+          "id": "bathroom",
+          "text": {
+            "ko": "화장실",
+            "zh": "洗手间",
+            "en": "Toilet",
+            "ja": "トイレ"
+          }
+        },
+        {
+          "id": "living-room",
+          "text": {
+            "ko": "거실",
+            "zh": "客厅",
+            "en": "living room",
+            "ja": "リビングルーム"
+          }
+        }
       ]
     },
     {
       "id": "daily-actions",
-      "category": "日常动作",
+      "category": {
+        "ko": "일상 행동",
+        "zh": "日常动作",
+        "en": "everyday actions",
+        "ja": "日常の動作"
+      },
       "colorPreset": "mint",
       "tiles": [
-        { "id": "eat", "languageCode": "ko", "text": "먹다", "translations": { "zh": "吃" } },
-        { "id": "drink", "languageCode": "ko", "text": "마시다", "translations": { "zh": "喝" } },
-        { "id": "sleep", "languageCode": "ko", "text": "자다", "translations": { "zh": "睡觉" } },
-        { "id": "walk", "languageCode": "ko", "text": "걷다", "translations": { "zh": "走" } }
+        {
+          "id": "eat",
+          "text": {
+            "ko": "먹다",
+            "zh": "吃",
+            "en": "eat",
+            "ja": "食べる"
+          }
+        },
+        {
+          "id": "drink",
+          "text": {
+            "ko": "마시다",
+            "zh": "喝",
+            "en": "drink",
+            "ja": "飲む"
+          }
+        },
+        {
+          "id": "sleep",
+          "text": {
+            "ko": "자다",
+            "zh": "睡觉",
+            "en": "sleep",
+            "ja": "寝る"
+          }
+        },
+        {
+          "id": "walk",
+          "text": {
+            "ko": "걷다",
+            "zh": "走",
+            "en": "Walk",
+            "ja": "歩く"
+          }
+        }
       ]
     },
     {
       "id": "nature",
-      "category": "自然",
+      "category": {
+        "ko": "자연",
+        "zh": "自然",
+        "en": "nature",
+        "ja": "自然"
+      },
       "colorPreset": "sunset",
       "tiles": [
-        { "id": "mountain", "languageCode": "ko", "text": "산", "translations": { "zh": "山" } },
-        { "id": "river", "languageCode": "ko", "text": "강", "translations": { "zh": "江/河" } },
-        { "id": "sea", "languageCode": "ko", "text": "바다", "translations": { "zh": "海" } },
-        { "id": "tree", "languageCode": "ko", "text": "나무", "translations": { "zh": "树" } }
+        {
+          "id": "mountain",
+          "text": {
+            "ko": "산",
+            "zh": "山",
+            "en": "Mountain",
+            "ja": "山"
+          }
+        },
+        {
+          "id": "river",
+          "text": {
+            "ko": "강",
+            "zh": "江/河",
+            "en": "river/river",
+            "ja": "川/川"
+          }
+        },
+        {
+          "id": "sea",
+          "text": {
+            "ko": "바다",
+            "zh": "海",
+            "en": "ocean",
+            "ja": "海"
+          }
+        },
+        {
+          "id": "tree",
+          "text": {
+            "ko": "나무",
+            "zh": "树",
+            "en": "Tree",
+            "ja": "木"
+          }
+        }
       ]
     },
     {
       "id": "emotions",
-      "category": "情绪",
+      "category": {
+        "ko": "감정",
+        "zh": "情绪",
+        "en": "emotions",
+        "ja": "感情"
+      },
       "colorPreset": "rose",
       "tiles": [
-        { "id": "happy", "languageCode": "ko", "text": "행복하다", "translations": { "zh": "幸福" } },
-        { "id": "sad", "languageCode": "ko", "text": "슬프다", "translations": { "zh": "难过" } },
-        { "id": "angry", "languageCode": "ko", "text": "화나다", "translations": { "zh": "生气" } },
-        { "id": "scared", "languageCode": "ko", "text": "무섭다", "translations": { "zh": "害怕" } }
+        {
+          "id": "happy",
+          "text": {
+            "ko": "행복하다",
+            "zh": "幸福",
+            "en": "happiness",
+            "ja": "幸せ"
+          }
+        },
+        {
+          "id": "sad",
+          "text": {
+            "ko": "슬프다",
+            "zh": "难过",
+            "en": "sad",
+            "ja": "悲しい"
+          }
+        },
+        {
+          "id": "angry",
+          "text": {
+            "ko": "화나다",
+            "zh": "生气",
+            "en": "angry",
+            "ja": "怒り"
+          }
+        },
+        {
+          "id": "scared",
+          "text": {
+            "ko": "무섭다",
+            "zh": "害怕",
+            "en": "Fear",
+            "ja": "恐れ"
+          }
+        }
       ]
     },
     {
       "id": "meals",
-      "category": "三餐",
+      "category": {
+        "ko": "하루 세 끼",
+        "zh": "三餐",
+        "en": "three daily meals",
+        "ja": "一日三食"
+      },
       "colorPreset": "sky",
       "tiles": [
-        { "id": "breakfast", "languageCode": "ko", "text": "아침", "translations": { "zh": "早餐" } },
-        { "id": "lunch", "languageCode": "ko", "text": "점심", "translations": { "zh": "午餐" } },
-        { "id": "dinner", "languageCode": "ko", "text": "저녁", "translations": { "zh": "晚餐" } },
-        { "id": "snack", "languageCode": "ko", "text": "간식", "translations": { "zh": "零食" } }
+        {
+          "id": "breakfast",
+          "text": {
+            "ko": "아침",
+            "zh": "早餐",
+            "en": "breakfast",
+            "ja": "朝食"
+          }
+        },
+        {
+          "id": "lunch",
+          "text": {
+            "ko": "점심",
+            "zh": "午餐",
+            "en": "Lunch",
+            "ja": "ランチ"
+          }
+        },
+        {
+          "id": "dinner",
+          "text": {
+            "ko": "저녁",
+            "zh": "晚餐",
+            "en": "dinner",
+            "ja": "夕食"
+          }
+        },
+        {
+          "id": "snack",
+          "text": {
+            "ko": "간식",
+            "zh": "零食",
+            "en": "snack",
+            "ja": "スナック"
+          }
+        }
       ]
     }
   ]
 }
-

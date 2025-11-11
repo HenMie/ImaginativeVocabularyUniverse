@@ -3,16 +3,76 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 import { STORAGE_KEY } from '../constants/storage'
 import {
   CURRENT_PROGRESS_VERSION,
+  type LanguagePreferences,
   type LevelProgressSnapshot,
   type PlayerProgress,
 } from '../types/progress'
 import { getTotalHintCostForUsage, type HintCostKey } from '../constants/economy'
+import {
+  DEFAULT_DEFINITION_LANGUAGES,
+  DEFAULT_GAME_LANGUAGE,
+  MAX_DEFINITION_LANGUAGES,
+  MIN_DEFINITION_LANGUAGES,
+} from '../constants/languages'
+
+const normalizeLanguageCode = (code: string | undefined, fallback: string) => {
+  if (!code) return fallback
+  const trimmed = code.trim()
+  return trimmed.length ? trimmed : fallback
+}
+
+const normalizeDefinitionLanguages = (codes?: string[], fallback = DEFAULT_DEFINITION_LANGUAGES) => {
+  const pool = Array.isArray(codes) ? codes : []
+  const sanitized = Array.from(
+    new Set(pool.map((code) => code?.trim()).filter((code): code is string => Boolean(code))),
+  )
+  if (!sanitized.length) {
+    return [...fallback]
+  }
+  return sanitized.slice(0, MAX_DEFINITION_LANGUAGES)
+}
+
+const makeDefaultLanguagePreferences = (): LanguagePreferences => ({
+  game: DEFAULT_GAME_LANGUAGE,
+  definitions: [...DEFAULT_DEFINITION_LANGUAGES],
+})
+
+const resolveLanguagePreferences = (
+  base?: LanguagePreferences,
+  next?: Partial<LanguagePreferences> & { translation?: string },
+  legacyTranslation?: string,
+): LanguagePreferences => {
+  const candidate: Partial<LanguagePreferences> & { translation?: string } = {
+    ...(base ?? {}),
+    ...(next ?? {}),
+  }
+  if ((!candidate.definitions || candidate.definitions.length === 0) && candidate.translation) {
+    candidate.definitions = [candidate.translation]
+  }
+  if ((!candidate.definitions || candidate.definitions.length === 0) && legacyTranslation) {
+    candidate.definitions = [legacyTranslation]
+  }
+  let definitions = normalizeDefinitionLanguages(candidate.definitions)
+  if (definitions.length < MIN_DEFINITION_LANGUAGES) {
+    const fallback = DEFAULT_DEFINITION_LANGUAGES.filter(
+      (code) => !definitions.includes(code),
+    )
+    definitions = [...definitions, ...fallback]
+  }
+  if (!definitions.length) {
+    definitions = [...DEFAULT_DEFINITION_LANGUAGES]
+  }
+  return {
+    game: normalizeLanguageCode(candidate.game, DEFAULT_GAME_LANGUAGE),
+    definitions: definitions.slice(0, MAX_DEFINITION_LANGUAGES),
+  }
+}
 
 const makeDefaultProgress = (): PlayerProgress => ({
   version: CURRENT_PROGRESS_VERSION,
   coins: 120,
   unlockedLevelIds: ['level-001'],
-  activeLanguage: 'ko',
+  languagePreferences: makeDefaultLanguagePreferences(),
   seenTutorials: [],
   levelSnapshots: {},
   settings: {
@@ -111,6 +171,8 @@ interface ProgressState {
   setProgress: (data: Partial<PlayerProgress>) => void
   resetProgress: () => void
   importProgress: (payload: PlayerProgress) => void
+  setGameLanguage: (code: string) => void
+  setDefinitionLanguages: (codes: string[]) => void
   updateLevelSnapshot: (
     levelId: string,
     updater: (snapshot: LevelProgressSnapshot) => LevelProgressSnapshot,
@@ -136,33 +198,89 @@ export const useProgressStore = create<ProgressState>()(
       progress: makeDefaultProgress(),
       debugMode: false,
       setProgress: (data) =>
-        set((state) => ({
-          progress: {
-            ...state.progress,
-            ...data,
-            version: CURRENT_PROGRESS_VERSION,
-            settings: {
-              ...state.progress.settings,
-              ...data.settings,
+        set((state) => {
+          const legacyTranslation = (data as { activeLanguage?: string }).activeLanguage
+          const nextPreferences = resolveLanguagePreferences(
+            state.progress.languagePreferences,
+            data.languagePreferences,
+            legacyTranslation,
+          )
+          return {
+            progress: {
+              ...state.progress,
+              ...data,
+              languagePreferences: nextPreferences,
+              version: CURRENT_PROGRESS_VERSION,
+              settings: {
+                ...state.progress.settings,
+                ...data.settings,
+              },
             },
-          },
-        })),
+          }
+        }),
       resetProgress: () =>
         set({
           progress: makeDefaultProgress(),
         }),
       importProgress: (payload) =>
-        set(() => ({
-          progress: {
-            ...makeDefaultProgress(),
-            ...payload,
-            version: CURRENT_PROGRESS_VERSION,
-            settings: {
-              ...makeDefaultProgress().settings,
-              ...payload.settings,
+        set(() => {
+          const base = makeDefaultProgress()
+          const legacyTranslation = (payload as { activeLanguage?: string }).activeLanguage
+          const nextPreferences = resolveLanguagePreferences(
+            base.languagePreferences,
+            payload.languagePreferences,
+            legacyTranslation,
+          )
+          return {
+            progress: {
+              ...base,
+              ...payload,
+              languagePreferences: nextPreferences,
+              version: CURRENT_PROGRESS_VERSION,
+              settings: {
+                ...base.settings,
+                ...payload.settings,
+              },
             },
-          },
-        })),
+          }
+        }),
+      setGameLanguage: (code) =>
+        set((state) => {
+          const nextPreferences = resolveLanguagePreferences(state.progress.languagePreferences, {
+            game: code,
+          })
+          if (state.progress.languagePreferences.game === nextPreferences.game) {
+            return state
+          }
+          return {
+            progress: {
+              ...state.progress,
+              languagePreferences: nextPreferences,
+            },
+          }
+        }),
+      setDefinitionLanguages: (codes) =>
+        set((state) => {
+          const nextPreferences = resolveLanguagePreferences(state.progress.languagePreferences, {
+            definitions: codes,
+          })
+          const sameLength =
+            state.progress.languagePreferences.definitions.length === nextPreferences.definitions.length
+          const sameSet =
+            sameLength &&
+            state.progress.languagePreferences.definitions.every((code) =>
+              nextPreferences.definitions.includes(code),
+            )
+          if (sameLength && sameSet) {
+            return state
+          }
+          return {
+            progress: {
+              ...state.progress,
+              languagePreferences: nextPreferences,
+            },
+          }
+        }),
       updateLevelSnapshot: (levelId, updater) =>
         set((state) => {
           const previous =
@@ -325,6 +443,11 @@ export const useProgressStore = create<ProgressState>()(
             ...(restored.settings ?? {}),
           },
         }
+        mergedProgress.languagePreferences = resolveLanguagePreferences(
+          current.progress.languagePreferences,
+          restored.languagePreferences,
+          (restored as { activeLanguage?: string }).activeLanguage,
+        )
         return {
           ...current,
           progress: mergedProgress,

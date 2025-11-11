@@ -1,76 +1,302 @@
 {
   "id": "level-020",
-  "name": "关卡20",
   "difficulty": "hard",
-  "version": 1,
-  "languageCodes": ["ko", "zh"],
+  "version": 2,
+  "language": [
+    "ko",
+    "zh",
+    "en",
+    "ja"
+  ],
+  "tutorialSteps": [],
   "groups": [
     {
       "id": "streaming-platforms",
-      "category": "流媒体",
+      "category": {
+        "ko": "스트리밍",
+        "zh": "流媒体",
+        "en": "streaming media",
+        "ja": "ストリーミングメディア"
+      },
       "colorPreset": "indigo",
       "tiles": [
-        { "id": "subscription", "languageCode": "ko", "text": "구독", "translations": { "zh": "订阅" } },
-        { "id": "recommendation", "languageCode": "ko", "text": "추천", "translations": { "zh": "推荐" } },
-        { "id": "algorithm", "languageCode": "ko", "text": "알고리즘", "translations": { "zh": "算法" } },
-        { "id": "autoplay", "languageCode": "ko", "text": "자동재생", "translations": { "zh": "自动播放" } }
+        {
+          "id": "subscription",
+          "text": {
+            "ko": "구독",
+            "zh": "订阅",
+            "en": "subscription",
+            "ja": "サブスクリプション"
+          }
+        },
+        {
+          "id": "recommendation",
+          "text": {
+            "ko": "추천",
+            "zh": "推荐",
+            "en": "recommend",
+            "ja": "推薦する"
+          }
+        },
+        {
+          "id": "algorithm",
+          "text": {
+            "ko": "알고리즘",
+            "zh": "算法",
+            "en": "algorithm",
+            "ja": "アルゴリズム"
+          }
+        },
+        {
+          "id": "autoplay",
+          "text": {
+            "ko": "자동재생",
+            "zh": "自动播放",
+            "en": "Autoplay",
+            "ja": "自動再生"
+          }
+        }
       ]
     },
     {
       "id": "online-shopping",
-      "category": "网购行为",
+      "category": {
+        "ko": "온라인 쇼핑 행동",
+        "zh": "网购行为",
+        "en": "online shopping behaviors",
+        "ja": "ネット通販の行動"
+      },
       "colorPreset": "gold",
       "tiles": [
-        { "id": "cart", "languageCode": "ko", "text": "장바구니", "translations": { "zh": "购物车" } },
-        { "id": "wishlist", "languageCode": "ko", "text": "찜", "translations": { "zh": "收藏" } },
-        { "id": "review", "languageCode": "ko", "text": "리뷰", "translations": { "zh": "评价" } },
-        { "id": "return", "languageCode": "ko", "text": "반품", "translations": { "zh": "退货" } }
+        {
+          "id": "cart",
+          "text": {
+            "ko": "장바구니",
+            "zh": "购物车",
+            "en": "shopping cart",
+            "ja": "ショッピングカート"
+          }
+        },
+        {
+          "id": "wishlist",
+          "text": {
+            "ko": "찜",
+            "zh": "收藏",
+            "en": "collect",
+            "ja": "集める"
+          }
+        },
+        {
+          "id": "review",
+          "text": {
+            "ko": "리뷰",
+            "zh": "评价",
+            "en": "evaluate",
+            "ja": "評価する"
+          }
+        },
+        {
+          "id": "return",
+          "text": {
+            "ko": "반품",
+            "zh": "退货",
+            "en": "return the goods",
+            "ja": "商品を返品する"
+          }
+        }
       ]
     },
     {
       "id": "freelance-work",
-      "category": "自由职业",
+      "category": {
+        "ko": "프리랜서",
+        "zh": "自由职业",
+        "en": "freelancing",
+        "ja": "フリーランス"
+      },
       "colorPreset": "teal",
       "tiles": [
-        { "id": "freelancer", "languageCode": "ko", "text": "프리랜서", "translations": { "zh": "自由职业者" } },
-        { "id": "portfolio", "languageCode": "ko", "text": "포트폴리오", "translations": { "zh": "作品集" } },
-        { "id": "client", "languageCode": "ko", "text": "클라이언트", "translations": { "zh": "客户" } },
-        { "id": "deadline", "languageCode": "ko", "text": "마감 기한", "translations": { "zh": "截止期限" } }
+        {
+          "id": "freelancer",
+          "text": {
+            "ko": "프리랜서",
+            "zh": "自由职业者",
+            "en": "freelancer",
+            "ja": "フリーランサー"
+          }
+        },
+        {
+          "id": "portfolio",
+          "text": {
+            "ko": "포트폴리오",
+            "zh": "作品集",
+            "en": "Portfolio",
+            "ja": "ポートフォリオ"
+          }
+        },
+        {
+          "id": "client",
+          "text": {
+            "ko": "클라이언트",
+            "zh": "客户",
+            "en": "client",
+            "ja": "クライアント"
+          }
+        },
+        {
+          "id": "deadline",
+          "text": {
+            "ko": "마감 기한",
+            "zh": "截止期限",
+            "en": "Deadline",
+            "ja": "締め切り"
+          }
+        }
       ]
     },
     {
       "id": "campus-life",
-      "category": "校园生活",
+      "category": {
+        "ko": "캠퍼스 생활",
+        "zh": "校园生活",
+        "en": "campus life",
+        "ja": "キャンパスライフ"
+      },
       "colorPreset": "rose",
       "tiles": [
-        { "id": "orientation", "languageCode": "ko", "text": "오리엔테이션", "translations": { "zh": "迎新" } },
-        { "id": "club", "languageCode": "ko", "text": "동아리", "translations": { "zh": "社团" } },
-        { "id": "festival", "languageCode": "ko", "text": "축제", "translations": { "zh": "校园节" } },
-        { "id": "graduate", "languageCode": "ko", "text": "졸업", "translations": { "zh": "毕业" } }
+        {
+          "id": "orientation",
+          "text": {
+            "ko": "오리엔테이션",
+            "zh": "迎新",
+            "en": "Welcome",
+            "ja": "いらっしゃいませ"
+          }
+        },
+        {
+          "id": "club",
+          "text": {
+            "ko": "동아리",
+            "zh": "社团",
+            "en": "Societies",
+            "ja": "社会"
+          }
+        },
+        {
+          "id": "festival",
+          "text": {
+            "ko": "축제",
+            "zh": "校园节",
+            "en": "Campus Festival",
+            "ja": "キャンパスフェスティバル"
+          }
+        },
+        {
+          "id": "graduate",
+          "text": {
+            "ko": "졸업",
+            "zh": "毕业",
+            "en": "graduate",
+            "ja": "卒業"
+          }
+        }
       ]
     },
     {
       "id": "self-improvement",
-      "category": "自我提升",
+      "category": {
+        "ko": "자기 계발",
+        "zh": "自我提升",
+        "en": "self improvement",
+        "ja": "自己啓発"
+      },
       "colorPreset": "sky",
       "tiles": [
-        { "id": "online-course", "languageCode": "ko", "text": "온라인 강의", "translations": { "zh": "线上课程" } },
-        { "id": "certification", "languageCode": "ko", "text": "자격증", "translations": { "zh": "资格证" } },
-        { "id": "side-project", "languageCode": "ko", "text": "사이드 프로젝트", "translations": { "zh": "副业项目" } },
-        { "id": "networking", "languageCode": "ko", "text": "네트워킹", "translations": { "zh": "人脉拓展" } }
+        {
+          "id": "online-course",
+          "text": {
+            "ko": "온라인 강의",
+            "zh": "线上课程",
+            "en": "Online courses",
+            "ja": "オンラインコース"
+          }
+        },
+        {
+          "id": "certification",
+          "text": {
+            "ko": "자격증",
+            "zh": "资格证",
+            "en": "Qualification certificate",
+            "ja": "資格証明書"
+          }
+        },
+        {
+          "id": "side-project",
+          "text": {
+            "ko": "사이드 프로젝트",
+            "zh": "副业项目",
+            "en": "Side project",
+            "ja": "サイドプロジェクト"
+          }
+        },
+        {
+          "id": "networking",
+          "text": {
+            "ko": "네트워킹",
+            "zh": "人脉拓展",
+            "en": "Network development",
+            "ja": "ネットワーク開発"
+          }
+        }
       ]
     },
     {
       "id": "minimalism",
-      "category": "极简主义",
+      "category": {
+        "ko": "미니멀리즘",
+        "zh": "极简主义",
+        "en": "minimalism",
+        "ja": "ミニマリズム"
+      },
       "colorPreset": "emerald",
       "tiles": [
-        { "id": "declutter", "languageCode": "ko", "text": "정리정돈", "translations": { "zh": "断舍离" } },
-        { "id": "simple-living", "languageCode": "ko", "text": "미니멀 라이프", "translations": { "zh": "极简生活" } },
-        { "id": "essential", "languageCode": "ko", "text": "필수품", "translations": { "zh": "必需品" } },
-        { "id": "sustainable", "languageCode": "ko", "text": "지속가능", "translations": { "zh": "可持续" } }
+        {
+          "id": "declutter",
+          "text": {
+            "ko": "정리정돈",
+            "zh": "断舍离",
+            "en": "break away",
+            "ja": "離脱する"
+          }
+        },
+        {
+          "id": "simple-living",
+          "text": {
+            "ko": "미니멀 라이프",
+            "zh": "极简生活",
+            "en": "minimalist life",
+            "ja": "ミニマリストの生活"
+          }
+        },
+        {
+          "id": "essential",
+          "text": {
+            "ko": "필수품",
+            "zh": "必需品",
+            "en": "necessity",
+            "ja": "必要性"
+          }
+        },
+        {
+          "id": "sustainable",
+          "text": {
+            "ko": "지속가능",
+            "zh": "可持续",
+            "en": "sustainable",
+            "ja": "持続可能な"
+          }
+        }
       ]
     }
   ]
 }
-

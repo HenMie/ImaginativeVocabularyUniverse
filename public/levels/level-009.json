@@ -1,166 +1,254 @@
 {
   "id": "level-009",
-  "name": "关卡9",
   "difficulty": "medium",
-  "version": 1,
-  "languageCodes": ["ko", "zh"],
+  "version": 2,
+  "language": [
+    "ko",
+    "zh",
+    "en",
+    "ja"
+  ],
+  "tutorialSteps": [],
   "groups": [
     {
       "id": "natural-cycles",
-      "category": "自然循环",
+      "category": {
+        "ko": "자연 순환",
+        "zh": "自然循环",
+        "en": "natural cycles",
+        "ja": "自然の循環"
+      },
       "colorPreset": "indigo",
       "tiles": [
         {
           "id": "evaporation",
-          "languageCode": "ko",
-          "text": "증발",
-          "translations": { "zh": "蒸发" }
+          "text": {
+            "ko": "증발",
+            "zh": "蒸发",
+            "en": "evaporation",
+            "ja": "蒸発"
+          }
         },
         {
           "id": "condensation",
-          "languageCode": "ko",
-          "text": "응결",
-          "translations": { "zh": "凝结" }
+          "text": {
+            "ko": "응결",
+            "zh": "凝结",
+            "en": "condensation",
+            "ja": "結露"
+          }
         },
         {
           "id": "erosion",
-          "languageCode": "ko",
-          "text": "침식",
-          "translations": { "zh": "侵蚀" }
+          "text": {
+            "ko": "침식",
+            "zh": "侵蚀",
+            "en": "erosion",
+            "ja": "侵食"
+          }
         },
         {
           "id": "deposition",
-          "languageCode": "ko",
-          "text": "퇴적",
-          "translations": { "zh": "沉积" }
+          "text": {
+            "ko": "퇴적",
+            "zh": "沉积",
+            "en": "deposition",
+            "ja": "堆積"
+          }
         }
       ]
     },
     {
       "id": "policy-tools",
-      "category": "政策工具",
+      "category": {
+        "ko": "정책 수단",
+        "zh": "政策工具",
+        "en": "policy tools",
+        "ja": "政策手段"
+      },
       "colorPreset": "orange",
       "tiles": [
         {
           "id": "subsidy",
-          "languageCode": "ko",
-          "text": "보조금",
-          "translations": { "zh": "补贴" }
+          "text": {
+            "ko": "보조금",
+            "zh": "补贴",
+            "en": "subsidy",
+            "ja": "補助金"
+          }
         },
         {
           "id": "regulation",
-          "languageCode": "ko",
-          "text": "규제",
-          "translations": { "zh": "监管" }
+          "text": {
+            "ko": "규제",
+            "zh": "监管",
+            "en": "supervision",
+            "ja": "監督"
+          }
         },
         {
           "id": "taxation",
-          "languageCode": "ko",
-          "text": "과세",
-          "translations": { "zh": "征税" }
+          "text": {
+            "ko": "과세",
+            "zh": "征税",
+            "en": "tax",
+            "ja": "税"
+          }
         },
         {
           "id": "incentive",
-          "languageCode": "ko",
-          "text": "인센티브",
-          "translations": { "zh": "激励" }
+          "text": {
+            "ko": "인센티브",
+            "zh": "激励",
+            "en": "excitation",
+            "ja": "励起"
+          }
         }
       ]
     },
     {
       "id": "psych-processes",
-      "category": "心理过程",
+      "category": {
+        "ko": "심리 과정",
+        "zh": "心理过程",
+        "en": "psychological processes",
+        "ja": "心理過程"
+      },
       "colorPreset": "gold",
       "tiles": [
         {
           "id": "attention",
-          "languageCode": "ko",
-          "text": "주의",
-          "translations": { "zh": "注意" }
+          "text": {
+            "ko": "주의",
+            "zh": "注意",
+            "en": "Notice",
+            "ja": "知らせ"
+          }
         },
         {
           "id": "memory",
-          "languageCode": "ko",
-          "text": "기억",
-          "translations": { "zh": "记忆" }
+          "text": {
+            "ko": "기억",
+            "zh": "记忆",
+            "en": "memory",
+            "ja": "メモリ"
+          }
         },
         {
           "id": "learning",
-          "languageCode": "ko",
-          "text": "학습",
-          "translations": { "zh": "学习" }
+          "text": {
+            "ko": "학습",
+            "zh": "学习",
+            "en": "study",
+            "ja": "勉強"
+          }
         },
         {
           "id": "motivation",
-          "languageCode": "ko",
-          "text": "동기",
-          "translations": { "zh": "动机" }
+          "text": {
+            "ko": "동기",
+            "zh": "动机",
+            "en": "motivation",
+            "ja": "モチベーション"
+          }
         }
       ]
     },
     {
       "id": "risk-management",
-      "category": "风险管理",
+      "category": {
+        "ko": "리스크 관리",
+        "zh": "风险管理",
+        "en": "risk management",
+        "ja": "リスク管理"
+      },
       "colorPreset": "teal",
       "tiles": [
         {
           "id": "risk",
-          "languageCode": "ko",
-          "text": "리스크",
-          "translations": { "zh": "风险" }
+          "text": {
+            "ko": "리스크",
+            "zh": "风险",
+            "en": "risk",
+            "ja": "リスク"
+          }
         },
         {
           "id": "uncertainty",
-          "languageCode": "ko",
-          "text": "불확실성",
-          "translations": { "zh": "不确定性" }
+          "text": {
+            "ko": "불확실성",
+            "zh": "不确定性",
+            "en": "uncertainty",
+            "ja": "不確実性"
+          }
         },
         {
           "id": "mitigation",
-          "languageCode": "ko",
-          "text": "완화",
-          "translations": { "zh": "缓解" }
+          "text": {
+            "ko": "완화",
+            "zh": "缓解",
+            "en": "ease",
+            "ja": "容易に"
+          }
         },
         {
           "id": "resilience",
-          "languageCode": "ko",
-          "text": "회복탄력성",
-          "translations": { "zh": "韧性" }
+          "text": {
+            "ko": "회복탄력성",
+            "zh": "韧性",
+            "en": "toughness",
+            "ja": "靭性"
+          }
         }
       ]
     },
     {
       "id": "energy-types",
-      "category": "能源类型",
+      "category": {
+        "ko": "에너지 유형",
+        "zh": "能源类型",
+        "en": "energy types",
+        "ja": "エネルギーの種類"
+      },
       "colorPreset": "emerald",
       "tiles": [
         {
           "id": "renewable-energy",
-          "languageCode": "ko",
-          "text": "재생에너지",
-          "translations": { "zh": "可再生能源" }
+          "text": {
+            "ko": "재생에너지",
+            "zh": "可再生能源",
+            "en": "renewable energy",
+            "ja": "再生可能エネルギー"
+          }
         },
         {
           "id": "fossil-fuel",
-          "languageCode": "ko",
-          "text": "화석연료",
-          "translations": { "zh": "化石燃料" }
+          "text": {
+            "ko": "화석연료",
+            "zh": "化石燃料",
+            "en": "fossil fuels",
+            "ja": "化石燃料"
+          }
         },
         {
           "id": "electricity",
-          "languageCode": "ko",
-          "text": "전력",
-          "translations": { "zh": "电力" }
+          "text": {
+            "ko": "전력",
+            "zh": "电力",
+            "en": "electricity",
+            "ja": "電気"
+          }
         },
         {
           "id": "hydrogen",
-          "languageCode": "ko",
-          "text": "수소",
-          "translations": { "zh": "氢" }
+          "text": {
+            "ko": "수소",
+            "zh": "氢",
+            "en": "hydrogen",
+            "ja": "水素"
+          }
         }
       ]
     }
   ]
 }
-
-

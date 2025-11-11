@@ -1,197 +1,302 @@
 {
   "id": "level-007",
-  "name": "关卡7",
   "difficulty": "easy",
-  "version": 1,
-  "languageCodes": ["ko", "zh"],
+  "version": 2,
+  "language": [
+    "ko",
+    "zh",
+    "en",
+    "ja"
+  ],
+  "tutorialSteps": [],
   "groups": [
     {
       "id": "city-facilities",
-      "category": "城市设施",
+      "category": {
+        "ko": "도시 시설",
+        "zh": "城市设施",
+        "en": "urban facilities",
+        "ja": "都市施設"
+      },
       "colorPreset": "lilac",
       "tiles": [
         {
           "id": "park",
-          "languageCode": "ko",
-          "text": "공원",
-          "translations": { "zh": "公园" }
+          "text": {
+            "ko": "공원",
+            "zh": "公园",
+            "en": "garden",
+            "ja": "庭"
+          }
         },
         {
           "id": "market",
-          "languageCode": "ko",
-          "text": "시장",
-          "translations": { "zh": "市场" }
+          "text": {
+            "ko": "시장",
+            "zh": "市场",
+            "en": "market",
+            "ja": "市場"
+          }
         },
         {
           "id": "hospital",
-          "languageCode": "ko",
-          "text": "병원",
-          "translations": { "zh": "医院" }
+          "text": {
+            "ko": "병원",
+            "zh": "医院",
+            "en": "Hospital",
+            "ja": "病院"
+          }
         },
         {
           "id": "school",
-          "languageCode": "ko",
-          "text": "학교",
-          "translations": { "zh": "学校" }
+          "text": {
+            "ko": "학교",
+            "zh": "学校",
+            "en": "School",
+            "ja": "学校"
+          }
         }
       ]
     },
     {
       "id": "weather-basic",
-      "category": "天气",
+      "category": {
+        "ko": "날씨",
+        "zh": "天气",
+        "en": "weather",
+        "ja": "天気"
+      },
       "colorPreset": "mint",
       "tiles": [
         {
           "id": "rain",
-          "languageCode": "ko",
-          "text": "비",
-          "translations": { "zh": "雨" }
+          "text": {
+            "ko": "비",
+            "zh": "雨",
+            "en": "rain",
+            "ja": "雨"
+          }
         },
         {
           "id": "snow",
-          "languageCode": "ko",
-          "text": "눈",
-          "translations": { "zh": "雪" }
+          "text": {
+            "ko": "눈",
+            "zh": "雪",
+            "en": "Snow",
+            "ja": "雪"
+          }
         },
         {
           "id": "wind",
-          "languageCode": "ko",
-          "text": "바람",
-          "translations": { "zh": "风" }
+          "text": {
+            "ko": "바람",
+            "zh": "风",
+            "en": "wind",
+            "ja": "風"
+          }
         },
         {
           "id": "cloud",
-          "languageCode": "ko",
-          "text": "구름",
-          "translations": { "zh": "云" }
+          "text": {
+            "ko": "구름",
+            "zh": "云",
+            "en": "cloud",
+            "ja": "雲"
+          }
         }
       ]
     },
     {
       "id": "family-members",
-      "category": "家庭成员",
+      "category": {
+        "ko": "가족 구성원",
+        "zh": "家庭成员",
+        "en": "family members",
+        "ja": "家族のメンバー"
+      },
       "colorPreset": "sunset",
       "tiles": [
         {
           "id": "father",
-          "languageCode": "ko",
-          "text": "아버지",
-          "translations": { "zh": "父亲" }
+          "text": {
+            "ko": "아버지",
+            "zh": "父亲",
+            "en": "Father",
+            "ja": "父親"
+          }
         },
         {
           "id": "mother",
-          "languageCode": "ko",
-          "text": "어머니",
-          "translations": { "zh": "母亲" }
+          "text": {
+            "ko": "어머니",
+            "zh": "母亲",
+            "en": "Mother",
+            "ja": "母親"
+          }
         },
         {
           "id": "older-brother-male",
-          "languageCode": "ko",
-          "text": "형",
-          "translations": { "zh": "哥哥（男称）" }
+          "text": {
+            "ko": "형",
+            "zh": "哥哥（男称）",
+            "en": "Brother (male name)",
+            "ja": "弟（男性名）"
+          }
         },
         {
           "id": "older-sister-male",
-          "languageCode": "ko",
-          "text": "누나",
-          "translations": { "zh": "姐姐（男称）" }
+          "text": {
+            "ko": "누나",
+            "zh": "姐姐（男称）",
+            "en": "Sister (male name)",
+            "ja": "妹（男性名）"
+          }
         }
       ]
     },
     {
       "id": "hobbies",
-      "category": "兴趣爱好",
+      "category": {
+        "ko": "취미와 관심사",
+        "zh": "兴趣爱好",
+        "en": "hobbies and interests",
+        "ja": "趣味と関心"
+      },
       "colorPreset": "rose",
       "tiles": [
         {
           "id": "movie",
-          "languageCode": "ko",
-          "text": "영화",
-          "translations": { "zh": "电影" }
+          "text": {
+            "ko": "영화",
+            "zh": "电影",
+            "en": "Movie",
+            "ja": "映画"
+          }
         },
         {
           "id": "music",
-          "languageCode": "ko",
-          "text": "음악",
-          "translations": { "zh": "音乐" }
+          "text": {
+            "ko": "음악",
+            "zh": "音乐",
+            "en": "music",
+            "ja": "音楽"
+          }
         },
         {
           "id": "reading",
-          "languageCode": "ko",
-          "text": "독서",
-          "translations": { "zh": "读书" }
+          "text": {
+            "ko": "독서",
+            "zh": "读书",
+            "en": "read",
+            "ja": "読む"
+          }
         },
         {
           "id": "travel",
-          "languageCode": "ko",
-          "text": "여행",
-          "translations": { "zh": "旅行" }
+          "text": {
+            "ko": "여행",
+            "zh": "旅行",
+            "en": "travel",
+            "ja": "旅行"
+          }
         }
       ]
     },
     {
       "id": "clothing",
-      "category": "衣物",
+      "category": {
+        "ko": "의류",
+        "zh": "衣物",
+        "en": "clothing",
+        "ja": "衣類"
+      },
       "colorPreset": "sky",
       "tiles": [
         {
           "id": "hat",
-          "languageCode": "ko",
-          "text": "모자",
-          "translations": { "zh": "帽子" }
+          "text": {
+            "ko": "모자",
+            "zh": "帽子",
+            "en": "hat",
+            "ja": "帽子"
+          }
         },
         {
           "id": "shirt",
-          "languageCode": "ko",
-          "text": "셔츠",
-          "translations": { "zh": "衬衫" }
+          "text": {
+            "ko": "셔츠",
+            "zh": "衬衫",
+            "en": "shirt",
+            "ja": "シャツ"
+          }
         },
         {
           "id": "pants",
-          "languageCode": "ko",
-          "text": "바지",
-          "translations": { "zh": "裤子" }
+          "text": {
+            "ko": "바지",
+            "zh": "裤子",
+            "en": "Pants",
+            "ja": "パンツ"
+          }
         },
         {
           "id": "shoes",
-          "languageCode": "ko",
-          "text": "신발",
-          "translations": { "zh": "鞋子" }
+          "text": {
+            "ko": "신발",
+            "zh": "鞋子",
+            "en": "shoe",
+            "ja": "靴"
+          }
         }
       ]
     },
     {
       "id": "tastes",
-      "category": "口味",
+      "category": {
+        "ko": "맛",
+        "zh": "口味",
+        "en": "flavors",
+        "ja": "味"
+      },
       "colorPreset": "purple",
       "tiles": [
         {
           "id": "sweet",
-          "languageCode": "ko",
-          "text": "달다",
-          "translations": { "zh": "甜" }
+          "text": {
+            "ko": "달다",
+            "zh": "甜",
+            "en": "sweet",
+            "ja": "甘い"
+          }
         },
         {
           "id": "salty",
-          "languageCode": "ko",
-          "text": "짜다",
-          "translations": { "zh": "咸" }
+          "text": {
+            "ko": "짜다",
+            "zh": "咸",
+            "en": "salty",
+            "ja": "塩辛い"
+          }
         },
         {
           "id": "spicy",
-          "languageCode": "ko",
-          "text": "맵다",
-          "translations": { "zh": "辣" }
+          "text": {
+            "ko": "맵다",
+            "zh": "辣",
+            "en": "hot",
+            "ja": "熱い"
+          }
         },
         {
           "id": "bland",
-          "languageCode": "ko",
-          "text": "싱겁다",
-          "translations": { "zh": "淡" }
+          "text": {
+            "ko": "싱겁다",
+            "zh": "淡",
+            "en": "light",
+            "ja": "ライト"
+          }
         }
       ]
     }
   ]
 }
-
-

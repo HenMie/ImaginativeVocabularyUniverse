@@ -1,65 +1,254 @@
 {
   "id": "level-017",
-  "name": "关卡17",
   "difficulty": "easy",
-  "version": 1,
-  "languageCodes": ["ko", "zh"],
+  "version": 2,
+  "language": [
+    "ko",
+    "zh",
+    "en",
+    "ja"
+  ],
+  "tutorialSteps": [],
   "groups": [
     {
       "id": "shops",
-      "category": "商店",
+      "category": {
+        "ko": "가게",
+        "zh": "商店",
+        "en": "shops",
+        "ja": "店"
+      },
       "colorPreset": "lilac",
       "tiles": [
-        { "id": "bakery", "languageCode": "ko", "text": "빵집", "translations": { "zh": "面包店" } },
-        { "id": "bookstore", "languageCode": "ko", "text": "서점", "translations": { "zh": "书店" } },
-        { "id": "convenience-store", "languageCode": "ko", "text": "편의점", "translations": { "zh": "便利店" } },
-        { "id": "flower-shop", "languageCode": "ko", "text": "꽃집", "translations": { "zh": "花店" } }
+        {
+          "id": "bakery",
+          "text": {
+            "ko": "빵집",
+            "zh": "面包店",
+            "en": "bakery",
+            "ja": "ベーカリー"
+          }
+        },
+        {
+          "id": "bookstore",
+          "text": {
+            "ko": "서점",
+            "zh": "书店",
+            "en": "bookstore",
+            "ja": "本屋"
+          }
+        },
+        {
+          "id": "convenience-store",
+          "text": {
+            "ko": "편의점",
+            "zh": "便利店",
+            "en": "convenience store",
+            "ja": "コンビニエンスストア"
+          }
+        },
+        {
+          "id": "flower-shop",
+          "text": {
+            "ko": "꽃집",
+            "zh": "花店",
+            "en": "flower shop",
+            "ja": "花屋"
+          }
+        }
       ]
     },
     {
       "id": "electronics",
-      "category": "电子产品",
+      "category": {
+        "ko": "전자 제품",
+        "zh": "电子产品",
+        "en": "electronics",
+        "ja": "電子製品"
+      },
       "colorPreset": "mint",
       "tiles": [
-        { "id": "phone", "languageCode": "ko", "text": "휴대폰", "translations": { "zh": "手机" } },
-        { "id": "computer", "languageCode": "ko", "text": "컴퓨터", "translations": { "zh": "电脑" } },
-        { "id": "tablet", "languageCode": "ko", "text": "태블릿", "translations": { "zh": "平板" } },
-        { "id": "earphones", "languageCode": "ko", "text": "이어폰", "translations": { "zh": "耳机" } }
+        {
+          "id": "phone",
+          "text": {
+            "ko": "휴대폰",
+            "zh": "手机",
+            "en": "cell phone",
+            "ja": "携帯電話"
+          }
+        },
+        {
+          "id": "computer",
+          "text": {
+            "ko": "컴퓨터",
+            "zh": "电脑",
+            "en": "computer",
+            "ja": "コンピューター"
+          }
+        },
+        {
+          "id": "tablet",
+          "text": {
+            "ko": "태블릿",
+            "zh": "平板",
+            "en": "flat",
+            "ja": "フラット"
+          }
+        },
+        {
+          "id": "earphones",
+          "text": {
+            "ko": "이어폰",
+            "zh": "耳机",
+            "en": "earphone",
+            "ja": "イヤホン"
+          }
+        }
       ]
     },
     {
       "id": "musical-instruments",
-      "category": "乐器",
+      "category": {
+        "ko": "악기",
+        "zh": "乐器",
+        "en": "musical instruments",
+        "ja": "楽器"
+      },
       "colorPreset": "sunset",
       "tiles": [
-        { "id": "piano", "languageCode": "ko", "text": "피아노", "translations": { "zh": "钢琴" } },
-        { "id": "guitar", "languageCode": "ko", "text": "기타", "translations": { "zh": "吉他" } },
-        { "id": "drum", "languageCode": "ko", "text": "드럼", "translations": { "zh": "鼓" } },
-        { "id": "violin", "languageCode": "ko", "text": "바이올린", "translations": { "zh": "小提琴" } }
+        {
+          "id": "piano",
+          "text": {
+            "ko": "피아노",
+            "zh": "钢琴",
+            "en": "piano",
+            "ja": "ピアノ"
+          }
+        },
+        {
+          "id": "guitar",
+          "text": {
+            "ko": "기타",
+            "zh": "吉他",
+            "en": "Guitar",
+            "ja": "ギター"
+          }
+        },
+        {
+          "id": "drum",
+          "text": {
+            "ko": "드럼",
+            "zh": "鼓",
+            "en": "drum",
+            "ja": "ドラム"
+          }
+        },
+        {
+          "id": "violin",
+          "text": {
+            "ko": "바이올린",
+            "zh": "小提琴",
+            "en": "violin",
+            "ja": "バイオリン"
+          }
+        }
       ]
     },
     {
       "id": "sports",
-      "category": "运动",
+      "category": {
+        "ko": "운동",
+        "zh": "运动",
+        "en": "sports",
+        "ja": "スポーツ"
+      },
       "colorPreset": "rose",
       "tiles": [
-        { "id": "soccer", "languageCode": "ko", "text": "축구", "translations": { "zh": "足球" } },
-        { "id": "basketball", "languageCode": "ko", "text": "농구", "translations": { "zh": "篮球" } },
-        { "id": "baseball", "languageCode": "ko", "text": "야구", "translations": { "zh": "棒球" } },
-        { "id": "swimming", "languageCode": "ko", "text": "수영", "translations": { "zh": "游泳" } }
+        {
+          "id": "soccer",
+          "text": {
+            "ko": "축구",
+            "zh": "足球",
+            "en": "football",
+            "ja": "フットボール"
+          }
+        },
+        {
+          "id": "basketball",
+          "text": {
+            "ko": "농구",
+            "zh": "篮球",
+            "en": "basketball",
+            "ja": "バスケットボール"
+          }
+        },
+        {
+          "id": "baseball",
+          "text": {
+            "ko": "야구",
+            "zh": "棒球",
+            "en": "baseball",
+            "ja": "野球"
+          }
+        },
+        {
+          "id": "swimming",
+          "text": {
+            "ko": "수영",
+            "zh": "游泳",
+            "en": "swim",
+            "ja": "泳ぐ"
+          }
+        }
       ]
     },
     {
       "id": "cooking-methods",
-      "category": "烹饪方式",
+      "category": {
+        "ko": "조리 방법",
+        "zh": "烹饪方式",
+        "en": "cooking methods",
+        "ja": "調理法"
+      },
       "colorPreset": "sky",
       "tiles": [
-        { "id": "boil", "languageCode": "ko", "text": "삶다", "translations": { "zh": "煮" } },
-        { "id": "fry", "languageCode": "ko", "text": "튀기다", "translations": { "zh": "炸" } },
-        { "id": "grill", "languageCode": "ko", "text": "굽다", "translations": { "zh": "烤" } },
-        { "id": "steam", "languageCode": "ko", "text": "찌다", "translations": { "zh": "蒸" } }
+        {
+          "id": "boil",
+          "text": {
+            "ko": "삶다",
+            "zh": "煮",
+            "en": "cook",
+            "ja": "料理する"
+          }
+        },
+        {
+          "id": "fry",
+          "text": {
+            "ko": "튀기다",
+            "zh": "炸",
+            "en": "fry",
+            "ja": "稚魚"
+          }
+        },
+        {
+          "id": "grill",
+          "text": {
+            "ko": "굽다",
+            "zh": "烤",
+            "en": "bake",
+            "ja": "焼く"
+          }
+        },
+        {
+          "id": "steam",
+          "text": {
+            "ko": "찌다",
+            "zh": "蒸",
+            "en": "Steam",
+            "ja": "スチーム"
+          }
+        }
       ]
     }
   ]
 }
-

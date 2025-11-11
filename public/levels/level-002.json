@@ -1,54 +1,206 @@
 {
   "id": "level-002",
-  "name": "关卡2",
   "difficulty": "easy",
-  "version": 1,
-  "languageCodes": ["ko", "zh"],
+  "version": 2,
+  "language": [
+    "ko",
+    "zh",
+    "en",
+    "ja"
+  ],
+  "tutorialSteps": [],
   "groups": [
     {
       "id": "transport",
-      "category": "公共交通",
+      "category": {
+        "ko": "대중교통",
+        "zh": "公共交通",
+        "en": "public transportation",
+        "ja": "公共交通機関"
+      },
       "colorPreset": "sky",
       "tiles": [
-        { "id": "subway", "languageCode": "ko", "text": "지하철", "translations": { "zh": "地铁" } },
-        { "id": "bus", "languageCode": "ko", "text": "버스", "translations": { "zh": "公交车" } },
-        { "id": "taxi", "languageCode": "ko", "text": "택시", "translations": { "zh": "出租车" } },
-        { "id": "bike", "languageCode": "ko", "text": "자전거", "translations": { "zh": "自行车" } }
+        {
+          "id": "subway",
+          "text": {
+            "ko": "지하철",
+            "zh": "地铁",
+            "en": "subway",
+            "ja": "地下鉄"
+          }
+        },
+        {
+          "id": "bus",
+          "text": {
+            "ko": "버스",
+            "zh": "公交车",
+            "en": "bus",
+            "ja": "バス"
+          }
+        },
+        {
+          "id": "taxi",
+          "text": {
+            "ko": "택시",
+            "zh": "出租车",
+            "en": "taxi",
+            "ja": "タクシー"
+          }
+        },
+        {
+          "id": "bike",
+          "text": {
+            "ko": "자전거",
+            "zh": "自行车",
+            "en": "bike",
+            "ja": "自転車"
+          }
+        }
       ]
     },
     {
       "id": "essentials",
-      "category": "随身物品",
+      "category": {
+        "ko": "휴대품",
+        "zh": "随身物品",
+        "en": "carry-on items",
+        "ja": "携帯品"
+      },
       "colorPreset": "mint",
       "tiles": [
-        { "id": "transit-card", "languageCode": "ko", "text": "교통카드", "translations": { "zh": "交通卡" } },
-        { "id": "map", "languageCode": "ko", "text": "지도", "translations": { "zh": "地图" } },
-        { "id": "umbrella", "languageCode": "ko", "text": "우산", "translations": { "zh": "雨伞" } },
-        { "id": "backpack", "languageCode": "ko", "text": "배낭", "translations": { "zh": "背包" } }
+        {
+          "id": "transit-card",
+          "text": {
+            "ko": "교통카드",
+            "zh": "交通卡",
+            "en": "transportation card",
+            "ja": "交通カード"
+          }
+        },
+        {
+          "id": "map",
+          "text": {
+            "ko": "지도",
+            "zh": "地图",
+            "en": "map",
+            "ja": "地図"
+          }
+        },
+        {
+          "id": "umbrella",
+          "text": {
+            "ko": "우산",
+            "zh": "雨伞",
+            "en": "umbrella",
+            "ja": "傘"
+          }
+        },
+        {
+          "id": "backpack",
+          "text": {
+            "ko": "배낭",
+            "zh": "背包",
+            "en": "backpack",
+            "ja": "バックパック"
+          }
+        }
       ]
     },
     {
       "id": "street-food",
-      "category": "街头小吃",
+      "category": {
+        "ko": "길거리 음식",
+        "zh": "街头小吃",
+        "en": "street snacks",
+        "ja": "屋台の食べ物"
+      },
       "colorPreset": "sunset",
       "tiles": [
-        { "id": "fish-cake", "languageCode": "ko", "text": "어묵", "translations": { "zh": "鱼糕" } },
-        { "id": "tteokbokki", "languageCode": "ko", "text": "떡볶이", "translations": { "zh": "辣炒年糕" } },
-        { "id": "hotteok", "languageCode": "ko", "text": "호떡", "translations": { "zh": "糖饼" } },
-        { "id": "bungeoppang", "languageCode": "ko", "text": "붕어빵", "translations": { "zh": "鲫鱼饼" } }
+        {
+          "id": "fish-cake",
+          "text": {
+            "ko": "어묵",
+            "zh": "鱼糕",
+            "en": "fish cake",
+            "ja": "かまぼこ"
+          }
+        },
+        {
+          "id": "tteokbokki",
+          "text": {
+            "ko": "떡볶이",
+            "zh": "辣炒年糕",
+            "en": "spicy rice cake",
+            "ja": "ピリ辛餅"
+          }
+        },
+        {
+          "id": "hotteok",
+          "text": {
+            "ko": "호떡",
+            "zh": "糖饼",
+            "en": "sweet pancake",
+            "ja": "シュガークッキー"
+          }
+        },
+        {
+          "id": "bungeoppang",
+          "text": {
+            "ko": "붕어빵",
+            "zh": "鲫鱼饼",
+            "en": "fish-shaped pastry",
+            "ja": "フナケーキ"
+          }
+        }
       ]
     },
     {
       "id": "skincare",
-      "category": "护肤补给",
+      "category": {
+        "ko": "스킨케어 용품",
+        "zh": "护肤补给",
+        "en": "skincare essentials",
+        "ja": "スキンケア用品"
+      },
       "colorPreset": "lilac",
       "tiles": [
-        { "id": "eye-cream", "languageCode": "ko", "text": "아이크림", "translations": { "zh": "眼霜" } },
-        { "id": "sheet-mask", "languageCode": "ko", "text": "마스크팩", "translations": { "zh": "面膜" } },
-        { "id": "face-cream", "languageCode": "ko", "text": "크림", "translations": { "zh": "面霜" } },
-        { "id": "serum", "languageCode": "ko", "text": "에센스", "translations": { "zh": "精华液" } }
+        {
+          "id": "eye-cream",
+          "text": {
+            "ko": "아이크림",
+            "zh": "眼霜",
+            "en": "eye cream",
+            "ja": "アイクリーム"
+          }
+        },
+        {
+          "id": "sheet-mask",
+          "text": {
+            "ko": "마스크팩",
+            "zh": "面膜",
+            "en": "sheet mask",
+            "ja": "フェイシャルマスク"
+          }
+        },
+        {
+          "id": "face-cream",
+          "text": {
+            "ko": "크림",
+            "zh": "面霜",
+            "en": "cream",
+            "ja": "クリーム"
+          }
+        },
+        {
+          "id": "serum",
+          "text": {
+            "ko": "에센스",
+            "zh": "精华液",
+            "en": "serum",
+            "ja": "エッセンス"
+          }
+        }
       ]
     }
   ]
 }
-
