@@ -26,23 +26,23 @@ export const App = () => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
-        <span className="animate-pulse text-lg text-primary">正在加载语言资源…</span>
+      <div className="flex min-h-screen items-center justify-center bg-background dark:bg-dark-background">
+        <span className="animate-pulse text-lg text-primary dark:text-dark-primary">正在加载语言资源…</span>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-background p-6 text-center">
-        <h1 className="text-2xl font-semibold text-red-500">初始化失败</h1>
-        <p className="max-w-md text-sm text-slate-600">{error}</p>
+      <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-background dark:bg-dark-background p-6 text-center">
+        <h1 className="text-2xl font-semibold text-red-500 dark:text-red-400">初始化失败</h1>
+        <p className="max-w-md text-sm text-slate-600 dark:text-dark-textMuted">{error}</p>
       </div>
     )
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col bg-background dark:bg-dark-background">
       <Routes>
         <Route path="/" element={<LevelSelect />} />
         <Route path="/settings" element={<LanguageSettings />} />

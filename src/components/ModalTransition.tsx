@@ -81,7 +81,7 @@ export const ModalTransition = ({
     >
       <div
         ref={modalRef}
-        className="relative flex max-h-[90vh] w-[90vw] max-w-lg flex-col items-center justify-center rounded-2xl bg-white shadow-2xl"
+        className="relative flex max-h-[90vh] w-[90vw] max-w-lg flex-col items-center justify-center rounded-2xl bg-white shadow-2xl dark:bg-dark-surface dark:shadow-dark-tile"
         style={{ display: 'none' }}
       >
         {children}
@@ -156,11 +156,11 @@ export const SheetTransition = ({
     >
       <div
         ref={sheetRef}
-        className="flex w-full max-w-lg flex-col rounded-t-3xl bg-white shadow-2xl"
+        className="flex w-full max-w-lg flex-col rounded-t-3xl bg-white shadow-2xl dark:bg-dark-surface dark:shadow-dark-tile"
         style={{ display: 'none' }}
       >
         <div className="mb-2 flex justify-center pt-3">
-          <div className="h-1.5 w-12 rounded-full bg-slate-300" />
+          <div className="h-1.5 w-12 rounded-full bg-slate-300 dark:bg-dark-border" />
         </div>
         {children}
       </div>

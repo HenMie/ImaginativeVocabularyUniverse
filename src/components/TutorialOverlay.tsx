@@ -27,12 +27,12 @@ export const TutorialOverlay = ({ open, steps, onClose }: TutorialOverlayProps) 
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/50 backdrop-blur">
-      <div className="w-full max-w-md rounded-3xl bg-surface p-6 shadow-2xl">
-        <h2 className="text-lg font-semibold text-slate-800">快速上手</h2>
-        <ol className="mt-4 space-y-3 text-sm text-slate-600">
+      <div className="w-full max-w-md rounded-3xl bg-surface p-6 shadow-2xl dark:bg-dark-surface dark:shadow-dark-tile">
+        <h2 className="text-lg font-semibold text-slate-800 dark:text-dark-text">快速上手</h2>
+        <ol className="mt-4 space-y-3 text-sm text-slate-600 dark:text-dark-textMuted">
           {processedSteps.map((step, index) => (
             <li key={step} className="flex gap-3">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary dark:bg-dark-primary/20 dark:text-dark-primary">
                 {index + 1}
               </span>
               <span>{step}</span>
@@ -42,7 +42,7 @@ export const TutorialOverlay = ({ open, steps, onClose }: TutorialOverlayProps) 
         <button
           type="button"
           onClick={onClose}
-          className="mt-6 w-full rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white shadow hover:bg-primary-dark"
+          className="mt-6 w-full rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white shadow hover:bg-primary-dark dark:bg-dark-primary dark:hover:bg-dark-primary-dark"
         >
           开始挑战
         </button>

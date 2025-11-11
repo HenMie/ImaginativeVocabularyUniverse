@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { GroupRow } from '../components/GroupRow'
 import { CompletedRow } from '../components/CompletedRow'
+import { AnimatedCompletedRow } from '../components/AnimatedCompletedRow'
 import { TutorialOverlay } from '../components/TutorialOverlay'
 import { WordTile } from '../components/WordTile'
 import { TileDragLayer } from '../components/TileDragLayer'
@@ -84,6 +85,8 @@ export const LevelPlay = () => {
   const [showCompletionPanel, setShowCompletionPanel] = useState(false)
   const [showRestartConfirm, setShowRestartConfirm] = useState(false)
   const [updateAvailable, setUpdateAvailable] = useState(false)
+  const [isPlayingCompletionAnimation, setIsPlayingCompletionAnimation] = useState(false)
+  const [animatingGroupId, setAnimatingGroupId] = useState<string | null>(null)
 
   const level = useSessionStore((state) => state.level)
   const tiles = useSessionStore((state) => state.tiles)
@@ -307,10 +310,26 @@ export const LevelPlay = () => {
   ])
 
   useEffect(() => {
-    if (status === 'completed') {
-      setShowCompletionPanel(true)
+    if (status === 'completed' && !isPlayingCompletionAnimation) {
+      // Check if this is the final completion (all groups completed)
+      if (level && completedGroups.length === level.groups.length) {
+        setIsPlayingCompletionAnimation(true)
+        // Find the last completed group to animate
+        const lastCompletedGroup = completedGroups[completedGroups.length - 1]
+        if (lastCompletedGroup) {
+          setAnimatingGroupId(lastCompletedGroup.group.id)
+          // Start animation sequence
+          setTimeout(() => {
+            setShowCompletionPanel(true)
+            setIsPlayingCompletionAnimation(false)
+            setAnimatingGroupId(null)
+          }, 3000) // 3 seconds for animation
+        }
+      } else {
+        setShowCompletionPanel(true)
+      }
     }
-  }, [status])
+  }, [status, completedGroups, level, isPlayingCompletionAnimation])
 
   const highlightedSet = useMemo(
     () => new Set(hintState.highlightedTileIds),
@@ -606,7 +625,7 @@ export const LevelPlay = () => {
   }
 
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-3 p-3 pb-16 sm:gap-4 sm:p-4">
+    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-3 p-3 pb-16 xs:gap-3.5 xs:p-3.5 sm:gap-4 sm:p-4 md:gap-4 md:p-4 ipad:gap-5 ipad:p-5 ipad:pb-20 bg-background dark:bg-dark-background">
       <TileDragLayer />
       {updateAvailable && (
         <div className="flex items-center justify-between rounded-2xl bg-gradient-to-r from-primary/10 to-primary/5 px-4 py-2.5 shadow-sm ring-1 ring-primary/20">
@@ -626,35 +645,35 @@ export const LevelPlay = () => {
           </button>
         </div>
       )}
-      <header className="flex flex-col gap-2.5 rounded-2xl bg-surface/90 px-3 py-2.5 shadow-tile backdrop-blur sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+      <header className="flex flex-col gap-2.5 rounded-2xl bg-surface/90 px-3 py-2.5 shadow-tile backdrop-blur dark:bg-dark-surface dark:shadow-dark-tile sm:flex-row sm:items-center sm:justify-between sm:gap-3 md:px-4 md:py-3 ipad:gap-4 ipad:px-5 ipad:py-3.5">
         <div className="flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-start">
           <div className="flex gap-2">
             <button
               type="button"
               onClick={() => navigate(-1)}
-              className="rounded-full bg-primary/10 px-2.5 py-1.5 text-sm font-medium text-primary transition hover:bg-primary/20"
+              className="rounded-full bg-primary/10 px-2.5 py-1.5 text-sm font-medium text-primary transition hover:bg-primary/20 dark:bg-dark-primary/20 dark:text-dark-primary dark:hover:bg-dark-primary/30 md:px-3 md:py-1.5 md:text-sm ipad:px-4 ipad:py-2"
             >
               ← 返回
             </button>
             <button
               type="button"
               onClick={() => setShowRestartConfirm(true)}
-              className="rounded-full bg-amber-100 px-2.5 py-1.5 text-sm font-medium text-amber-700 transition hover:bg-amber-200"
+              className="rounded-full bg-amber-100 px-2.5 py-1.5 text-sm font-medium text-amber-700 transition hover:bg-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:hover:bg-amber-900/50 md:px-3 md:py-1.5 md:text-sm ipad:px-4 ipad:py-2"
             >
               重新开始
             </button>
           </div>
-          <span className="rounded-full bg-slate-200/70 px-2.5 py-0.5 text-xs font-semibold text-slate-700">
+          <span className="rounded-full bg-slate-200/70 px-2.5 py-0.5 text-xs font-semibold text-slate-700 dark:bg-dark-surfaceSecondary dark:text-dark-text">
             金币 {debugMode ? '∞' : playerProgress.coins}
           </span>
           {debugMode && (
-            <span className="rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-700">
+            <span className="rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
               调试
             </span>
           )}
         </div>
         <div className="flex flex-col items-center gap-1 text-center sm:items-start sm:text-left">
-          <h1 className="text-xl font-semibold text-slate-800 sm:text-2xl">{title}</h1>
+          <h1 className="text-xl font-semibold text-slate-800 dark:text-dark-text sm:text-2xl md:text-2xl ipad:text-3xl">{title}</h1>
           <span
             className={clsx(
               'rounded-full px-3 py-0.5 text-xs font-semibold',
@@ -665,12 +684,12 @@ export const LevelPlay = () => {
           </span>
         </div>
         <div className="flex w-full flex-col items-center gap-1 sm:w-auto sm:items-end">
-          <div className="text-[10px] uppercase tracking-wide text-slate-400">提示使用</div>
+          <div className="text-[10px] uppercase tracking-wide text-slate-400 dark:text-dark-textMuted">提示使用</div>
           <div className="flex flex-wrap justify-center gap-1.5 sm:justify-end">
             {hintSummary.map((item) => (
               <span
                 key={item.key}
-                className="rounded-full bg-white/80 px-2.5 py-0.5 text-xs font-medium text-slate-600 shadow-sm"
+                className="rounded-full bg-white/80 px-2.5 py-0.5 text-xs font-medium text-slate-600 shadow-sm dark:bg-dark-surfaceSecondary dark:text-dark-textSecondary dark:shadow-none"
               >
                 {item.label} {item.value}
               </span>
@@ -682,17 +701,17 @@ export const LevelPlay = () => {
       {(replayNotice || revealedCategories.length > 0) && (
         <div className="space-y-1.5">
           {replayNotice && (
-            <div className="rounded-xl bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-600 shadow-inner">
+            <div className="rounded-xl bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-600 shadow-inner dark:bg-dark-surfaceSecondary dark:text-dark-textMuted dark:shadow-none">
               本关已通关，再次游玩不再获得金币奖励，提示免费
             </div>
           )}
           {revealedCategories.length > 0 && (
-            <div className="flex flex-wrap items-center gap-1.5 rounded-xl bg-amber-50 px-3 py-1.5 text-sm text-amber-700 shadow-inner">
+            <div className="flex flex-wrap items-center gap-1.5 rounded-xl bg-amber-50 px-3 py-1.5 text-sm text-amber-700 shadow-inner dark:bg-amber-900/20 dark:text-amber-400 dark:shadow-none">
               <span className="font-semibold">已知主题：</span>
               {revealedCategories.map((theme) => (
                 <span
                   key={theme}
-                  className="rounded-full bg-white/80 px-2.5 py-0.5 text-xs font-semibold text-amber-700 shadow-sm"
+                  className="rounded-full bg-white/80 px-2.5 py-0.5 text-xs font-semibold text-amber-700 shadow-sm dark:bg-dark-surfaceSecondary dark:text-amber-400 dark:shadow-none"
                 >
                   {theme}
                 </span>
@@ -702,14 +721,14 @@ export const LevelPlay = () => {
         </div>
       )}
 
-      <section className="grid gap-3 sm:grid-cols-[2fr_1fr]">
+      <section className="grid gap-3 sm:grid-cols-[2fr_1fr] md:gap-4 ipad:gap-5 ipad:grid-cols-[3fr_2fr] ipad:landscape:grid-cols-[4fr_3fr] ipad:landscape:gap-6">
         <div className="flex flex-col gap-3">
           <div
             className={clsx(
-              'grid gap-2 rounded-3xl bg-surface/70 p-3 shadow-inner backdrop-blur',
+              'grid gap-2 rounded-3xl bg-surface/70 p-3 shadow-inner backdrop-blur dark:bg-dark-surface dark:shadow-none',
               tiles.length === 0 && 'place-items-center py-16',
               // 移动端优化
-              'touch-manipulation'
+              'touch-manipulation md:p-4 md:gap-2.5 ipad:p-5 ipad:gap-3 ipad:landscape:p-6'
             )}
             style={{
               gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
@@ -717,7 +736,7 @@ export const LevelPlay = () => {
             }}
           >
             {tiles.length === 0 ? (
-              <div className="text-sm text-slate-500">词场已清空，等待庆祝🎉</div>
+              <div className="text-sm text-slate-500 dark:text-dark-textMuted">词场已清空，等待庆祝🎉</div>
             ) : (
               tiles.map((tile, index) => {
                 const rowIndex = Math.floor(index / columns)
@@ -733,13 +752,16 @@ export const LevelPlay = () => {
                   if (rowTiles.length === columns && rowTiles.every((t) => t.status === 'completed' && t.groupId === tile.groupId)) {
                     const completedGroup = completedGroups.find((g) => g.group.id === tile.groupId)
                     if (completedGroup) {
+                      const isAnimatingGroup = isPlayingCompletionAnimation && animatingGroupId === tile.groupId
+                      const RowComponent = isAnimatingGroup ? AnimatedCompletedRow : CompletedRow
                       return (
-                        <CompletedRow
+                        <RowComponent
                           key={`completed-${tile.groupId}-${rowIndex}`}
                           group={completedGroup}
                           colorPreset={colorMap.get(tile.groupId)}
                           columns={columns}
                           wordLanguage={gameLanguage}
+                          isAnimating={isAnimatingGroup}
                         />
                       )
                     }
@@ -774,8 +796,8 @@ export const LevelPlay = () => {
             )}
           </div>
 
-          <div className="flex flex-col items-center gap-2 rounded-2xl bg-surface/90 p-2.5 shadow-inner backdrop-blur">
-            <div className="grid w-full grid-cols-2 gap-1.5 sm:flex sm:flex-wrap sm:justify-center sm:gap-2">
+          <div className="flex flex-col items-center gap-2 rounded-2xl bg-surface/90 p-2.5 shadow-inner backdrop-blur dark:bg-dark-surface dark:shadow-none md:p-3 md:gap-2.5 ipad:p-4 ipad:gap-3">
+            <div className="grid w-full grid-cols-2 gap-1.5 sm:flex sm:flex-wrap sm:justify-center sm:gap-2 md:gap-2.5 ipad:gap-3 ipad:grid-cols-4 ipad:landscape:flex">
               {TOOL_ORDER.map((tool) => {
                 const config = TOOL_CONFIG[tool]
                 const isVerify = tool === 'verify'
@@ -787,37 +809,37 @@ export const LevelPlay = () => {
                     onClick={() => openToolDialog(tool)}
                     disabled={disabled}
                     className={clsx(
-                      'flex w-full items-center justify-center gap-1 rounded-full px-3 py-1.5 text-sm font-medium transition sm:w-auto',
-                      tool === 'group' && 'bg-primary/10 text-primary hover:bg-primary/20',
-                      tool === 'theme' && 'bg-amber-100 text-amber-700 hover:bg-amber-200',
-                      tool === 'assemble' && 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200',
-                      tool === 'verify' && 'bg-sky-100 text-sky-700 hover:bg-sky-200',
-                      disabled && 'cursor-not-allowed opacity-50 hover:bg-sky-100',
+                      'flex w-full items-center justify-center gap-1 rounded-full px-3 py-1.5 text-sm font-medium transition sm:w-auto md:px-3.5 md:py-2 ipad:px-4 ipad:py-2.5 ipad:text-sm',
+                      tool === 'group' && 'bg-primary/10 text-primary hover:bg-primary/20 dark:bg-dark-primary/20 dark:text-dark-primary dark:hover:bg-dark-primary/30',
+                      tool === 'theme' && 'bg-amber-100 text-amber-700 hover:bg-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:hover:bg-amber-900/50',
+                      tool === 'assemble' && 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:hover:bg-emerald-900/50',
+                      tool === 'verify' && 'bg-sky-100 text-sky-700 hover:bg-sky-200 dark:bg-sky-900/30 dark:text-sky-400 dark:hover:bg-sky-900/50',
+                      disabled && 'cursor-not-allowed opacity-50 hover:bg-sky-100 dark:hover:bg-sky-900/30',
                     )}
                   >
                     <span>{config.title}</span>
                     {isVerify && awaitingVerification && (
-                      <span className="text-xs text-emerald-600">等待点击</span>
+                      <span className="text-xs text-emerald-600 dark:text-emerald-400">等待点击</span>
                     )}
                   </button>
                 )
               })}
             </div>
-            {message && <span className="text-center text-xs text-slate-500">{message}</span>}
+            {message && <span className="text-center text-xs text-slate-500 dark:text-dark-textMuted">{message}</span>}
           </div>
         </div>
 
-        <aside className="flex h-full flex-col gap-3">
-          <div className="flex flex-1 flex-col gap-2 rounded-3xl bg-surface/90 p-3 shadow-inner backdrop-blur">
-            <h2 className="text-sm font-semibold text-slate-600">词牌详情</h2>
+        <aside className="flex h-full flex-col gap-3 md:gap-4 ipad:gap-5">
+          <div className="flex flex-1 flex-col gap-2 rounded-3xl bg-surface/90 p-3 shadow-inner backdrop-blur dark:bg-dark-surface dark:shadow-none md:p-4 md:gap-3 ipad:p-5 ipad:gap-4">
+            <h2 className="text-sm font-semibold text-slate-600 dark:text-dark-text">词牌详情</h2>
             {activeTile ? (
               <>
-                <div className="flex flex-col items-center rounded-2xl bg-white/90 p-3 text-center shadow">
-                  <div className="mt-0.5 text-2xl font-semibold text-slate-800">
+                <div className="flex flex-col items-center rounded-2xl bg-white/90 p-3 text-center shadow md:p-4 md:px-6 ipad:p-5 ipad:px-8 dark:bg-dark-surfaceSecondary dark:shadow-none">
+                  <div className="mt-0.5 text-2xl font-semibold text-slate-800 dark:text-dark-text md:text-3xl ipad:text-4xl">
                     {activeTileDisplayText}
                   </div>
                   {activeTile.data.text && activeTile.data.text[gameLanguage] && activeTileDisplayText !== activeTile.data.text[gameLanguage] && (
-                    <div className="text-xs text-slate-500">
+                    <div className="text-xs text-slate-500 dark:text-dark-textMuted">
                       {gameLanguage.toUpperCase()}：{activeTile.data.text[gameLanguage]}
                     </div>
                   )}
@@ -829,15 +851,15 @@ export const LevelPlay = () => {
                     return (
                       <div
                         key={lang}
-                        className="flex items-center justify-between rounded-xl bg-white/70 px-2.5 py-1.5 text-sm text-slate-600"
+                        className="flex items-center justify-between rounded-xl bg-white/70 px-2.5 py-1.5 text-sm text-slate-600 dark:bg-dark-surfaceSecondary dark:text-dark-textSecondary md:px-3 md:py-2 md:text-sm ipad:px-4 ipad:py-2.5 ipad:text-base"
                       >
-                        <span className={clsx('font-medium', isPreferred && 'text-primary')}>
+                        <span className={clsx('font-medium', isPreferred && 'text-primary dark:text-dark-primary')}>
                           {lang.toUpperCase()}
                         </span>
                         <span
                           className={clsx(
-                            isPreferred && 'text-slate-900 font-semibold',
-                            !text && 'text-slate-400',
+                            isPreferred && 'text-slate-900 font-semibold dark:text-dark-text',
+                            !text && 'text-slate-400 dark:text-dark-textMuted',
                           )}
                         >
                           {text ?? '—'}
@@ -847,22 +869,22 @@ export const LevelPlay = () => {
                   })}
                 </div>
                 {activeTile.data.hint && (
-                  <div className="rounded-xl bg-yellow-100/70 px-2.5 py-1.5 text-sm text-yellow-700">
+                  <div className="rounded-xl bg-yellow-100/70 px-2.5 py-1.5 text-sm text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400">
                     提示：{getTileHintText(activeTile.data, gameLanguage)}
                   </div>
                 )}
               </>
             ) : (
-              <div className="flex flex-1 items-center justify-center text-sm text-slate-500">
+              <div className="flex flex-1 items-center justify-center text-sm text-slate-500 dark:text-dark-textMuted">
                 点击词牌可查看释义
               </div>
             )}
           </div>
 
-          <div className="flex flex-col gap-2 rounded-3xl bg-surface/90 p-3 shadow-inner backdrop-blur">
-            <h2 className="text-sm font-semibold text-slate-600">已完成分组</h2>
+          <div className="flex flex-col gap-2 rounded-3xl bg-surface/90 p-3 shadow-inner backdrop-blur dark:bg-dark-surface dark:shadow-none md:p-4 md:gap-3 ipad:p-5 ipad:gap-4">
+            <h2 className="text-sm font-semibold text-slate-600 dark:text-dark-text">已完成分组</h2>
             {completedGroups.length === 0 ? (
-              <p className="text-xs text-slate-500">暂未完成任何分组，加油！</p>
+              <p className="text-xs text-slate-500 dark:text-dark-textMuted">暂未完成任何分组，加油！</p>
             ) : (
               <div className="flex max-h-72 flex-col gap-2 overflow-y-auto pr-1">
                 {completedGroups.map((group) => (
@@ -883,8 +905,8 @@ export const LevelPlay = () => {
       {status === 'completed' && level && (
         <>
           {showCompletionPanel && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 px-3 py-4 backdrop-blur sm:px-4 sm:py-10">
-              <div className="flex w-full max-w-4xl flex-col gap-3 overflow-hidden rounded-3xl bg-white/95 p-4 shadow-2xl ring-1 ring-slate-100 sm:gap-5 sm:rounded-4xl sm:p-6 md:p-8 mx-4 max-h-[90vh] overflow-y-auto">
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 px-3 py-4 backdrop-blur sm:px-4 sm:py-10 md:px-6 md:py-12 ipad:px-8 ipad:py-16">
+              <div className="flex w-full max-w-4xl flex-col gap-3 overflow-hidden rounded-3xl bg-white/95 p-4 shadow-2xl ring-1 ring-slate-100 sm:gap-5 sm:rounded-4xl sm:p-6 md:p-8 mx-4 max-h-[90vh] overflow-y-auto ipad:max-w-6xl ipad:gap-6 ipad:p-8 ipad:rounded-4xl ipad:max-h-[85vh]">
                 <header className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
                   <div className="space-y-1.5 sm:space-y-2">
                     <div className="text-xs font-semibold text-primary sm:text-sm">🎉 关卡完成</div>
@@ -1037,15 +1059,15 @@ export const LevelPlay = () => {
 
       {toolDialog && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/50 backdrop-blur p-4">
-          <div className="flex w-full max-w-sm mx-4 flex-col gap-4 rounded-3xl bg-white p-4 sm:p-6 shadow-2xl sm:max-w-md">
+          <div className="flex w-full max-w-sm mx-4 flex-col gap-4 rounded-3xl bg-white p-4 sm:p-6 shadow-2xl sm:max-w-md dark:bg-dark-surface dark:shadow-dark-tile">
             <header className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-slate-800">
+              <h2 className="text-lg font-semibold text-slate-800 dark:text-dark-text">
                 {TOOL_CONFIG[toolDialog.type].title}
               </h2>
               <button
                 type="button"
                 onClick={closeToolDialog}
-                className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-sm text-slate-500 hover:bg-slate-200 transition-colors"
+                className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-sm text-slate-500 hover:bg-slate-200 transition-colors dark:bg-dark-surfaceSecondary dark:text-dark-textSecondary dark:hover:bg-dark-border"
                 aria-label="关闭"
               >
                 ×
@@ -1053,8 +1075,8 @@ export const LevelPlay = () => {
             </header>
             {toolDialog.stage === 'preview' && (
               <>
-                <p className="text-sm text-slate-600">{TOOL_CONFIG[toolDialog.type].description}</p>
-                <div className="rounded-2xl bg-slate-100 px-4 py-3 text-sm text-slate-700">
+                <p className="text-sm text-slate-600 dark:text-dark-textMuted">{TOOL_CONFIG[toolDialog.type].description}</p>
+                <div className="rounded-2xl bg-slate-100 px-4 py-3 text-sm text-slate-700 dark:bg-dark-surfaceSecondary dark:text-dark-text">
                   消耗：
                   {(() => {
                     const value = getToolCost(toolDialog.type)
@@ -1065,14 +1087,14 @@ export const LevelPlay = () => {
                   <button
                     type="button"
                     onClick={closeToolDialog}
-                    className="rounded-full bg-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-300"
+                    className="rounded-full bg-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-300 dark:bg-dark-surfaceSecondary dark:text-dark-textSecondary dark:hover:bg-dark-border"
                   >
                     再想想
                   </button>
                   <button
                     type="button"
                     onClick={handleConfirmTool}
-                    className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow hover:bg-primary-dark"
+                    className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow hover:bg-primary-dark dark:bg-dark-primary dark:hover:bg-dark-primary-dark"
                   >
                     确认使用
                   </button>
@@ -1083,12 +1105,12 @@ export const LevelPlay = () => {
               <>
                 {toolDialog.result.type === 'group' && (
                   <div className="space-y-3">
-                    <div className="text-sm text-slate-600">取到了主题线索：</div>
-                    <div className="rounded-2xl bg-primary/10 px-4 py-3 text-sm font-semibold text-primary">
+                    <div className="text-sm text-slate-600 dark:text-dark-textMuted">取到了主题线索：</div>
+                    <div className="rounded-2xl bg-primary/10 px-4 py-3 text-sm font-semibold text-primary dark:bg-dark-primary/20 dark:text-dark-primary">
                       {getCategoryText(toolDialog.result.category, gameLanguage)}
                     </div>
                     {toolDialog.result.sample?.text && (
-                      <div className="rounded-2xl bg-slate-100 px-4 py-3 text-sm text-slate-600">
+                      <div className="rounded-2xl bg-slate-100 px-4 py-3 text-sm text-slate-600 dark:bg-dark-surfaceSecondary dark:text-dark-textMuted">
                         例词：{pickTranslation(toolDialog.result.sample.text, gameLanguage)}
                         {toolDialog.result.sample.translation
                           ? `（${toolDialog.result.sample.translation}）`
@@ -1099,12 +1121,12 @@ export const LevelPlay = () => {
                 )}
                 {toolDialog.result.type === 'theme' && (
                   <div className="space-y-3">
-                    <div className="text-sm text-slate-600">当前可能的主题：</div>
+                    <div className="text-sm text-slate-600 dark:text-dark-textMuted">当前可能的主题：</div>
                     <div className="flex flex-wrap gap-2">
                       {toolDialog.result.topics.map((topic, index) => (
                         <span
                           key={`topic-${index}`}
-                          className="rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-700"
+                          className="rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
                         >
                           {getCategoryText(topic, gameLanguage)}
                         </span>
@@ -1114,18 +1136,18 @@ export const LevelPlay = () => {
                 )}
                 {toolDialog.result.type === 'assemble' && (
                   <div className="space-y-3">
-                    <div className="text-sm text-slate-600">
+                    <div className="text-sm text-slate-600 dark:text-dark-textMuted">
                       主题「{getCategoryText(toolDialog.result.category, gameLanguage)}」的全部词块：
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       {toolDialog.result.words.map((word) => (
                         <div
                           key={word.id}
-                          className="rounded-2xl bg-emerald-50 px-3 py-2 text-sm text-emerald-700 shadow-inner"
+                          className="rounded-2xl bg-emerald-50 px-3 py-2 text-sm text-emerald-700 shadow-inner dark:bg-emerald-900/30 dark:text-emerald-400"
                         >
                           <div className="font-semibold">{pickTranslation(word.text, gameLanguage)}</div>
                           {word.translation && (
-                            <div className="text-xs text-emerald-600">{word.translation}</div>
+                            <div className="text-xs text-emerald-600 dark:text-emerald-500">{word.translation}</div>
                           )}
                         </div>
                       ))}
@@ -1136,7 +1158,7 @@ export const LevelPlay = () => {
                   <button
                     type="button"
                     onClick={closeToolDialog}
-                    className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow hover:bg-primary-dark"
+                    className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow hover:bg-primary-dark dark:bg-dark-primary dark:hover:bg-dark-primary-dark"
                   >
                     知道了
                   </button>
@@ -1165,33 +1187,33 @@ export const LevelPlay = () => {
 
       {showRestartConfirm && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/50 backdrop-blur p-4">
-          <div className="flex w-full max-w-sm mx-4 flex-col gap-4 rounded-3xl bg-white p-4 sm:p-6 shadow-2xl sm:max-w-md">
+          <div className="flex w-full max-w-sm mx-4 flex-col gap-4 rounded-3xl bg-white p-4 sm:p-6 shadow-2xl sm:max-w-md dark:bg-dark-surface dark:shadow-dark-tile">
             <header className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-slate-800">确认重新开始？</h2>
+              <h2 className="text-lg font-semibold text-slate-800 dark:text-dark-text">确认重新开始？</h2>
               <button
                 type="button"
                 onClick={() => setShowRestartConfirm(false)}
-                className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-sm text-slate-500 hover:bg-slate-200 transition-colors"
+                className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-sm text-slate-500 hover:bg-slate-200 transition-colors dark:bg-dark-surfaceSecondary dark:text-dark-textSecondary dark:hover:bg-dark-border"
                 aria-label="取消"
               >
                 ×
               </button>
             </header>
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-slate-600 dark:text-dark-textMuted">
               重新开始将清除当前进度，所有词块将重新打乱。你确定要重新开始吗？
             </p>
             <footer className="flex justify-end gap-3">
               <button
                 type="button"
                 onClick={() => setShowRestartConfirm(false)}
-                className="rounded-full bg-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-300"
+                className="rounded-full bg-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-300 dark:bg-dark-surfaceSecondary dark:text-dark-textSecondary dark:hover:bg-dark-border"
               >
                 取消
               </button>
               <button
                 type="button"
                 onClick={handleRestartLevel}
-                className="rounded-full bg-amber-500 px-5 py-2 text-sm font-semibold text-white shadow hover:bg-amber-600"
+                className="rounded-full bg-amber-500 px-5 py-2 text-sm font-semibold text-white shadow hover:bg-amber-600 dark:bg-amber-600 dark:hover:bg-amber-700"
               >
                 确认重新开始
               </button>

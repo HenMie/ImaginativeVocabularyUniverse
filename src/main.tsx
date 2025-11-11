@@ -8,6 +8,7 @@ import { TouchBackend, type TouchBackendOptions } from 'react-dnd-touch-backend'
 import { registerSW } from 'virtual:pwa-register'
 import { App } from './App'
 import { useProgressStore } from './store/progressStore'
+import { useThemeStore } from './store/themeStore'
 import './index.css'
 
 const getBackendConfig = (): {
@@ -47,6 +48,14 @@ const getBackendConfig = (): {
 
 const { backend, options } = getBackendConfig()
 
+// 初始化主题系统
+const initializeTheme = () => {
+  if (typeof window !== 'undefined') {
+    const { setTheme, theme } = useThemeStore.getState()
+    setTheme(theme) // 这会应用保存的主题设置
+  }
+}
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
@@ -56,6 +65,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     </BrowserRouter>
   </React.StrictMode>
 )
+
+// 在应用启动后初始化主题
+initializeTheme()
 
 if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
   const updateSW = registerSW({
