@@ -87,6 +87,12 @@ export function UserMenu() {
               👤 个人资料
             </button>
             <button
+              onClick={() => handleNavigate('/vocabulary')}
+              className="w-full text-left px-4 py-2.5 text-sm lg:text-base font-medium text-slate-700 dark:text-dark-text hover:bg-slate-100/80 dark:hover:bg-dark-surfaceSecondary rounded-2xl mx-2 transition-smooth hover-scale-sm"
+            >
+              📚 生词本
+            </button>
+            <button
               onClick={() => handleNavigate('/settings')}
               className="w-full text-left px-4 py-2.5 text-sm lg:text-base font-medium text-slate-700 dark:text-dark-text hover:bg-slate-100/80 dark:hover:bg-dark-surfaceSecondary rounded-2xl mx-2 transition-smooth hover-scale-sm"
             >

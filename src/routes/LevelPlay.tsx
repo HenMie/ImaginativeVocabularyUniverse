@@ -24,6 +24,7 @@ import { getTileDisplayText, pickTranslation, getCategoryText, getTileHintText }
 import type { TranslationMap } from '../types/language'
 import { useAuthContext } from '../contexts/AuthContext'
 import { upsertLeaderboardEntry } from '../services/playerProgressService'
+import { useVocabularyStore } from '../store/vocabularyStore'
 
 type ToolType = 'group' | 'theme' | 'assemble' | 'verify'
 type ToolDialogStage = 'preview' | 'result'
@@ -90,6 +91,9 @@ export const LevelPlay = () => {
   const [updateAvailable, setUpdateAvailable] = useState(false)
   const [isPlayingCompletionAnimation, setIsPlayingCompletionAnimation] = useState(false)
   const [animatingGroupId, setAnimatingGroupId] = useState<string | null>(null)
+  const [selectedTilesForVocabulary, setSelectedTilesForVocabulary] = useState<Set<string>>(new Set())
+  const [addedToVocabulary, setAddedToVocabulary] = useState<Set<string>>(new Set())
+  const [isAddingToVocabulary, setIsAddingToVocabulary] = useState(false)
 
   const level = useSessionStore((state) => state.level)
   const tiles = useSessionStore((state) => state.tiles)
@@ -117,6 +121,7 @@ export const LevelPlay = () => {
   const clearHighlights = useSessionStore((state) => state.clearHighlights)
 
   const completeLevel = useProgressStore((state) => state.completeLevel)
+  const { addWord } = useVocabularyStore()
   const markTutorialSeen = useProgressStore((state) => state.markTutorialSeen)
   const seenTutorials = useProgressStore((state) => state.progress.seenTutorials)
   const playerProgress = useProgressStore((state) => state.progress)
@@ -472,6 +477,100 @@ export const LevelPlay = () => {
       setMessage(`✅ 已确认主题「${category}」，颜色将保留`)
     } else {
       setMessage('该行已着色，请继续调整')
+    }
+  }
+
+  const toggleTileSelection = (tileId: string) => {
+    setSelectedTilesForVocabulary((prev) => {
+      const newSet = new Set(prev)
+      if (newSet.has(tileId)) {
+        newSet.delete(tileId)
+      } else {
+        newSet.add(tileId)
+      }
+      return newSet
+    })
+  }
+
+  const handleBatchAddToVocabulary = async () => {
+    if (!user) {
+      alert('请先登录后再使用生词本功能')
+      return
+    }
+
+    if (selectedTilesForVocabulary.size === 0) {
+      setMessage('请先选择要加入生词本的单词')
+      return
+    }
+
+    if (!level) return
+
+    setIsAddingToVocabulary(true)
+    let successCount = 0
+    let skipCount = 0
+    let errorCount = 0
+
+    try {
+      for (const tileId of selectedTilesForVocabulary) {
+        // 查找对应的 tile 和 group
+        let foundTile: any = null
+        let foundGroup: any = null
+
+        for (const group of level.groups) {
+          const tile = group.tiles.find((t) => t.id === tileId)
+          if (tile) {
+            foundTile = tile
+            foundGroup = group
+            break
+          }
+        }
+
+        if (!foundTile || !foundGroup) continue
+
+        const headlineText = pickTranslation(foundTile.text, gameLanguage)
+        const primaryTranslation = pickTranslation(
+          foundTile.text,
+          primaryDefinitionLanguage,
+          definitionLanguages.slice(1),
+        )
+
+        // 跳过图片或特殊类型
+        if (primaryTranslation === '—') {
+          skipCount++
+          continue
+        }
+
+        try {
+          await addWord(user.id, headlineText, primaryTranslation, gameLanguage, {
+            levelId,
+            groupCategory: getCategoryText(foundGroup.category, primaryDefinitionLanguage),
+            tileId,
+          })
+          setAddedToVocabulary((prev) => new Set(prev).add(tileId))
+          successCount++
+        } catch (error) {
+          const errorMessage = (error as Error).message
+          if (errorMessage.includes('已在生词本中')) {
+            skipCount++
+          } else {
+            errorCount++
+            console.error(`添加失败: ${headlineText}`, error)
+          }
+        }
+      }
+
+      // 清空选择
+      setSelectedTilesForVocabulary(new Set())
+
+      // 显示结果
+      const messages = []
+      if (successCount > 0) messages.push(`成功添加 ${successCount} 个`)
+      if (skipCount > 0) messages.push(`跳过 ${skipCount} 个`)
+      if (errorCount > 0) messages.push(`失败 ${errorCount} 个`)
+
+      setMessage(`✅ ${messages.join(', ')}`)
+    } finally {
+      setIsAddingToVocabulary(false)
     }
   }
 
@@ -1004,9 +1103,23 @@ export const LevelPlay = () => {
                       <h3 className="text-base font-semibold text-slate-800 sm:text-lg">关卡词汇总览</h3>
                       <p className="text-xs text-slate-500 sm:text-sm">共 {totalTiles} 个词条，按主题整理</p>
                     </div>
-                    <div className="hidden text-xs text-slate-400 sm:block">
-                      长按可复制
-                    </div>
+                    {user && (
+                      <button
+                        onClick={handleBatchAddToVocabulary}
+                        disabled={selectedTilesForVocabulary.size === 0 || isAddingToVocabulary}
+                        className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors sm:px-4 sm:py-2 sm:text-sm ${
+                          selectedTilesForVocabulary.size === 0 || isAddingToVocabulary
+                            ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                            : 'bg-primary text-white hover:bg-primary-dark'
+                        }`}
+                      >
+                        {isAddingToVocabulary
+                          ? '添加中...'
+                          : selectedTilesForVocabulary.size > 0
+                            ? `📚 加入生词本 (${selectedTilesForVocabulary.size})`
+                            : '📚 加入生词本'}
+                      </button>
+                    )}
                   </header>
                   <div className="flex max-h-[50vh] flex-col gap-2.5 overflow-y-auto pr-1 sm:max-h-[45vh] sm:gap-3">
                     {level.groups.map((group) => {
@@ -1039,30 +1152,62 @@ export const LevelPlay = () => {
                               const headlineText = pickTranslation(tile.text, gameLanguage)
                               const secondary =
                                 headlineText !== primaryTranslation && primaryTranslation !== '—' ? primaryTranslation : undefined
+                              const isAdded = addedToVocabulary.has(tile.id)
+                              const isSelected = selectedTilesForVocabulary.has(tile.id)
+                              const canSelect = user && primaryTranslation !== '—' && !isAdded
                               return (
                                 <div
                                   key={tile.id}
-                                  className="flex flex-col gap-0.5 rounded-xl border px-2 py-1.5 text-sm shadow-inner sm:rounded-2xl sm:px-4 sm:py-2.5"
+                                  className={`flex flex-col gap-0.5 rounded-xl border px-2 py-1.5 text-sm shadow-inner sm:rounded-2xl sm:px-4 sm:py-2.5 transition-all ${
+                                    canSelect ? 'cursor-pointer hover:shadow-md' : ''
+                                  } ${isSelected ? 'ring-2 ring-primary' : ''}`}
                                   style={{
                                     backgroundColor: preset?.rowBackground ?? 'rgba(255,255,255,0.9)',
                                     color: preset?.text ?? '#475569',
                                     borderColor: preset?.border ?? 'rgba(148,163,184,0.25)',
                                   }}
+                                  onClick={() => canSelect && toggleTileSelection(tile.id)}
                                 >
-                                  <span className="text-sm font-semibold sm:text-base" style={{ color: preset?.text }}>
-                                    {headlineText}
-                                  </span>
-                                  {secondary && (
-                                    <span className="text-xs sm:text-sm" style={{ color: preset?.text ?? '#475569', opacity: 0.8 }}>
-                                      {secondary}
-                                    </span>
-                                  )}
-                                  {primaryTranslation === '—' && (
-                                    <span className="text-[10px] opacity-70 sm:text-xs">该词牌为图片或特殊类型</span>
-                                  )}
-                                  {tile.hint && (
-                                    <span className="text-[10px] text-amber-600 sm:text-xs">提示：{pickTranslation(tile.hint, gameLanguage)}</span>
-                                  )}
+                                  <div className="flex items-start gap-2">
+                                    {user && primaryTranslation !== '—' && (
+                                      <div className="flex-shrink-0 pt-0.5">
+                                        {isAdded ? (
+                                          <div className="flex h-5 w-5 items-center justify-center rounded-full bg-green-100 text-green-600 sm:h-6 sm:w-6">
+                                            <span className="text-xs sm:text-sm">✓</span>
+                                          </div>
+                                        ) : (
+                                          <div
+                                            className={`flex h-5 w-5 items-center justify-center rounded-full border-2 transition-colors sm:h-6 sm:w-6 ${
+                                              isSelected
+                                                ? 'border-primary bg-primary text-white'
+                                                : 'border-slate-300 bg-white hover:border-primary'
+                                            }`}
+                                          >
+                                            {isSelected && <span className="text-xs sm:text-sm">✓</span>}
+                                          </div>
+                                        )}
+                                      </div>
+                                    )}
+                                    <div className="flex-1">
+                                      <span className="text-sm font-semibold sm:text-base" style={{ color: preset?.text }}>
+                                        {headlineText}
+                                      </span>
+                                      {secondary && (
+                                        <span className="block text-xs sm:text-sm" style={{ color: preset?.text ?? '#475569', opacity: 0.8 }}>
+                                          {secondary}
+                                        </span>
+                                      )}
+                                      {primaryTranslation === '—' && (
+                                        <span className="text-[10px] opacity-70 sm:text-xs">该词牌为图片或特殊类型</span>
+                                      )}
+                                      {tile.hint && (
+                                        <span className="text-[10px] text-amber-600 sm:text-xs">提示：{pickTranslation(tile.hint, gameLanguage)}</span>
+                                      )}
+                                      {isAdded && (
+                                        <span className="block text-[10px] text-green-600 sm:text-xs">已在生词本中</span>
+                                      )}
+                                    </div>
+                                  </div>
                                 </div>
                               )
                             })}

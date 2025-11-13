@@ -190,6 +190,50 @@ export interface Database {
           updated_at?: string
         }
       }
+      vocabulary_book: {
+        Row: {
+          id: string
+          user_id: string
+          word: string
+          translation: string
+          language: string
+          level_id: string | null
+          group_category: string | null
+          tile_id: string | null
+          added_at: string
+          last_reviewed_at: string | null
+          review_count: number
+          notes: string | null
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          word: string
+          translation: string
+          language: string
+          level_id?: string | null
+          group_category?: string | null
+          tile_id?: string | null
+          added_at?: string
+          last_reviewed_at?: string | null
+          review_count?: number
+          notes?: string | null
+          updated_at?: string
+        }
+        Update: {
+          word?: string
+          translation?: string
+          language?: string
+          level_id?: string | null
+          group_category?: string | null
+          tile_id?: string | null
+          last_reviewed_at?: string | null
+          review_count?: number
+          notes?: string | null
+          updated_at?: string
+        }
+      }
     }
     Views: Record<string, never>
     Functions: Record<string, never>

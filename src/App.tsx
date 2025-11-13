@@ -13,6 +13,7 @@ import { Auth } from './routes/Auth'
 import { Admin } from './routes/Admin'
 import { ForgotPassword } from './routes/ForgotPassword'
 import { ResetPassword } from './routes/ResetPassword'
+import { VocabularyBook } from './routes/VocabularyBook'
 import { useLanguageStore } from './store/languageStore'
 
 const AppHeader = () => {
@@ -119,6 +120,20 @@ export const App = () => {
                   <AppHeader />
                   <main className="flex-1">
                     <LanguageSettings />
+                  </main>
+                  <Footer />
+                </div>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/vocabulary"
+            element={
+              <ProtectedRoute>
+                <div className="flex-1 flex flex-col">
+                  <AppHeader />
+                  <main className="flex-1">
+                    <VocabularyBook />
                   </main>
                   <Footer />
                 </div>
