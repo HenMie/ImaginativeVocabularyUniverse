@@ -9,34 +9,38 @@ interface DifficultyConfig {
 
 export const DIFFICULTY_CONFIG: Record<Difficulty, DifficultyConfig> = {
   easy: {
-    label: '易',
+    label: '入门',
     coins: 40,
     badgeClass: 'bg-emerald-100',
     badgeTextClass: 'text-emerald-700',
   },
   medium: {
-    label: '中',
+    label: '进阶',
     coins: 60,
     badgeClass: 'bg-amber-100',
     badgeTextClass: 'text-amber-700',
   },
   hard: {
-    label: '难',
+    label: '挑战',
     coins: 80,
     badgeClass: 'bg-rose-100',
     badgeTextClass: 'text-rose-700',
   },
+  expert: {
+    label: '大师',
+    coins: 100,
+    badgeClass: 'bg-indigo-100',
+    badgeTextClass: 'text-indigo-700',
+  },
 }
 
 export const getRewardsForDifficulty = (difficulty: Difficulty) => {
-  const config = DIFFICULTY_CONFIG[difficulty]
-  return {
-    coins: config.coins,
-  }
+  const config = DIFFICULTY_CONFIG[difficulty] ?? DIFFICULTY_CONFIG.easy
+  return { coins: config.coins }
 }
 
 export const formatDifficultyBadgeClasses = (difficulty: Difficulty) => {
-  const config = DIFFICULTY_CONFIG[difficulty]
+  const config = DIFFICULTY_CONFIG[difficulty] ?? DIFFICULTY_CONFIG.easy
   return `${config.badgeClass} ${config.badgeTextClass}`
 }
 
@@ -49,4 +53,3 @@ export const formatLevelTitle = (levelId: string) => {
   const seq = deriveLevelSequence(levelId)
   return seq ? `关卡${seq}` : '关卡'
 }
-

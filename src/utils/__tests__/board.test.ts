@@ -8,33 +8,40 @@ import {
   reorderTiles,
 } from '../board'
 
+const groups = [
+  {
+    id: 'alpha',
+    category: { en: 'alpha' },
+    tiles: [
+      { id: 'a1', text: { en: 'one' } },
+      { id: 'a2', text: { en: 'two' } },
+      { id: 'a3', text: { en: 'three' } },
+      { id: 'a4', text: { en: 'four' } },
+    ],
+  },
+  {
+    id: 'beta',
+    category: { en: 'beta' },
+    tiles: [
+      { id: 'b1', text: { en: 'five' } },
+      { id: 'b2', text: { en: 'six' } },
+      { id: 'b3', text: { en: 'seven' } },
+      { id: 'b4', text: { en: 'eight' } },
+    ],
+  },
+]
+
 const sampleLevel: LevelFile = {
   id: 'test',
   difficulty: 'easy',
-  version: 2,
-  language: ['ko', 'zh'],
-  groups: [
-    {
-      id: 'alpha',
-      category: { ko: '알파', zh: '阿尔法' },
-      tiles: [
-        { id: 'a1', text: { ko: '가', zh: '甲' } },
-        { id: 'a2', text: { ko: '나', zh: '乙' } },
-        { id: 'a3', text: { ko: '다', zh: '丙' } },
-        { id: 'a4', text: { ko: '라', zh: '丁' } },
-      ],
-    },
-    {
-      id: 'beta',
-      category: { ko: '베타', zh: '贝塔' },
-      tiles: [
-        { id: 'b1', text: { ko: '마', zh: '戊' } },
-        { id: 'b2', text: { ko: '바', zh: '己' } },
-        { id: 'b3', text: { ko: '사', zh: '庚' } },
-        { id: 'b4', text: { ko: '아', zh: '辛' } },
-      ],
-    },
-  ],
+  version: 1,
+  language: ['en'],
+  isPublished: true,
+  updatedAt: new Date().toISOString(),
+  content: {
+    groups,
+  },
+  groups,
 }
 
 describe('board utilities', () => {
@@ -65,6 +72,6 @@ describe('board utilities', () => {
 
   it('builds group lookup', () => {
     const map = groupLookup(sampleLevel.groups)
-    expect(map.alpha.category).toEqual({ ko: '알파', zh: '阿尔法' })
+    expect(map.alpha.category).toEqual({ en: 'alpha' })
   })
 })

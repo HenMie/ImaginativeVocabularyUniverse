@@ -32,9 +32,11 @@ body {
   min-height: 100svh;
   min-height: 100dvh;
   min-height: -webkit-fill-available;
-  background: radial-gradient(circle at 20% 20%, rgba(108, 99, 255, 0.12), transparent 55%),
-    radial-gradient(circle at 80% 0%, rgba(255, 159, 179, 0.2), transparent 45%),
-    theme('colors.background');
+  background:
+    radial-gradient(circle at 15% 15%, rgba(108, 99, 255, 0.15), transparent 50%),
+    radial-gradient(circle at 85% 10%, rgba(255, 159, 179, 0.12), transparent 50%),
+    radial-gradient(circle at 50% 90%, rgba(82, 210, 141, 0.08), transparent 50%),
+    linear-gradient(135deg, #f4f7fb 0%, #f8fafc 50%, #f4f7fb 100%);
   padding-top: var(--safe-area-top, 0px);
   padding-right: var(--safe-area-right, 0px);
   padding-bottom: var(--safe-area-bottom, 0px);
@@ -42,7 +44,18 @@ body {
   overscroll-behavior-y: contain;
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  transition: background 0.3s ease;
+}
+
+/* 暗色模式背景 */
+body.dark {
+  background:
+    radial-gradient(circle at 15% 15%, rgba(129, 140, 248, 0.12), transparent 50%),
+    radial-gradient(circle at 85% 10%, rgba(244, 114, 182, 0.1), transparent 50%),
+    radial-gradient(circle at 50% 90%, rgba(74, 222, 128, 0.08), transparent 50%),
+    linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
 }
 
 #root {
@@ -132,3 +145,29 @@ button {
   }
 }
 
+/* 自定义下拉框样式 */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23475569' d='M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.25rem;
+  padding-right: 3rem !important;
+}
+
+/* 深色模式下的下拉箭头 */
+.dark select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23cbd5e1' d='M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z'/%3E%3C/svg%3E");
+}
+
+/* 下拉框选项样式 */
+select option {
+  padding: 0.5rem;
+  background-color: white;
+  color: #1e293b;
+}
+
+.dark select option {
+  background-color: #1e293b;
+  color: #f1f5f9;
+}

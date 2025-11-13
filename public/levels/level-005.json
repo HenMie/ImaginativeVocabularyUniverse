@@ -25,7 +25,7 @@
           "text": {
             "ko": "미루다",
             "zh": "拖延",
-            "en": "procrastination",
+            "en": "procrastinate",
             "ja": "先延ばし"
           }
         },
@@ -34,8 +34,8 @@
           "text": {
             "ko": "마감일",
             "zh": "截止日期",
-            "en": "expiration date",
-            "ja": "有効期限"
+            "en": "deadline",
+            "ja": "締め切り"
           }
         },
         {
@@ -43,8 +43,8 @@
           "text": {
             "ko": "밤샘",
             "zh": "熬夜",
-            "en": "stay up",
-            "ja": "起きていなさい"
+            "en": "all-nighter",
+            "ja": "徹夜"
           }
         },
         {
@@ -73,8 +73,8 @@
           "text": {
             "ko": "밈",
             "zh": "梗",
-            "en": "stem",
-            "ja": "幹"
+            "en": "meme",
+            "ja": "ミーム"
           }
         },
         {
@@ -91,8 +91,8 @@
           "text": {
             "ko": "트렌딩",
             "zh": "热搜",
-            "en": "Hot search",
-            "ja": "ホットサーチ"
+            "en": "trending",
+            "ja": "トレンド"
           }
         },
         {
@@ -169,7 +169,7 @@
           "text": {
             "ko": "표절",
             "zh": "抄袭",
-            "en": "Plagiarism",
+            "en": "plagiarism",
             "ja": "盗作"
           }
         },
@@ -178,7 +178,7 @@
           "text": {
             "ko": "인용",
             "zh": "引用",
-            "en": "Quote",
+            "en": "citation",
             "ja": "引用"
           }
         },
@@ -235,8 +235,8 @@
           "text": {
             "ko": "테이크아웃",
             "zh": "外带",
-            "en": "Takeaway",
-            "ja": "取り除く"
+            "en": "takeout",
+            "ja": "テイクアウト"
           }
         },
         {
@@ -284,7 +284,7 @@
             "ko": "공론장",
             "zh": "公共讨论场",
             "en": "public forum",
-            "ja": "公開フォーラム"
+            "ja": "公共フォーラム"
           }
         },
         {
@@ -292,7 +292,7 @@
           "text": {
             "ko": "자원봉사",
             "zh": "志愿服务",
-            "en": "Volunteer service",
+            "en": "volunteering",
             "ja": "ボランティア活動"
           }
         }

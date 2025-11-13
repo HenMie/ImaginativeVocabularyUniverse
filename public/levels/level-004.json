@@ -73,7 +73,7 @@
           "text": {
             "ko": "소문",
             "zh": "传言",
-            "en": "Rumors",
+            "en": "rumor",
             "ja": "噂"
           }
         },
@@ -82,8 +82,8 @@
           "text": {
             "ko": "광고",
             "zh": "广告",
-            "en": "advertise",
-            "ja": "宣伝する"
+            "en": "advertisement",
+            "ja": "広告"
           }
         },
         {
@@ -130,7 +130,7 @@
           "text": {
             "ko": "동업자",
             "zh": "合伙人",
-            "en": "Partner",
+            "en": "business partner",
             "ja": "パートナー"
           }
         },
@@ -244,8 +244,8 @@
           "text": {
             "ko": "제사",
             "zh": "祭祀",
-            "en": "sacrifice",
-            "ja": "犠牲"
+            "en": "memorial service",
+            "ja": "法事"
           }
         }
       ]
@@ -292,7 +292,7 @@
           "text": {
             "ko": "성과",
             "zh": "成果",
-            "en": "Achievements",
+            "en": "performance",
             "ja": "業績"
           }
         }

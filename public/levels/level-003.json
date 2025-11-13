@@ -35,15 +35,15 @@
             "ko": "약속",
             "zh": "约定",
             "en": "appointment",
-            "ja": "合意"
+            "ja": "約束"
           }
         },
         {
           "id": "deadline",
           "text": {
             "ko": "마감",
-            "zh": "截止期",
-            "en": "Deadline",
+            "zh": "截止日期",
+            "en": "deadline",
             "ja": "締め切り"
           }
         },
@@ -149,7 +149,7 @@
             "ko": "노년",
             "zh": "老年",
             "en": "old age",
-            "ja": "お年寄り"
+            "ja": "老年期"
           }
         }
       ]
@@ -158,7 +158,7 @@
       "id": "cultivatable-things",
       "category": {
         "ko": "기를 수 있는 가치",
-        "zh": "品质",
+        "zh": "可培养的品质",
         "en": "qualities to cultivate",
         "ja": "育てられる価値"
       },
@@ -170,7 +170,7 @@
             "ko": "습관",
             "zh": "习惯",
             "en": "habit",
-            "ja": "癖"
+            "ja": "習慣"
           }
         },
         {
@@ -293,7 +293,7 @@
             "ko": "부피",
             "zh": "体积",
             "en": "volume",
-            "ja": "音量"
+            "ja": "体積"
           }
         }
       ]

@@ -43,7 +43,7 @@
           "text": {
             "ko": "졸리다",
             "zh": "困",
-            "en": "Sleepy",
+            "en": "drowsy",
             "ja": "眠い"
           }
         },
@@ -73,8 +73,8 @@
           "text": {
             "ko": "몰아보기",
             "zh": "刷剧",
-            "en": "Binge watching",
-            "ja": "ビンジウォッチング"
+            "en": "binge-watch",
+            "ja": "一気見"
           }
         },
         {
@@ -91,7 +91,7 @@
           "text": {
             "ko": "막장",
             "zh": "悬念",
-            "en": "suspense",
+            "en": "cliffhanger",
             "ja": "サスペンス"
           }
         },
@@ -100,8 +100,8 @@
           "text": {
             "ko": "반전",
             "zh": "反转",
-            "en": "reverse",
-            "ja": "逆行する"
+            "en": "plot twist",
+            "ja": "プロットツイスト"
           }
         }
       ]
@@ -130,7 +130,7 @@
           "text": {
             "ko": "배달앱",
             "zh": "外卖软件",
-            "en": "Food delivery software",
+            "en": "delivery app",
             "ja": "食品配達ソフトウェア"
           }
         },
@@ -139,7 +139,7 @@
           "text": {
             "ko": "포장",
             "zh": "打包",
-            "en": "Pack",
+            "en": "packaging",
             "ja": "パック"
           }
         },
@@ -149,7 +149,7 @@
             "ko": "팁",
             "zh": "小费",
             "en": "tip",
-            "ja": "ヒント"
+            "ja": "チップ"
           }
         }
       ]
@@ -178,8 +178,8 @@
           "text": {
             "ko": "근거",
             "zh": "依据",
-            "en": "in accordance with",
-            "ja": "に従って"
+            "en": "evidence",
+            "ja": "証拠"
           }
         },
         {
@@ -196,8 +196,8 @@
           "text": {
             "ko": "설득",
             "zh": "说服",
-            "en": "persuade",
-            "ja": "説得する"
+            "en": "persuasion",
+            "ja": "説得"
           }
         }
       ]
@@ -292,8 +292,8 @@
           "text": {
             "ko": "포용",
             "zh": "包容",
-            "en": "tolerate",
-            "ja": "許容する"
+            "en": "inclusion",
+            "ja": "インクルージョン"
           }
         }
       ]

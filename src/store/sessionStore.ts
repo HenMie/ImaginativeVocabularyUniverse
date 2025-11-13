@@ -54,6 +54,7 @@ interface LevelSessionState {
   revealedCategories: string[]
   tileColorOverrides: Record<string, string>
   freeHints: boolean
+  startedAt: number | null
   initialize: (
     level: LevelFile,
     levelId: string,
@@ -123,6 +124,7 @@ type SessionPersistedState = Pick<
   | 'revealedCategories'
   | 'tileColorOverrides'
   | 'freeHints'
+  | 'startedAt'
 >
 
 const MAX_VISIBLE_ROWS = 6
@@ -235,6 +237,7 @@ export const useSessionStore = create<LevelSessionState>()(
           revealedCategories: [],
           tileColorOverrides: {},
           freeHints: false,
+          startedAt: null,
         })
       }
 
@@ -381,6 +384,7 @@ export const useSessionStore = create<LevelSessionState>()(
         revealedCategories: [],
         tileColorOverrides: {},
         freeHints: false,
+        startedAt: null,
         initialize: (level, levelId, options) => {
           const state = get()
           const columns = level.board?.columns ?? 4
@@ -419,6 +423,9 @@ export const useSessionStore = create<LevelSessionState>()(
             state.status !== 'idle' &&
             state.status !== 'completed' &&
             state.tiles.length > 0
+          const nextStartedAt = shouldResume
+            ? state.startedAt ?? Date.now()
+            : Date.now()
           const harmonizedGroupColors = harmonizeGroupColors(level, state.groupColors)
           const harmonizedOverrides = harmonizeTileOverrides(
             level,
@@ -448,6 +455,7 @@ export const useSessionStore = create<LevelSessionState>()(
               groupColors: harmonizedGroupColors,
               tileColorOverrides: harmonizedOverrides,
               freeHints: validatedFreeHints,
+              startedAt: nextStartedAt,
             })
             return
           }
@@ -479,6 +487,7 @@ export const useSessionStore = create<LevelSessionState>()(
             revealedCategories: [],
             tileColorOverrides: {},
             freeHints: validatedFreeHints,
+            startedAt: nextStartedAt,
           })
         },
         reorder: (from, to) => {
@@ -813,6 +822,7 @@ export const useSessionStore = create<LevelSessionState>()(
         revealedCategories: state.revealedCategories,
         tileColorOverrides: state.tileColorOverrides,
         freeHints: state.freeHints,
+        startedAt: state.startedAt,
       }),
     },
   ),

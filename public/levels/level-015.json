@@ -14,7 +14,7 @@
       "id": "work-life-balance",
       "category": {
         "ko": "직장 생활",
-        "zh": "工作生活",
+        "zh": "工作与生活平衡",
         "en": "work life",
         "ja": "仕事生活"
       },
@@ -43,8 +43,8 @@
           "text": {
             "ko": "재택근무",
             "zh": "居家办公",
-            "en": "Home office",
-            "ja": "ホームオフィス"
+            "en": "work from home",
+            "ja": "在宅勤務"
           }
         },
         {
@@ -73,8 +73,8 @@
           "text": {
             "ko": "좋아요",
             "zh": "点赞",
-            "en": "Like",
-            "ja": "のように"
+            "en": "like",
+            "ja": "いいね"
           }
         },
         {
@@ -100,8 +100,8 @@
           "text": {
             "ko": "팔로우",
             "zh": "关注",
-            "en": "focus on",
-            "ja": "焦点を当てる"
+            "en": "follow",
+            "ja": "フォロー"
           }
         }
       ]
@@ -121,7 +121,7 @@
           "text": {
             "ko": "연애",
             "zh": "恋爱",
-            "en": "in love",
+            "en": "dating",
             "ja": "恋愛中"
           }
         },
@@ -130,8 +130,8 @@
           "text": {
             "ko": "이별",
             "zh": "分手",
-            "en": "separate",
-            "ja": "別"
+            "en": "breakup",
+            "ja": "別れ"
           }
         },
         {
@@ -148,8 +148,8 @@
           "text": {
             "ko": "원거리",
             "zh": "异地",
-            "en": "Remote place",
-            "ja": "遠隔地"
+            "en": "long-distance",
+            "ja": "遠距離"
           }
         }
       ]
@@ -169,7 +169,7 @@
           "text": {
             "ko": "스트레스",
             "zh": "压力",
-            "en": "pressure",
+            "en": "stress",
             "ja": "プレッシャー"
           }
         },
@@ -196,8 +196,8 @@
           "text": {
             "ko": "힐링",
             "zh": "疗愈",
-            "en": "Heal",
-            "ja": "癒す"
+            "en": "healing",
+            "ja": "ヒーリング"
           }
         }
       ]
@@ -226,8 +226,8 @@
           "text": {
             "ko": "통금",
             "zh": "门禁",
-            "en": "access control",
-            "ja": "アクセス制御"
+            "en": "curfew",
+            "ja": "門限"
           }
         },
         {
@@ -292,8 +292,8 @@
           "text": {
             "ko": "요약 노트",
             "zh": "复习笔记",
-            "en": "Review notes",
-            "ja": "レビューノート"
+            "en": "cheat sheet",
+            "ja": "カンニングペーパー"
           }
         }
       ]

@@ -330,6 +330,29 @@
   .haptic-feedback:hover {
     transform: scale(1.02);
   }
+
+  /* 悬停提升效果 */
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .hover-lift-sm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 20px rgba(108, 99, 255, 0.3);
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+
+  .hover-scale-sm:hover {
+    transform: scale(1.02);
+  }
 }
 
 .haptic-feedback:active {
@@ -337,11 +360,100 @@
   transition: transform var(--duration-instant) var(--ease-out-cubic);
 }
 
+/* 平滑过渡类 */
+.transition-smooth {
+  transition: all var(--duration-standard) var(--ease-out-cubic);
+}
+
+.transition-smooth-fast {
+  transition: all var(--duration-fast) var(--ease-out-cubic);
+}
+
+.transition-smooth-slow {
+  transition: all var(--duration-slow) var(--ease-out-cubic);
+}
+
 /* 性能优化 */
 .gpu-accelerated {
   transform: translateZ(0);
   backface-visibility: hidden;
   perspective: 1000px;
+}
+
+/* 页面进入动画 */
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter-animation {
+  animation: pageEnter var(--duration-slow) var(--ease-out-cubic);
+}
+
+/* 卡片进入动画 - 交错效果 */
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card-enter {
+  animation: cardEnter var(--duration-slow) var(--ease-out-cubic);
+}
+
+.card-enter-1 { animation-delay: 0ms; }
+.card-enter-2 { animation-delay: 50ms; }
+.card-enter-3 { animation-delay: 100ms; }
+.card-enter-4 { animation-delay: 150ms; }
+.card-enter-5 { animation-delay: 200ms; }
+.card-enter-6 { animation-delay: 250ms; }
+
+/* 渐显动画 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp var(--duration-standard) var(--ease-out-cubic);
+}
+
+/* 微光效果 */
+@keyframes shimmerEffect {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmerEffect 2s infinite;
 }
 
 .will-change-transform {

@@ -1,6 +1,4 @@
 import { create } from 'zustand'
-import { createJSONStorage, persist } from 'zustand/middleware'
-import { STORAGE_KEY } from '../constants/storage'
 import {
   CURRENT_PROGRESS_VERSION,
   type LanguagePreferences,
@@ -14,6 +12,11 @@ import {
   MAX_DEFINITION_LANGUAGES,
   MIN_DEFINITION_LANGUAGES,
 } from '../constants/languages'
+import {
+  fetchRemoteProgress,
+  persistRemoteProgress,
+  upsertUserLevelProgressRecord,
+} from '../services/playerProgressService'
 
 const normalizeLanguageCode = (code: string | undefined, fallback: string) => {
   if (!code) return fallback
@@ -71,6 +74,7 @@ const resolveLanguagePreferences = (
 const makeDefaultProgress = (): PlayerProgress => ({
   version: CURRENT_PROGRESS_VERSION,
   coins: 120,
+  experience: 0,
   unlockedLevelIds: ['level-001'],
   languagePreferences: makeDefaultLanguagePreferences(),
   seenTutorials: [],
@@ -151,26 +155,63 @@ const normalizeSnapshot = (
   return normalized
 }
 
-const storage = createJSONStorage<PlayerProgress>(() => {
-  if (typeof window === 'undefined') {
-    return {
-      getItem: () => null,
-      setItem: () => {},
-      removeItem: () => {},
-      key: () => null,
-      length: 0,
-      clear: () => {},
-    } as unknown as Storage
+const mergeProgress = (base: PlayerProgress, restored?: Partial<PlayerProgress>): PlayerProgress => {
+  if (!restored) {
+    return base
   }
-  return window.localStorage
-})
+
+  const normalizedSnapshots = Object.entries(restored.levelSnapshots ?? {}).reduce<
+    Record<string, LevelProgressSnapshot>
+  >((acc, [levelId, snapshot]) => {
+    acc[levelId] = normalizeSnapshot(
+      levelId,
+      snapshot as Partial<LevelProgressSnapshot> & Record<string, unknown>,
+    )
+    return acc
+  }, {})
+  const unlockedSet = new Set([
+    ...base.unlockedLevelIds,
+    ...(restored.unlockedLevelIds ?? []),
+  ])
+  if (!unlockedSet.size) {
+    unlockedSet.add('level-001')
+  }
+  const merged: PlayerProgress = {
+    ...base,
+    ...restored,
+    version: CURRENT_PROGRESS_VERSION,
+    coins: restored.coins ?? base.coins,
+    experience: restored.experience ?? base.experience,
+    unlockedLevelIds: Array.from(unlockedSet),
+    levelSnapshots: {
+      ...base.levelSnapshots,
+      ...normalizedSnapshots,
+    },
+    settings: {
+      ...base.settings,
+      ...(restored.settings ?? {}),
+    },
+    lastBackupAt: restored.lastBackupAt ?? base.lastBackupAt,
+    lastOnlineAt: restored.lastOnlineAt ?? base.lastOnlineAt,
+  }
+  merged.languagePreferences = resolveLanguagePreferences(
+    base.languagePreferences,
+    restored.languagePreferences,
+    (restored as { activeLanguage?: string })?.activeLanguage,
+  )
+  return merged
+}
 
 interface ProgressState {
   progress: PlayerProgress
+  loading: boolean
+  initialized: boolean
   debugMode: boolean
+  error: string | null
+  userId?: string
   setProgress: (data: Partial<PlayerProgress>) => void
   resetProgress: () => void
-  importProgress: (payload: PlayerProgress) => void
+  initialize: (userId: string) => Promise<void>
   setGameLanguage: (code: string) => void
   setDefinitionLanguages: (codes: string[]) => void
   updateLevelSnapshot: (
@@ -184,6 +225,7 @@ interface ProgressState {
     hintsUsed: Record<string, number>
     unlockLevelId?: string | null
     freeHintMode?: boolean
+    completionTimeMs?: number
   }) => void
   spendCoins: (amount: number) => boolean
   refundCoins: (amount: number) => void
@@ -192,268 +234,247 @@ interface ProgressState {
   isLevelUnlocked: (levelId: string) => boolean
 }
 
-export const useProgressStore = create<ProgressState>()(
-  persist(
-    (set, get) => ({
-      progress: makeDefaultProgress(),
-      debugMode: false,
-      setProgress: (data) =>
-        set((state) => {
-          const legacyTranslation = (data as { activeLanguage?: string }).activeLanguage
-          const nextPreferences = resolveLanguagePreferences(
-            state.progress.languagePreferences,
-            data.languagePreferences,
-            legacyTranslation,
-          )
-          return {
-            progress: {
-              ...state.progress,
-              ...data,
-              languagePreferences: nextPreferences,
-              version: CURRENT_PROGRESS_VERSION,
-              settings: {
-                ...state.progress.settings,
-                ...data.settings,
-              },
-            },
+export const useProgressStore = create<ProgressState>((set, get) => {
+  // 直接实时保存到云端
+  const persistToCloud = async () => {
+    const { userId, progress } = get()
+    if (!userId) {
+      return
+    }
+    try {
+      await persistRemoteProgress(userId, progress)
+    } catch (error) {
+      console.error('保存云端进度失败', error)
+    }
+  }
+
+  const applyProgressUpdate = (updater: (progress: PlayerProgress) => PlayerProgress) => {
+    set((state) => ({
+      progress: updater(state.progress),
+    }))
+    // 直接实时保存
+    void persistToCloud()
+  }
+
+  return {
+    progress: makeDefaultProgress(),
+    loading: false,
+    initialized: false,
+    debugMode: false,
+    error: null,
+    userId: undefined,
+    setProgress: (data) => {
+      applyProgressUpdate((current) => {
+        const legacyTranslation = (data as { activeLanguage?: string })?.activeLanguage
+        const nextPreferences = resolveLanguagePreferences(
+          current.languagePreferences,
+          data.languagePreferences,
+          legacyTranslation,
+        )
+        return {
+          ...current,
+          ...data,
+          languagePreferences: nextPreferences,
+          settings: {
+            ...current.settings,
+            ...(data.settings ?? {}),
+          },
+          version: CURRENT_PROGRESS_VERSION,
+        }
+      })
+    },
+    resetProgress: () => {
+      set({
+        progress: makeDefaultProgress(),
+        initialized: false,
+        userId: undefined,
+      })
+    },
+    initialize: async (userId: string) => {
+      if (!userId) {
+        return
+      }
+      set({ loading: true, error: null, userId })
+      try {
+        const snapshot = await fetchRemoteProgress(userId)
+        const base = makeDefaultProgress()
+        let progress = mergeProgress(base, snapshot?.payload ?? undefined)
+        if (snapshot) {
+          progress = {
+            ...progress,
+            coins: snapshot.coins ?? progress.coins,
+            experience: snapshot.experience ?? progress.experience,
+            lastOnlineAt: snapshot.lastOnlineAt ?? progress.lastOnlineAt,
           }
-        }),
-      resetProgress: () =>
+        }
         set({
-          progress: makeDefaultProgress(),
-        }),
-      importProgress: (payload) =>
-        set(() => {
-          const base = makeDefaultProgress()
-          const legacyTranslation = (payload as { activeLanguage?: string }).activeLanguage
-          const nextPreferences = resolveLanguagePreferences(
-            base.languagePreferences,
-            payload.languagePreferences,
-            legacyTranslation,
-          )
-          return {
-            progress: {
-              ...base,
-              ...payload,
-              languagePreferences: nextPreferences,
-              version: CURRENT_PROGRESS_VERSION,
-              settings: {
-                ...base.settings,
-                ...payload.settings,
-              },
-            },
-          }
-        }),
-      setGameLanguage: (code) =>
-        set((state) => {
-          const nextPreferences = resolveLanguagePreferences(state.progress.languagePreferences, {
-            game: code,
-          })
-          if (state.progress.languagePreferences.game === nextPreferences.game) {
-            return state
-          }
-          return {
-            progress: {
-              ...state.progress,
-              languagePreferences: nextPreferences,
-            },
-          }
-        }),
-      setDefinitionLanguages: (codes) =>
-        set((state) => {
-          const nextPreferences = resolveLanguagePreferences(state.progress.languagePreferences, {
-            definitions: codes,
-          })
-          const sameLength =
-            state.progress.languagePreferences.definitions.length === nextPreferences.definitions.length
-          const sameSet =
-            sameLength &&
-            state.progress.languagePreferences.definitions.every((code) =>
-              nextPreferences.definitions.includes(code),
-            )
-          if (sameLength && sameSet) {
-            return state
-          }
-          return {
-            progress: {
-              ...state.progress,
-              languagePreferences: nextPreferences,
-            },
-          }
-        }),
-      updateLevelSnapshot: (levelId, updater) =>
-        set((state) => {
-          const previous =
-            state.progress.levelSnapshots[levelId] ?? createDefaultSnapshot(levelId)
-          const next = updater(previous)
-          return {
-            progress: {
-              ...state.progress,
-              levelSnapshots: {
-                ...state.progress.levelSnapshots,
-                [levelId]: {
-                  ...next,
-                  levelId,
-                  lastPlayedAt: new Date().toISOString(),
-                },
-              },
-            },
-          }
-        }),
-      completeLevel: ({
-        levelId,
-        completedGroupIds,
-        coinsReward,
-        hintsUsed,
-        unlockLevelId,
-        freeHintMode,
-      }) => {
-        set((state) => {
-          const snapshot =
-            state.progress.levelSnapshots[levelId] ?? createDefaultSnapshot(levelId)
-          const hintCosts = Object.entries(hintsUsed).reduce<Record<string, number>>((acc, [type, count]) => {
+          progress,
+          loading: false,
+          initialized: true,
+        })
+      } catch (error) {
+        console.error('初始化云端进度失败', error)
+        set({
+          loading: false,
+          error: (error as Error).message,
+        })
+      }
+    },
+    setGameLanguage: (code) => {
+      applyProgressUpdate((current) => {
+        const nextPreferences = resolveLanguagePreferences(current.languagePreferences, {
+          game: code,
+        })
+        if (nextPreferences.game === current.languagePreferences.game) {
+          return current
+        }
+        return {
+          ...current,
+          languagePreferences: nextPreferences,
+        }
+      })
+    },
+    setDefinitionLanguages: (codes) => {
+      applyProgressUpdate((current) => {
+        const nextPreferences = resolveLanguagePreferences(current.languagePreferences, {
+          definitions: codes,
+        })
+        return {
+          ...current,
+          languagePreferences: nextPreferences,
+        }
+      })
+    },
+    updateLevelSnapshot: (levelId, updater) => {
+      applyProgressUpdate((current) => {
+        const prevSnapshot = current.levelSnapshots[levelId] ?? createDefaultSnapshot(levelId)
+        const nextSnapshot = updater(prevSnapshot)
+        return {
+          ...current,
+          levelSnapshots: {
+            ...current.levelSnapshots,
+            [levelId]: nextSnapshot,
+          },
+        }
+      })
+    },
+    completeLevel: ({
+      levelId,
+      completedGroupIds,
+      coinsReward,
+      hintsUsed,
+      unlockLevelId,
+      freeHintMode,
+      completionTimeMs,
+    }) => {
+      const now = new Date().toISOString()
+      let latestBestTime: number | undefined
+      applyProgressUpdate((current) => {
+        const snapshot = current.levelSnapshots[levelId] ?? createDefaultSnapshot(levelId)
+        const hintCosts = Object.entries(hintsUsed).reduce<Record<string, number>>(
+          (acc, [type, count]) => {
             if (count > 0) {
               const hintKey = type as HintCostKey
               const cost = freeHintMode ? 0 : getTotalHintCostForUsage(hintKey, count)
               acc[hintKey] = (acc[hintKey] ?? 0) + cost
             }
             return acc
-          }, snapshot.hintCosts ? { ...snapshot.hintCosts } : {})
-          const now = new Date().toISOString()
-          const updatedSnapshot: LevelProgressSnapshot = {
-            ...snapshot,
-            completedGroupIds,
-            remainingTileIds: [],
-            hintsUsed: {
-              ...snapshot.hintsUsed,
-              ...hintsUsed,
-            },
-            hintCosts,
-            coinsEarned: snapshot.coinsEarned + coinsReward,
-            completed: true,
-            completedAt: snapshot.completedAt ?? now,
-            lastPlayedAt: now,
-          }
-
-          const unlockedSet = new Set([...state.progress.unlockedLevelIds, levelId])
-          if (unlockLevelId) {
-            unlockedSet.add(unlockLevelId)
-          }
-
-          return {
-            progress: {
-              ...state.progress,
-              coins: state.progress.coins + coinsReward,
-              unlockedLevelIds: Array.from(unlockedSet),
-              levelSnapshots: {
-                ...state.progress.levelSnapshots,
-                [levelId]: updatedSnapshot,
-              },
-            },
-          }
-        })
-      },
-      spendCoins: (amount) => {
-        if (amount <= 0) return true
-        const state = get()
-        // 调试模式下金币消耗总是成功
-        if (state.debugMode) return true
-        let success = false
-        set((state) => {
-          if (state.progress.coins < amount) {
-            success = false
-            return state
-          }
-          success = true
-          return {
-            progress: {
-              ...state.progress,
-              coins: state.progress.coins - amount,
-            },
-          }
-        })
-        return success
-      },
-      refundCoins: (amount) => {
-        if (amount <= 0) return
-        set((state) => ({
-          progress: {
-            ...state.progress,
-            coins: state.progress.coins + amount,
           },
-        }))
-      },
-      markTutorialSeen: (tutorialId) =>
-        set((state) => {
-          if (state.progress.seenTutorials.includes(tutorialId)) {
-            return state
-          }
-          return {
-            progress: {
-              ...state.progress,
-              seenTutorials: [...state.progress.seenTutorials, tutorialId],
-            },
-          }
-        }),
-      toggleDebugMode: () =>
-        set((state) => ({
-          debugMode: !state.debugMode,
-        })),
-      isLevelUnlocked: (levelId: string) => {
-        const state = get()
-        if (state.debugMode) return true
-        return state.progress.unlockedLevelIds.includes(levelId)
-      },
-    }),
-    {
-      name: STORAGE_KEY,
-      storage,
-      version: CURRENT_PROGRESS_VERSION,
-      partialize: (state) => state.progress as PlayerProgress,
-      merge: (persisted, current) => {
-        const restored = (persisted ?? {}) as PlayerProgress
-        const normalizedSnapshots = Object.entries(restored.levelSnapshots ?? {}).reduce<
-          Record<string, LevelProgressSnapshot>
-        >((acc, [levelId, snapshot]) => {
-          acc[levelId] = normalizeSnapshot(
-            levelId,
-            snapshot as Partial<LevelProgressSnapshot> & Record<string, unknown>,
-          )
-          return acc
-        }, {})
-        const unlockedSet = new Set([
-          ...current.progress.unlockedLevelIds,
-          ...(restored.unlockedLevelIds ?? []),
-        ])
-        if (!unlockedSet.size) {
-          unlockedSet.add('level-001')
-        }
-        const mergedProgress: PlayerProgress = {
-          ...current.progress,
-          ...restored,
-          version: CURRENT_PROGRESS_VERSION,
-          coins: restored.coins ?? current.progress.coins,
-          unlockedLevelIds: Array.from(unlockedSet),
-          levelSnapshots: {
-            ...current.progress.levelSnapshots,
-            ...normalizedSnapshots,
-          },
-          settings: {
-            ...current.progress.settings,
-            ...(restored.settings ?? {}),
-          },
-        }
-        mergedProgress.languagePreferences = resolveLanguagePreferences(
-          current.progress.languagePreferences,
-          restored.languagePreferences,
-          (restored as { activeLanguage?: string }).activeLanguage,
+          snapshot.hintCosts ? { ...snapshot.hintCosts } : {},
         )
+
+        const bestTimeMs =
+          typeof completionTimeMs === 'number'
+            ? Math.min(snapshot.bestTimeMs ?? completionTimeMs, completionTimeMs)
+            : snapshot.bestTimeMs
+        latestBestTime = bestTimeMs ?? undefined
+
+        const updatedSnapshot: LevelProgressSnapshot = {
+          ...snapshot,
+          completedGroupIds,
+          remainingTileIds: [],
+          hintsUsed: {
+            ...snapshot.hintsUsed,
+            ...hintsUsed,
+          },
+          hintCosts,
+          coinsEarned: snapshot.coinsEarned + coinsReward,
+          completed: true,
+          completedAt: snapshot.completedAt ?? now,
+          lastPlayedAt: now,
+        }
+        if (typeof bestTimeMs === 'number') {
+          updatedSnapshot.bestTimeMs = bestTimeMs
+        }
+
+        const unlockedSet = new Set([...current.unlockedLevelIds, levelId])
+        if (unlockLevelId) {
+          unlockedSet.add(unlockLevelId)
+        }
+
         return {
           ...current,
-          progress: mergedProgress,
+          coins: current.coins + coinsReward,
+          experience: current.experience + coinsReward,
+          unlockedLevelIds: Array.from(unlockedSet),
+          levelSnapshots: {
+            ...current.levelSnapshots,
+            [levelId]: updatedSnapshot,
+          },
         }
-      },
-    },
-  ),
-)
+      })
 
+      const { userId } = get()
+      if (userId) {
+        void upsertUserLevelProgressRecord(userId, levelId, {
+          status: 'completed',
+          bestScore: coinsReward,
+          bestTimeMs: latestBestTime ?? null,
+          lastPlayedAt: now,
+        }).catch((error) => {
+          console.error('更新关卡进度失败', error)
+        })
+      }
+    },
+    spendCoins: (amount) => {
+      if (amount <= 0) return true
+      const state = get()
+      if (state.debugMode) return true
+      if (state.progress.coins < amount) {
+        return false
+      }
+      applyProgressUpdate((current) => ({
+        ...current,
+        coins: current.coins - amount,
+      }))
+      return true
+    },
+    refundCoins: (amount) => {
+      if (amount <= 0) return
+      applyProgressUpdate((current) => ({
+        ...current,
+        coins: current.coins + amount,
+      }))
+    },
+    markTutorialSeen: (tutorialId) => {
+      applyProgressUpdate((current) => {
+        if (current.seenTutorials.includes(tutorialId)) {
+          return current
+        }
+        return {
+          ...current,
+          seenTutorials: [...current.seenTutorials, tutorialId],
+        }
+      })
+    },
+    toggleDebugMode: () =>
+      set((state) => ({
+        debugMode: !state.debugMode,
+      })),
+    isLevelUnlocked: (levelId: string) => {
+      const state = get()
+      if (state.debugMode) return true
+      return state.progress.unlockedLevelIds.includes(levelId)
+    },
+  }
+})

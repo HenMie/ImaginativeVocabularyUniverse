@@ -19,6 +19,7 @@ export interface LanguagePreferences {
 export interface PlayerProgress {
   version: number
   coins: number
+  experience: number
   unlockedLevelIds: string[]
   languagePreferences: LanguagePreferences
   seenTutorials: string[]
@@ -29,6 +30,7 @@ export interface PlayerProgress {
     showRomanization: boolean
   }
   lastBackupAt?: string
+  lastOnlineAt?: string
 }
 
 export const CURRENT_PROGRESS_VERSION = 4

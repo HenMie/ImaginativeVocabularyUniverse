@@ -22,6 +22,8 @@ import {
 import { getRewardsForDifficulty } from '../constants/levels'
 import { getTileDisplayText, pickTranslation, getCategoryText, getTileHintText } from '../utils/translation'
 import type { TranslationMap } from '../types/language'
+import { useAuthContext } from '../contexts/AuthContext'
+import { upsertLeaderboardEntry } from '../services/playerProgressService'
 
 type ToolType = 'group' | 'theme' | 'assemble' | 'verify'
 type ToolDialogStage = 'preview' | 'result'
@@ -70,6 +72,7 @@ const TOOL_ORDER: ToolType[] = ['group', 'theme', 'assemble', 'verify']
 export const LevelPlay = () => {
   const { levelId } = useParams<{ levelId: string }>()
   const navigate = useNavigate()
+  const { user } = useAuthContext()
 
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -101,6 +104,7 @@ export const LevelPlay = () => {
   const revealedCategories = useSessionStore((state) => state.revealedCategories)
   const freeHints = useSessionStore((state) => state.freeHints)
   const currentLevelId = useSessionStore((state) => state.currentLevelId)
+  const sessionStartedAt = useSessionStore((state) => state.startedAt)
 
   const initialize = useSessionStore((state) => state.initialize)
   const reorder = useSessionStore((state) => state.reorder)
@@ -195,7 +199,7 @@ export const LevelPlay = () => {
         const metaIndex = levels.findIndex((item) => item.id === levelId)
         const upcoming = metaIndex >= 0 && metaIndex + 1 < levels.length ? levels[metaIndex + 1] : null
         setNextLevelId(upcoming?.id ?? null)
-        return fetchLevelData(meta.file)
+        return fetchLevelData(meta.id)
       })
       .then((levelFile) => {
         if (!levelFile || cancelled) return
@@ -225,7 +229,7 @@ export const LevelPlay = () => {
     
     const checkForUpdates = () => {
       clearLevelCache()
-      fetchLevelData(levelMeta?.file ?? `${levelId}.json`)
+      fetchLevelData(levelId)
         .then((newLevelData) => {
           if (JSON.stringify(newLevelData) !== JSON.stringify(level)) {
             setUpdateAvailable(true)
@@ -280,6 +284,8 @@ export const LevelPlay = () => {
   useEffect(() => {
     // 确保只在当前关卡完成时触发，避免切换关卡时的时序问题
     if (!level || !levelId || status !== 'completed' || completionReported || currentLevelId !== levelId) return
+    const completionTimeMs =
+      typeof sessionStartedAt === 'number' ? Math.max(1, Date.now() - sessionStartedAt) : undefined
     completeLevel({
       levelId,
       completedGroupIds: completedGroups.map((group) => group.group.id),
@@ -287,8 +293,24 @@ export const LevelPlay = () => {
       hintsUsed: hints,
       unlockLevelId: nextLevelId ?? undefined,
       freeHintMode: freeHints,
+      completionTimeMs,
     })
     setCompletionReported(true)
+    if (user && completionTimeMs) {
+      const totalHintsUsed = Object.values(hints).reduce(
+        (sum: number, count) => sum + count,
+        0,
+      )
+      void upsertLeaderboardEntry({
+        userId: user.id,
+        levelId,
+        completionTimeMs,
+        coinsEarned: effectiveCoinReward,
+        hintsSpent: totalHintsUsed,
+      }).catch((err) => {
+        console.error('排行榜同步失败', err)
+      })
+    }
     setMessage(
       alreadyClearedBeforeSession
         ? '🎉 再次通关，本次不再奖励金币，提示保持免费'
@@ -307,6 +329,8 @@ export const LevelPlay = () => {
     levelId,
     nextLevelId,
     status,
+    sessionStartedAt,
+    user,
   ])
 
   useEffect(() => {
@@ -349,7 +373,10 @@ export const LevelPlay = () => {
 
   const totalTiles = useMemo(() => {
     if (!level) return 0
-    return level.groups.reduce((sum, group) => sum + group.tiles.length, 0)
+    return level.groups.reduce(
+      (sum: number, group) => sum + group.tiles.length,
+      0,
+    )
   }, [level])
 
   const highlightPresetMap = useMemo(() => {
@@ -398,7 +425,13 @@ export const LevelPlay = () => {
     { key: 'verify', label: '查验', value: hints.verify },
   ]
 
-  const title = levelId ? formatLevelTitle(levelId) : levelMeta?.name ?? '关卡'
+  const translatedTitle =
+    level?.content.title
+      ? pickTranslation(level.content.title, languagePreferences.game)
+      : null
+  const title =
+    translatedTitle ??
+    (levelMeta?.title ?? (levelId ? formatLevelTitle(levelId) : '关卡'))
 
   const getGroupCategory = (groupId?: string) => {
     if (!groupId || !level) return '同组'
@@ -625,10 +658,10 @@ export const LevelPlay = () => {
   }
 
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-3 p-3 pb-16 xs:gap-3.5 xs:p-3.5 sm:gap-4 sm:p-4 md:gap-4 md:p-4 ipad:gap-5 ipad:p-5 ipad:pb-20 bg-background dark:bg-dark-background">
+    <main className="page-enter-animation mx-auto flex w-full max-w-5xl flex-1 flex-col gap-3 p-3 pb-16 xs:gap-3.5 xs:p-3.5 sm:gap-4 sm:p-4 md:gap-4 md:p-4 lg:max-w-6xl lg:gap-5 lg:p-6 xl:max-w-7xl xl:gap-6 xl:p-8 2xl:max-w-8xl 2xl:gap-7 2xl:p-10 ipad:pb-20 bg-background dark:bg-dark-background">
       <TileDragLayer />
       {updateAvailable && (
-        <div className="flex items-center justify-between rounded-2xl bg-gradient-to-r from-primary/10 to-primary/5 px-4 py-2.5 shadow-sm ring-1 ring-primary/20">
+        <div className="fade-in-up flex items-center justify-between rounded-3xl bg-gradient-to-r from-primary/10 to-primary/5 px-4 py-2.5 shadow-soft ring-1 ring-primary/20 hover-lift-sm transition-smooth backdrop-blur-sm">
           <div className="flex items-center gap-2">
             <span className="text-xl">🔄</span>
             <div>
@@ -645,20 +678,20 @@ export const LevelPlay = () => {
           </button>
         </div>
       )}
-      <header className="flex flex-col gap-2.5 rounded-2xl bg-surface/90 px-3 py-2.5 shadow-tile backdrop-blur dark:bg-dark-surface dark:shadow-dark-tile sm:flex-row sm:items-center sm:justify-between sm:gap-3 md:px-4 md:py-3 ipad:gap-4 ipad:px-5 ipad:py-3.5">
+      <header className="fade-in-up flex flex-col gap-2.5 rounded-3xl bg-surface/90 px-3 py-2.5 shadow-medium backdrop-blur-lg dark:bg-dark-surface dark:shadow-dark-tile sm:flex-row sm:items-center sm:justify-between sm:gap-3 md:px-4 md:py-3 lg:px-5 lg:py-4 xl:px-6 xl:py-5 ipad:gap-4 transition-smooth">
         <div className="flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-start">
           <div className="flex gap-2">
             <button
               type="button"
               onClick={() => navigate(-1)}
-              className="rounded-full bg-primary/10 px-2.5 py-1.5 text-sm font-medium text-primary transition hover:bg-primary/20 dark:bg-dark-primary/20 dark:text-dark-primary dark:hover:bg-dark-primary/30 md:px-3 md:py-1.5 md:text-sm ipad:px-4 ipad:py-2"
+              className="rounded-full bg-primary/10 px-2.5 py-1.5 text-sm font-medium text-primary transition-smooth hover:bg-primary/20 hover-scale-sm dark:bg-dark-primary/20 dark:text-dark-primary dark:hover:bg-dark-primary/30 md:px-3 md:py-1.5 md:text-sm lg:px-4 lg:py-2 lg:text-base"
             >
               ← 返回
             </button>
             <button
               type="button"
               onClick={() => setShowRestartConfirm(true)}
-              className="rounded-full bg-amber-100 px-2.5 py-1.5 text-sm font-medium text-amber-700 transition hover:bg-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:hover:bg-amber-900/50 md:px-3 md:py-1.5 md:text-sm ipad:px-4 ipad:py-2"
+              className="rounded-full bg-amber-100 px-2.5 py-1.5 text-sm font-medium text-amber-700 transition-smooth hover:bg-amber-200 hover-scale-sm dark:bg-amber-900/30 dark:text-amber-400 dark:hover:bg-amber-900/50 md:px-3 md:py-1.5 md:text-sm lg:px-4 lg:py-2 lg:text-base"
             >
               重新开始
             </button>

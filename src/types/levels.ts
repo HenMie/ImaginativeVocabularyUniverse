@@ -1,6 +1,6 @@
 import type { TranslationMap } from './language'
 
-export type Difficulty = 'easy' | 'medium' | 'hard'
+export type Difficulty = 'easy' | 'medium' | 'hard' | 'expert'
 
 export interface TileDefinition {
   id: string
@@ -15,24 +15,37 @@ export interface GroupDefinition {
   tiles: TileDefinition[]
 }
 
-export interface LevelMetadata {
+export interface LevelContent {
+  tutorialSteps?: TranslationMap[]
+  groups: GroupDefinition[]
+  board?: {
+    columns?: number
+  }
+  title?: TranslationMap
+  description?: TranslationMap
+}
+
+export interface LevelRecord {
   id: string
   difficulty: Difficulty
   version: number
   language: string[]
+  isPublished: boolean
+  updatedAt: string
+  content: LevelContent
   tutorialSteps?: TranslationMap[]
-  board?: {
-    columns?: number
-  }
-}
-
-export interface LevelFile extends LevelMetadata {
+  board?: LevelContent['board']
   groups: GroupDefinition[]
 }
 
+export type LevelFile = LevelRecord
+
 export interface LevelIndexEntry {
   id: string
-  name: string
+  title: string
   difficulty: Difficulty
-  file: string
+  language: string[]
+  version: number
+  isPublished: boolean
+  updatedAt: string
 }
