@@ -173,9 +173,6 @@ supabase/               # Supabase 配置 (v1.1.0新增)
 └── setup.sql           # 数据库初始化脚本
 
 public/
-├── levels/             # 关卡数据文件（20个关卡）
-│   ├── index.json      # 关卡索引文件
-│   └── level-*.json    # 各关卡具体数据
 ├── languages.json      # 多语言配置文件
 └── icons/              # PWA 应用图标
 
@@ -235,121 +232,91 @@ e2e/                   # Playwright 端到端测试
 
 ## 📋 关卡数据规范
 
-关卡由目录 `public/levels/` 下的索引文件与若干关卡文件共同驱动。
+关卡数据存储在 Supabase 云端数据库中，通过管理员面板进行管理。
 
-### 1. 索引文件 `public/levels/index.json`
+### 1. 关卡数据结构
 
-- `version`：索引版本号，当前为 `1`。
-- `levels`：数组定义关卡顺序，每个元素对应一个 `LevelIndexEntry`。
+关卡数据遵循 `LevelRecord` 接口：
 
-示例片段：
+- **元数据字段**
+  - `id`：唯一关卡标识，用于路由与存档键
+  - `difficulty`：难度等级 `easy | medium | hard | expert`，影响关卡奖励
+  - `version`：关卡数据版本，当前为 `2`
+  - `language`：数组，定义本关支持的语言代码（如 `["ko", "zh", "en", "ja"]`）
+  - `isPublished`：是否发布，只有已发布的关卡才会在游戏中显示
+  - `updatedAt`：最后更新时间
 
-```5:18:public/levels/index.json
-  "levels": [
-    {
-      "id": "level-001",
-      "name": "关卡1",
-      "difficulty": "easy",
-      "file": "level-001.json"
-    },
-    {
-      "id": "level-002",
-      "name": "关卡2",
-      "difficulty": "medium",
-      "file": "level-002.json"
-    }
-  ]
-```
+- **内容字段 (content)**
+  - `tutorialSteps`：可选数组，每个元素为多语言对象，定义首玩时的提示文案
+  - `board.columns`：可选，重写默认列数（默认 4；用于非 4×4 词场或特殊布局）
+  - `groups`：主题分组数组，每组最终对应一行需要排列到位的四个词牌
 
-字段说明：
+### 2. 关卡内容示例
 
-- `id`：唯一关卡标识（需与关卡文件内一致），用于路由与存档键。
-- `name`：展示名称。
-- `difficulty`：`easy | medium | hard`，影响关卡奖励（见 `constants/levels.ts`）。
-- `file`：实际加载的关卡 JSON 文件名。
-
-### 2. 关卡文件（如 `public/levels/level-001.json`）
-
-每个关卡文件遵循 `LevelFile` 接口（版本 2）：
-
-- 元数据段
-  - `id`、`difficulty`：需与索引保持一致。
-  - `version`：关卡数据版本，当前为 `2`。
-  - `language`：数组，定义本关支持的语言代码（如 `["ko", "zh", "en", "ja"]`）。
-  - `tutorialSteps`：可选数组，每个元素为多语言对象，定义首玩时的提示文案。
-  - `board.columns`：可选，重写默认列数（默认 4；用于非 4×4 词场或特殊布局）。
-- `groups`：主题分组数组，每组最终对应一行需要排列到位的四个词牌。
-
-典型结构：
-
-```1:72:public/levels/level-001.json
+```json
 {
   "id": "level-001",
   "difficulty": "easy",
   "version": 2,
   "language": ["ko", "zh", "en", "ja"],
-  "tutorialSteps": [
-    {
-      "ko": "카드를 네 장 일렬로 드래그하면 그룹이 완성돼요。",
-      "zh": "拖动四个词牌排成一行即可分组。",
-      "en": "Drag four tiles into a row to form a group.",
-      "ja": "タイルを4枚一列にドラッグするとグループになります。"
-    },
-    {
-      "ko": "타일을 탭하면 뜻을 볼 수 있어요。",
-      "zh": "点击词牌可查看释义。",
-      "en": "Tap a tile to view its definition.",
-      "ja": "タイルをタップすると意味を確認できます。"
-    }
-  ],
-  "groups": [
-    {
-      "id": "drinks",
-      "category": {
-        "ko": "음료",
-        "zh": "饮料",
-        "en": "drinks",
-        "ja": "飲み物"
-      },
-      "colorPreset": "lilac",
-      "tiles": [
-        {
-          "id": "milk",
-          "text": {
-            "ko": "우유",
-            "zh": "牛奶",
-            "en": "milk",
-            "ja": "牛乳"
+  "isPublished": true,
+  "content": {
+    "tutorialSteps": [
+      {
+        "ko": "카드를 네 장 일렬로 드래그하면 그룹이 완성돼요。",
+        "zh": "拖动四个词牌排成一行即可分组。",
+        "en": "Drag four tiles into a row to form a group.",
+        "ja": "タイルを4枚一列にドラッグするとグループになります。"
+      }
+    ],
+    "groups": [
+      {
+        "id": "drinks",
+        "category": {
+          "ko": "음료",
+          "zh": "饮料",
+          "en": "drinks",
+          "ja": "飲み物"
+        },
+        "colorPreset": "lilac",
+        "tiles": [
+          {
+            "id": "milk",
+            "text": {
+              "ko": "우유",
+              "zh": "牛奶",
+              "en": "milk",
+              "ja": "牛乳"
+            }
           }
-        }
-      ]
-    }
-  ]
+        ]
+      }
+    ]
+  }
 }
 ```
 
 ### 3. 分组与词牌字段
 
-- `group.id`：全局唯一，作为完成记录、颜色标识的键值。
-- `group.category`：多语言对象，键为语言代码（如 `ko`、`zh`、`en`、`ja`），值为对应语言的主题名称。必须包含 `language` 数组中声明的所有语言。
-- `group.colorPreset`：引用 `constants/groupColors.ts` 中的预设 ID，会影响拖拽着色、完成行展示；如果省略，系统会按组索引自动分配颜色。
+- `group.id`：全局唯一，作为完成记录、颜色标识的键值
+- `group.category`：多语言对象，键为语言代码（如 `ko`、`zh`、`en`、`ja`），值为对应语言的主题名称。必须包含 `language` 数组中声明的所有语言
+- `group.colorPreset`：引用 `constants/groupColors.ts` 中的预设 ID，会影响拖拽着色、完成行展示；如果省略，系统会按组索引自动分配颜色
 
 词牌 (`tiles`) 遵循 `TileDefinition`：
 
-- `id`：组内唯一词牌标识。
-- `text`：多语言对象，键为语言代码，值为对应语言的词汇文本。必须包含 `language` 数组中声明的所有语言。
-- `hint`：可选，多语言对象，显示在右侧详情面板的额外线索。
+- `id`：组内唯一词牌标识
+- `text`：多语言对象，键为语言代码，值为对应语言的词汇文本。必须包含 `language` 数组中声明的所有语言
+- `hint`：可选，多语言对象，显示在右侧详情面板的额外线索
 
-### 4. 关卡编写流程建议
+### 4. 关卡管理流程
 
-1. 复制现有关卡 JSON，修改基础元信息与 `groups`。
-2. 保持每组词牌数量 = `board.columns`（默认 4），否则行匹配逻辑会检测失败。
-3. 确保所有语言代码均出现在关卡的 `language` 数组和 `public/languages.json` 中。
-4. 为每个 `category` 和 `text` 提供完整的多语言映射，包含 `language` 数组中声明的所有语言。
-5. `tutorialSteps` 如提供，每个步骤也需包含完整的多语言映射。
-6. 更新 `public/levels/index.json`，追加新的 `levels` 项；按目标顺序插入，并设置 `difficulty`。
-7. 若新增颜色预设，在 `constants/groupColors.ts` 添加；`colorPreset` 不要引用不存在的 ID。
-8. 本地运行 `npm run dev` 验证显示、拖拽、提示；必要时补充 Vitest/Playwright 覆盖。
+1. **通过管理员面板创建/编辑关卡**：访问 `/admin` 页面，使用可视化编辑器或 JSON 编辑器
+2. **设置关卡元数据**：配置 `id`、`difficulty`、`language` 等基础信息
+3. **编辑关卡内容**：配置 `groups` 和 `tiles` 数据，确保所有 `category` 和 `text` 包含完整的多语言映射
+4. **添加教学提示**：如需要，添加 `tutorialSteps` 多语言提示
+5. **保存为草稿**：设置 `isPublished: false` 进行测试
+6. **发布关卡**：测试通过后设置 `isPublished: true` 正式发布
+7. **导入旧版关卡**：可以通过管理员面板的"导入旧版关卡"功能导入本地 JSON 文件
 
 ## 🧪 测试策略
 
@@ -443,38 +410,21 @@ npm install --save-dev gh-pages
    - Vite 热重载和错误覆盖
 
 ### 添加新关卡
-1. 复制现有关卡文件模板
-2. 修改 `id`、`difficulty`、`language` 等元信息
-3. 配置 `groups` 和 `tiles` 数据，确保所有 `category` 和 `text` 包含完整的多语言映射
-4. 如需要，添加 `tutorialSteps` 多语言提示
-5. 更新 `public/levels/index.json` 添加新关卡条目（包含 `name` 字段用于显示）
-6. 运行测试验证功能正常
+1. 登录管理员账号，访问 `/admin` 页面
+2. 点击"新建关卡"按钮
+3. 设置关卡元数据：`id`、`difficulty`、`language` 等
+4. 使用可视化编辑器或 JSON 编辑器配置关卡内容
+5. 确保所有 `category` 和 `text` 包含完整的多语言映射
+6. 如需要，添加 `tutorialSteps` 多语言提示
+7. 先保存为草稿（`isPublished: false`）进行测试
+8. 测试通过后发布关卡（`isPublished: true`）
 
 ### 扩展新语言
 1. 在 `public/languages.json` 中添加语言配置
-2. 更新所有关卡文件的 `language` 数组，添加新语言代码
+2. 通过管理员面板编辑关卡，更新 `language` 数组
 3. 为所有关卡的 `category`、`text`、`tutorialSteps` 补充新语言的翻译
 4. 测试字体显示和 TTS 功能
 5. 更新语言切换界面
-
-## 🤝 贡献指南
-
-### 团队协作建议
-- **Git 工作流**：使用 Feature Branch + Pull Request
-- **代码审查**：所有 PR 需要至少一人审查
-- **自动化检查**：CI 运行 `npm run build && npm run test && npm run test:e2e`
-- **JSON 校验**：为关卡数据添加 JSON Schema 校验
-
-### 提交规范
-```bash
-feat: 添加新功能
-fix: 修复 bug
-docs: 更新文档
-style: 代码格式调整
-refactor: 重构代码
-test: 添加测试
-chore: 构建过程或辅助工具的变动
-```
 
 ## 🌐 Supabase 集成
 
@@ -506,7 +456,7 @@ v1.1.0 版本集成了 Supabase，为应用提供了完整的后端服务：
 
 ## 🔄 版本历史
 
-### v1.1.1 (当前版本) - 2025年1月
+### v1.1.1
 
 - 🔄 **版本管理**：自动检测版本更新并清除缓存
   - 应用启动时自动检查版本号
@@ -515,7 +465,7 @@ v1.1.0 版本集成了 Supabase，为应用提供了完整的后端服务：
   - 详细的日志输出，方便调试
 - 📚 **文档完善**：添加版本管理使用文档
 
-### v1.1.0 - 2024年12月
+### v1.1.0
 
 - 🌟 **Supabase 集成**：完整的后端服务支持
 - 👤 **用户系统**：注册、登录、权限管理
@@ -524,7 +474,7 @@ v1.1.0 版本集成了 Supabase，为应用提供了完整的后端服务：
 - 🎨 **UI 升级**：Apple 风格设计，暗色模式支持
 - 📱 **体验优化**：同步状态显示，错误处理
 
-### v1.0.0 - 2024年11月
+### v1.0.0
 
 - 🎮 **核心游戏功能**：拖拽交互、关卡系统
 - 💰 **经济系统**：金币奖励和提示机制

@@ -61,21 +61,6 @@ export default defineConfig({
         cleanupOutdatedCaches: true,
         runtimeCaching: [
           {
-            // 只匹配 JSON 文件，不匹配路由路径
-            urlPattern: ({ url }) => url.pathname.startsWith('/levels/') && url.pathname.endsWith('.json'),
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'level-data',
-              expiration: {
-                maxEntries: 32,
-                maxAgeSeconds: 60 * 60 * 24 * 30,
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
-          {
             urlPattern: ({ url }) => url.pathname.endsWith('/languages.json'),
             handler: 'CacheFirst',
             options: {
