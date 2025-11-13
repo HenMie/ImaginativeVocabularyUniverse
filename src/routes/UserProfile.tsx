@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState, useRef } from 'react'
 import type { FormEvent } from 'react'
 import { useAuthContext } from '../contexts/AuthContext'
 import {
@@ -10,6 +10,7 @@ import {
   fetchRemoteProgress,
   type RemoteProgressSnapshot,
 } from '../services/playerProgressService'
+import { useOnPageVisible } from '../hooks/usePageVisibility'
 import { LoadingSpinner } from '../components/LoadingSpinner'
 
 interface ProfileFormState {
@@ -54,22 +55,42 @@ export const UserProfile = () => {
   const [success, setSuccess] = useState<string | null>(null)
   const [isEditing, setIsEditing] = useState(false)
 
-  const loadProfile = useCallback(async () => {
+  // 记录上次加载时间,避免频繁刷新
+  const lastLoadTimeRef = useRef<number>(0)
+
+  const loadProfile = useCallback(async (isRefresh = false) => {
     if (!userId) {
       return
     }
-    const [profileData, progressSnapshot] = await Promise.all([
-      fetchUserProfile(userId),
-      fetchRemoteProgress(userId),
-    ])
-    setProfile(profileData)
-    setProgress(progressSnapshot)
-    // 优先使用 Supabase Auth 的 full_name
-    setFormState({
-      username: defaultUsername || profileData?.username || '',
-    })
+
+    // 如果是刷新操作,显示刷新状态
+    if (isRefresh) {
+      setRefreshing(true)
+    }
+
+    try {
+      const [profileData, progressSnapshot] = await Promise.all([
+        fetchUserProfile(userId),
+        fetchRemoteProgress(userId),
+      ])
+      setProfile(profileData)
+      setProgress(progressSnapshot)
+      // 优先使用 Supabase Auth 的 full_name
+      setFormState({
+        username: defaultUsername || profileData?.username || '',
+      })
+      lastLoadTimeRef.current = Date.now()
+
+      // 清除错误信息
+      setError(null)
+    } finally {
+      if (isRefresh) {
+        setRefreshing(false)
+      }
+    }
   }, [defaultUsername, userId])
 
+  // 初始加载
   useEffect(() => {
     let cancelled = false
 
@@ -81,7 +102,7 @@ export const UserProfile = () => {
     setError(null)
     setSuccess(null)
 
-    loadProfile()
+    loadProfile(false)
       .catch((err: Error) => {
         if (!cancelled) {
           setError(err.message)
@@ -97,6 +118,21 @@ export const UserProfile = () => {
       cancelled = true
     }
   }, [loadProfile, userId])
+
+  // 当页面重新可见时,如果距离上次加载超过5分钟,则刷新数据
+  useOnPageVisible(() => {
+    const now = Date.now()
+    const timeSinceLastLoad = now - lastLoadTimeRef.current
+    const fiveMinutes = 5 * 60 * 1000
+
+    if (timeSinceLastLoad > fiveMinutes && userId && !loading && !refreshing) {
+      console.info('页面重新可见,刷新用户数据')
+      loadProfile(true).catch((err: Error) => {
+        console.error('刷新用户数据失败:', err)
+        // 不显示错误,避免打扰用户
+      })
+    }
+  }, [userId, loading, refreshing, loadProfile])
 
   const handleRefresh = async () => {
     if (!userId) return

@@ -6,13 +6,59 @@ interface PendingRequest<T> {
   promise: Promise<T>
   timestamp: number
   cancelled: boolean
+  abortController?: AbortController
 }
 
 class RequestManager {
   private pendingRequests = new Map<string, PendingRequest<any>>()
-  private readonly REQUEST_TIMEOUT = 30000 // 30秒超时
+  private readonly REQUEST_TIMEOUT = 60000 // 60秒超时(增加到60秒)
   private readonly RETRY_DELAY = 1000 // 重试延迟1秒
   private readonly MAX_RETRIES = 3 // 最大重试次数
+  private isOnline = true
+
+  constructor() {
+    // 监听网络状态变化
+    if (typeof window !== 'undefined') {
+      window.addEventListener('online', this.handleOnline)
+      window.addEventListener('offline', this.handleOffline)
+      // 监听页面可见性变化
+      document.addEventListener('visibilitychange', this.handleVisibilityChange)
+    }
+  }
+
+  private handleOnline = () => {
+    console.info('🌐 网络已恢复')
+    this.isOnline = true
+  }
+
+  private handleOffline = () => {
+    console.warn('📡 网络已断开')
+    this.isOnline = false
+    // 取消所有进行中的请求
+    this.cancelAll()
+  }
+
+  private handleVisibilityChange = () => {
+    if (document.visibilityState === 'visible') {
+      // 页面重新可见时,清理过期的请求
+      this.cleanupStaleRequests()
+    }
+  }
+
+  /**
+   * 清理过期的请求(超过5分钟)
+   */
+  private cleanupStaleRequests(): void {
+    const now = Date.now()
+    const staleThreshold = 5 * 60 * 1000 // 5分钟
+
+    for (const [key, request] of this.pendingRequests.entries()) {
+      if (now - request.timestamp > staleThreshold) {
+        console.warn(`清理过期请求: ${key}`)
+        this.cancel(key)
+      }
+    }
+  }
 
   /**
    * 执行请求，自动处理去重、重试和超时
@@ -28,6 +74,11 @@ class RequestManager {
   ): Promise<T> {
     const { retries = this.MAX_RETRIES, timeout = this.REQUEST_TIMEOUT, forceRefresh = false } = options || {}
 
+    // 检查网络状态
+    if (!this.isOnline) {
+      throw new Error('网络连接已断开,请检查您的网络设置')
+    }
+
     // 如果强制刷新，取消之前的请求
     if (forceRefresh) {
       this.cancel(key)
@@ -42,27 +93,31 @@ class RequestManager {
         return existing.promise
       } else {
         // 请求过期，取消它
+        console.warn(`请求已过期,重新发起: ${key}`)
         this.cancel(key)
       }
     }
 
-    // 创建新的请求
+    // 创建 AbortController 用于取消请求
+    const abortController = new AbortController()
     let cancelled = false
+
     const pendingRequest: PendingRequest<T> = {
       promise: Promise.resolve() as Promise<T>,
       timestamp: Date.now(),
       cancelled: false,
+      abortController,
     }
 
     const requestPromise = this.executeWithRetry(
       () => {
-        if (cancelled) {
+        if (cancelled || abortController.signal.aborted) {
           throw new Error('请求已取消')
         }
         return requestFn()
       },
       retries,
-      () => cancelled
+      () => cancelled || abortController.signal.aborted
     )
 
     // 设置超时
@@ -70,23 +125,29 @@ class RequestManager {
       setTimeout(() => {
         cancelled = true
         pendingRequest.cancelled = true
-        reject(new Error(`请求超时: ${key}`))
+        abortController.abort()
+        reject(new Error(`请求超时,请刷新页面重试`))
       }, timeout)
     })
 
     const wrappedPromise = Promise.race([requestPromise, timeoutPromise])
       .catch((error) => {
-        // 如果是取消错误，不抛出
-        if (cancelled && error.message.includes('取消')) {
+        // 如果是取消错误，提供更友好的提示
+        if (cancelled || abortController.signal.aborted) {
+          if (error.message.includes('超时')) {
+            throw error // 保留超时错误信息
+          }
           throw new Error('请求已取消')
+        }
+        // 网络错误提供更友好的提示
+        if (error instanceof TypeError || error.message.includes('fetch')) {
+          throw new Error('网络请求失败,请检查网络连接后重试')
         }
         throw error
       })
       .finally(() => {
         // 请求完成后清理
-        if (!cancelled) {
-          this.pendingRequests.delete(key)
-        }
+        this.pendingRequests.delete(key)
       })
 
     pendingRequest.promise = wrappedPromise
@@ -159,6 +220,7 @@ class RequestManager {
     const pending = this.pendingRequests.get(key)
     if (pending) {
       pending.cancelled = true
+      pending.abortController?.abort()
     }
     this.pendingRequests.delete(key)
   }
@@ -169,6 +231,7 @@ class RequestManager {
   cancelAll(): void {
     for (const pending of this.pendingRequests.values()) {
       pending.cancelled = true
+      pending.abortController?.abort()
     }
     this.pendingRequests.clear()
   }
@@ -185,6 +248,25 @@ class RequestManager {
    */
   hasPending(key: string): boolean {
     return this.pendingRequests.has(key)
+  }
+
+  /**
+   * 获取网络状态
+   */
+  getNetworkStatus(): boolean {
+    return this.isOnline
+  }
+
+  /**
+   * 清理资源
+   */
+  destroy(): void {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('online', this.handleOnline)
+      window.removeEventListener('offline', this.handleOffline)
+      document.removeEventListener('visibilitychange', this.handleVisibilityChange)
+    }
+    this.cancelAll()
   }
 }
 

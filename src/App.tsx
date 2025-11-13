@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import { fetchLanguages } from './services/languageService'
 import { Footer } from './components/Footer'
 import { UserMenu } from './components/UserMenu'
+import { NetworkStatus } from './components/NetworkStatus'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { AuthProvider } from './contexts/AuthContext'
 import { LevelPlay } from './routes/LevelPlay'
@@ -55,7 +56,8 @@ export const App = () => {
         setError(err.message)
       })
       .finally(() => setLoading(false))
-  }, [setLanguages])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (loading) {
     return (
@@ -76,6 +78,7 @@ export const App = () => {
 
   return (
     <AuthProvider>
+      <NetworkStatus />
       <div className="flex min-h-screen flex-col bg-background dark:bg-dark-background">
         <Routes>
           {/* 公开路由 - 不需要登录 */}
