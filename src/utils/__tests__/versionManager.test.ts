@@ -96,11 +96,11 @@ describe('versionManager', () => {
   })
 
   describe('checkVersionUpdate', () => {
-    it('首次运行时应该返回 false', () => {
+    it('首次运行时应该返回 true（清除旧版本缓存）', () => {
       const hasUpdate = checkVersionUpdate()
-      expect(hasUpdate).toBe(false)
-      // 应该保存当前版本
-      expect(getStoredVersion()).toBe(getCurrentVersion())
+      expect(hasUpdate).toBe(true)
+      // 不应该自动保存版本（由 handleVersionUpdate 处理）
+      expect(getStoredVersion()).toBeNull()
     })
 
     it('版本未变化时应该返回 false', () => {

@@ -111,17 +111,17 @@ export const clearAllCaches = async (): Promise<void> => {
 
 /**
  * 检查版本更新
- * @returns 如果版本已更新返回 true，否则返回 false
+ * @returns 如果版本已更新或首次运行返回 true，否则返回 false
  */
 export const checkVersionUpdate = (): boolean => {
   const currentVersion = getCurrentVersion()
   const storedVersion = getStoredVersion()
 
-  // 首次运行或版本不存在
+  // 首次运行或版本不存在（可能是从旧版本升级）
   if (!storedVersion) {
-    console.info('📦 首次运行应用，当前版本:', currentVersion)
-    saveCurrentVersion()
-    return false
+    console.info('📦 首次运行版本管理功能，当前版本:', currentVersion)
+    console.info('🧹 将清除旧版本缓存以避免兼容性问题')
+    return true
   }
 
   // 版本已更新
