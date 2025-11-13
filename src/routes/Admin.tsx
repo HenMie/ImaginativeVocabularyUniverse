@@ -584,8 +584,7 @@ export function Admin() {
       <div className="flex flex-col gap-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-white">线上关卡</h2>
-            <p className="text-sm text-slate-500 dark:text-slate-400">通过 Supabase 统一管理</p>
+            <h2 className="text-xl font-semibold text-slate-900 dark:text-white">关卡列表</h2>
           </div>
           <div className="flex flex-wrap gap-2">
             <button
@@ -890,7 +889,6 @@ export function Admin() {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h2 className="text-lg font-semibold text-slate-900 dark:text-white">用户总览</h2>
-              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">检索 Supabase Profile 并查看金币、经验与最近在线时间。</p>
             </div>
             <div className="flex flex-col gap-2 sm:flex-row">
               <form onSubmit={handleUserSearchSubmit} className="flex flex-wrap gap-2">
@@ -1151,7 +1149,6 @@ export function Admin() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 className="text-lg font-semibold text-slate-900 dark:text-white">系统设置</h2>
-            <p className="text-sm text-slate-500 dark:text-slate-400">管理系统全局配置</p>
           </div>
           <button
             type="button"
@@ -1251,7 +1248,6 @@ export function Admin() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 className="text-lg font-semibold text-slate-900 dark:text-white">排行榜</h2>
-            <p className="text-sm text-slate-500 dark:text-slate-400">各关最速记录</p>
           </div>
           <div className="flex items-center gap-2">
             <select
