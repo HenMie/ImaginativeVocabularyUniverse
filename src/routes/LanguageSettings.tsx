@@ -217,7 +217,7 @@ export const LanguageSettings = () => {
               ← 返回关卡选择
             </button>
             <h1 className="mt-2 text-2xl font-bold text-slate-800 dark:text-dark-text sm:text-3xl lg:text-4xl xl:text-5xl">设置</h1>
-            <p className="text-xs text-slate-500 dark:text-dark-textMuted sm:text-sm lg:text-base xl:text-lg">配置语言偏好并管理存档数据</p>
+            <p className="text-xs text-slate-500 dark:text-dark-textMuted sm:text-sm lg:text-base xl:text-lg">配置游戏偏好</p>
           </div>
         </div>
 

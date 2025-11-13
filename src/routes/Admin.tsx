@@ -1361,7 +1361,6 @@ export function Admin() {
       <header className="fade-in-up rounded-4xl border border-slate-200 bg-white p-6 shadow-medium dark:border-slate-700 dark:bg-slate-900 lg:p-8 xl:p-10 backdrop-blur-sm transition-smooth">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="text-sm uppercase tracking-wider text-slate-500 dark:text-slate-400 lg:text-base">控制室</p>
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white lg:text-3xl xl:text-4xl">管理面板</h1>
           </div>
           <div className="flex gap-2">

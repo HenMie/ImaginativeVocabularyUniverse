@@ -165,7 +165,7 @@ export const UserProfile = () => {
         <div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100 lg:text-3xl xl:text-4xl">个人资料</h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 lg:text-base">
-            查看帐号详情、更新展示名称，所有更改会立即同步至线上存档。
+            查看帐号详情、更新展示名称。
           </p>
         </div>
         <button

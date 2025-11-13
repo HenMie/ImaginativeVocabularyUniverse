@@ -1,0 +1,4 @@
+# Netlify/Vercel 重定向规则
+# 将所有请求重定向到 index.html，让 React Router 处理路由
+/*    /index.html   200
+

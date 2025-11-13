@@ -1,0 +1,31 @@
+# Apache 服务器配置
+# 启用重写引擎
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  
+  # 如果请求的是实际存在的文件或目录，直接返回
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  
+  # 否则重定向到 index.html
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# 设置缓存策略
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "0"
+  ExpiresByType application/javascript "1 year"
+  ExpiresByType text/css "1 year"
+  ExpiresByType image/png "1 year"
+  ExpiresByType image/jpeg "1 year"
+  ExpiresByType image/svg+xml "1 year"
+  ExpiresByType application/json "1 hour"
+</IfModule>
+
+# 启用 Gzip 压缩
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
