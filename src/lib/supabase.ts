@@ -15,7 +15,24 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Supabase environment variables')
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    // 自动刷新会话
+    autoRefreshToken: true,
+    // 持久化会话到 localStorage
+    persistSession: true,
+    // 检测会话变化
+    detectSessionInUrl: true,
+    // 设置会话刷新间隔（默认是 60 秒前刷新）
+    // 这确保会话在过期前自动刷新
+  },
+  // 全局配置
+  global: {
+    headers: {
+      'x-application-name': 'ImaginativeVocabularyUniverse',
+    },
+  },
+})
 
 export interface Database {
   public: {

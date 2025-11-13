@@ -49,7 +49,9 @@ export function useAuth() {
 
     // 监听认证状态变化
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
+      async (event, session) => {
+        console.log('🔐 Auth state changed:', event, session?.user?.id)
+
         if (session) {
           const isAdmin = await checkAdminStatus(session.user.id)
           void progressStore.initialize(session.user.id)
@@ -71,7 +73,30 @@ export function useAuth() {
       }
     )
 
-    return () => subscription.unsubscribe()
+    // 监听页面可见性变化，主动刷新会话
+    const handleVisibilityChange = async () => {
+      if (document.visibilityState === 'visible') {
+        console.log('📄 Page became visible, refreshing session...')
+        try {
+          // 主动刷新会话
+          const { data: { session }, error } = await supabase.auth.refreshSession()
+          if (error) {
+            console.warn('⚠️ Failed to refresh session:', error.message)
+          } else if (session) {
+            console.log('✅ Session refreshed successfully')
+          }
+        } catch (error) {
+          console.error('❌ Error refreshing session:', error)
+        }
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    return () => {
+      subscription.unsubscribe()
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
   }, [])
 
   const checkAdminStatus = async (userId: string): Promise<boolean> => {

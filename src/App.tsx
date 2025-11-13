@@ -16,6 +16,7 @@ import { ForgotPassword } from './routes/ForgotPassword'
 import { ResetPassword } from './routes/ResetPassword'
 import { VocabularyBook } from './routes/VocabularyBook'
 import { useLanguageStore } from './store/languageStore'
+import { sessionHealthChecker } from './utils/sessionHealth'
 
 const AppHeader = () => {
   const navigate = useNavigate()
@@ -47,6 +48,9 @@ export const App = () => {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    // 初始化会话健康检查
+    console.log('🔐 Initializing session health checker')
+
     fetchLanguages()
       .then((languages) => {
         setLanguages(languages)
@@ -56,6 +60,11 @@ export const App = () => {
         setError(err.message)
       })
       .finally(() => setLoading(false))
+
+    // 清理函数
+    return () => {
+      sessionHealthChecker.stopPeriodicCheck()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

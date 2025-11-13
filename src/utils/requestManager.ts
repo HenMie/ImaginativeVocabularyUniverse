@@ -139,6 +139,16 @@ class RequestManager {
           }
           throw new Error('请求已取消')
         }
+
+        // 检查是否是会话过期错误
+        if (error?.message?.includes('JWT') ||
+            error?.message?.includes('session') ||
+            error?.message?.includes('expired') ||
+            error?.message?.includes('unauthorized') ||
+            error?.code === 'PGRST301') {
+          throw new Error('登录已过期,请刷新页面重新登录')
+        }
+
         // 网络错误提供更友好的提示
         if (error instanceof TypeError || error.message.includes('fetch')) {
           throw new Error('网络请求失败,请检查网络连接后重试')
