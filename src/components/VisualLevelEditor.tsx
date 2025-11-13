@@ -29,14 +29,12 @@ export function VisualLevelEditor({
   version,
   isPublished,
   groups,
-  tutorialSteps = [],
   onIdChange,
   onDifficultyChange,
   onLanguagesChange,
   onVersionChange,
   onIsPublishedChange,
   onGroupsChange,
-  onTutorialStepsChange,
   disabled = false,
 }: VisualLevelEditorProps) {
   const [expandedGroupId, setExpandedGroupId] = useState<string | null>(null)
@@ -214,7 +212,7 @@ export function VisualLevelEditor({
         </div>
 
         <div className="space-y-3">
-          {groups.map((group, groupIndex) => {
+          {groups.map((group) => {
             const isExpanded = expandedGroupId === group.id
             const colorPreset = GROUP_COLOR_PRESETS.find((p) => p.id === group.colorPreset)
 

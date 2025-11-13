@@ -14,7 +14,7 @@ import {
 
 export const LevelSelect = () => {
   const navigate = useNavigate()
-  const { user, loading: authLoading } = useAuthContext()
+  const { user } = useAuthContext()
   const progress = useProgressStore((state) => state.progress)
   const debugMode = useProgressStore((state) => state.debugMode)
   const isLevelUnlocked = useProgressStore((state) => state.isLevelUnlocked)
