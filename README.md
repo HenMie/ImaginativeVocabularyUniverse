@@ -1,6 +1,6 @@
 # 脑洞外语词场（ImaginativeVocabularyUniverse）
 
-[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/your-username/ImaginativeVocabularyUniverse)
+[![Version](https://img.shields.io/badge/version-1.1.1-blue.svg)](https://github.com/your-username/ImaginativeVocabularyUniverse)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19.2-blue.svg)](https://reactjs.org/)
@@ -31,6 +31,7 @@
 - **响应式设计**：基于 TailwindCSS 的美观界面，适配各种设备
 - **暗色模式**：自动检测系统主题，支持手动切换
 - **实时同步状态**：显示数据同步状态，支持错误重试
+- **版本管理**：自动检测版本更新并清除缓存，避免兼容性问题 (v1.1.1新增)
 
 ## 🚀 快速开始
 
@@ -505,7 +506,16 @@ v1.1.0 版本集成了 Supabase，为应用提供了完整的后端服务：
 
 ## 🔄 版本历史
 
-### v1.1.0 (当前版本) - 2024年12月
+### v1.1.1 (当前版本) - 2025年1月
+
+- 🔄 **版本管理**：自动检测版本更新并清除缓存
+  - 应用启动时自动检查版本号
+  - 版本更新时清除 localStorage、sessionStorage 和 Service Worker 缓存
+  - 避免版本更新后的兼容性问题和路由问题
+  - 详细的日志输出，方便调试
+- 📚 **文档完善**：添加版本管理使用文档
+
+### v1.1.0 - 2024年12月
 
 - 🌟 **Supabase 集成**：完整的后端服务支持
 - 👤 **用户系统**：注册、登录、权限管理

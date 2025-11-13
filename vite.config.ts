@@ -1,8 +1,15 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vitest/config'
 import { VitePWA } from 'vite-plugin-pwa'
+import { readFileSync } from 'fs'
+
+// 读取 package.json 获取版本号
+const packageJson = JSON.parse(readFileSync('./package.json', 'utf-8'))
 
 export default defineConfig({
+  define: {
+    'import.meta.env.VITE_APP_VERSION': JSON.stringify(packageJson.version),
+  },
   plugins: [
     react(),
     VitePWA({

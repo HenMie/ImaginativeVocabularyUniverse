@@ -8,6 +8,7 @@ import { TouchBackend, type TouchBackendOptions } from 'react-dnd-touch-backend'
 import { registerSW } from 'virtual:pwa-register'
 import { App } from './App'
 import { useThemeStore } from './store/themeStore'
+import { handleVersionUpdate } from './utils/versionManager'
 import './index.css'
 
 const getBackendConfig = (): {
@@ -67,6 +68,13 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 
 // 在应用启动后初始化主题
 initializeTheme()
+
+// 检查版本更新并清除缓存
+if (typeof window !== 'undefined') {
+  handleVersionUpdate().catch((error) => {
+    console.error('版本更新处理失败:', error)
+  })
+}
 
 if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
   const updateSW = registerSW({
