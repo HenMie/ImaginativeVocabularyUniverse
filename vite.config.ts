@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
@@ -14,8 +14,8 @@ export default defineConfig({
       includeAssets: ['vite.svg', 'icons/apple-touch-icon-180.png'],
       manifest: {
         name: '脑洞外语词场',
-        short_name: '脑洞词场',
-        description: '基于浏览器的脑洞词场外语学习小游戏，支持多语言词汇分类与本地进度存档。',
+        short_name: '脑洞外语词场',
+        description: '外语学习小游戏，支持多语言词汇分类。',
         theme_color: '#6C63FF',
         background_color: '#f4f7fb',
         display: 'standalone',
@@ -45,11 +45,17 @@ export default defineConfig({
       },
       workbox: {
         navigateFallback: '/index.html',
+        navigateFallbackDenylist: [
+          // 排除静态资源路径，让它们正常加载
+          /^\/_/,
+          /\/[^/?]+\.[^/]+$/,
+        ],
         globPatterns: ['**/*.{js,css,html,svg,png,json,woff2}'],
         cleanupOutdatedCaches: true,
         runtimeCaching: [
           {
-            urlPattern: ({ url }) => url.pathname.startsWith('/levels/'),
+            // 只匹配 JSON 文件，不匹配路由路径
+            urlPattern: ({ url }) => url.pathname.startsWith('/levels/') && url.pathname.endsWith('.json'),
             handler: 'CacheFirst',
             options: {
               cacheName: 'level-data',

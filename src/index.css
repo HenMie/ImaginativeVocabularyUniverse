@@ -120,6 +120,7 @@ button {
     /* 防止长按弹出菜单 */
     -webkit-touch-callout: none;
     -webkit-user-select: none;
+    user-select: none;
   }
 }
 

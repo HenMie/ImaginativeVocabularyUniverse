@@ -77,6 +77,23 @@ if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
     onOfflineReady() {
       console.info('脑洞外语词场已准备好离线使用')
     },
+    onRegisterError(error: Error) {
+      console.error('Service Worker 注册失败:', error)
+    },
   })
+
+  // 在开发环境下，提供清除 Service Worker 的方法
+  if (import.meta.env.DEV) {
+    ;(window as any).clearServiceWorker = async () => {
+      const registration = await navigator.serviceWorker.getRegistration()
+      if (registration) {
+        await registration.unregister()
+        // 清除所有缓存
+        const cacheNames = await caches.keys()
+        await Promise.all(cacheNames.map((name) => caches.delete(name)))
+        console.info('Service Worker 和缓存已清除，请刷新页面')
+      }
+    }
+  }
 }
 
