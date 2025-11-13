@@ -288,10 +288,7 @@ export const UserProfile = () => {
 
           <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
             <div className="flex flex-col gap-1">
-              <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">云端进度</h2>
-              <p className="text-sm text-slate-500 dark:text-slate-400">
-                快照来自 Supabase「user_progress」表，确保金币与经验与线上一致。
-              </p>
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">游戏进度</h2>
             </div>
             <div className="mt-4 grid gap-4 sm:grid-cols-3">
               <div className="rounded-2xl border border-slate-100 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-800/60">

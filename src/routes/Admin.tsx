@@ -30,6 +30,7 @@ import {
   updateSystemSettings,
   type SystemSetting,
 } from '../services/systemSettingsService'
+import { useProgressStore } from '../store/progressStore'
 
 type AdminTab = 'levels' | 'users' | 'leaderboards' | 'settings'
 
@@ -116,6 +117,10 @@ export function Admin() {
   const [importingLegacy, setImportingLegacy] = useState(false)
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null)
   const [useVisualEditor, setUseVisualEditor] = useState(true) // 默认使用可视化编辑器
+
+  // 调试模式状态
+  const debugMode = useProgressStore((state) => state.debugMode)
+  const toggleDebugMode = useProgressStore((state) => state.toggleDebugMode)
 
   const [userDirectory, setUserDirectory] = useState<UserDirectoryEntry[]>([])
   const [userLoading, setUserLoading] = useState(true)
@@ -1160,6 +1165,39 @@ export function Admin() {
         </div>
 
         <div className="mt-6 space-y-6">
+          {/* 调试模式开关 (仅管理员可见) */}
+          <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-900/20">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1">
+                <h3 className="text-base font-semibold text-slate-900 dark:text-white">
+                  🐛 调试模式
+                </h3>
+                <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
+                  开启后，您将拥有无限金币和全部关卡解锁权限（仅对您自己生效）
+                </p>
+                <p className="mt-2 text-xs text-amber-600 dark:text-amber-400">
+                  ⚠️ 此功能仅供管理员测试使用，不会影响其他用户
+                </p>
+              </div>
+              <label className="relative inline-flex cursor-pointer items-center">
+                <input
+                  type="checkbox"
+                  checked={debugMode}
+                  onChange={() => {
+                    toggleDebugMode()
+                    const newState = !debugMode
+                    console.log(
+                      `%c调试模式已${newState ? '开启' : '关闭'}`,
+                      `color: ${newState ? '#10b981' : '#ef4444'}; font-weight: bold; font-size: 14px;`
+                    )
+                  }}
+                  className="peer sr-only"
+                />
+                <div className="peer h-6 w-11 rounded-full bg-slate-300 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-slate-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-amber-500 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-500/30 dark:border-slate-600 dark:bg-slate-700 dark:peer-checked:bg-amber-600"></div>
+              </label>
+            </div>
+          </div>
+
           {/* 注册开关 */}
           {registrationSetting && (
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/60">
