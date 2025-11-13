@@ -1,5 +1,24 @@
--- Supabase 初始化脚本（纯在线模式）
--- 关卡数据存储在数据库中，管理员可在云端直接编辑。
+-- ============================================================
+-- Supabase 完整初始化脚本
+-- ============================================================
+--
+-- 此脚本包含了项目所需的所有数据库配置，包括：
+-- - 所有数据表（profiles, user_progress, levels, leaderboards, admin_users, system_settings, vocabulary_book）
+-- - 所有索引
+-- - 所有 RLS 策略（包括管理员权限）
+-- - 自动化触发器和函数
+-- - 默认数据和配置
+--
+-- 使用方法：
+-- 1. 登录 Supabase Dashboard (https://supabase.com/dashboard)
+-- 2. 选择你的项目
+-- 3. 在左侧菜单中点击 SQL Editor
+-- 4. 点击 New query 创建新查询
+-- 5. 复制此文件的完整内容并粘贴
+-- 6. 点击 Run 执行脚本
+--
+-- 执行完成后，请参考 docs/Supabase部署指南.md 添加管理员账号
+-- ============================================================
 
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
@@ -75,6 +94,43 @@ CREATE TABLE IF NOT EXISTS public.admin_users (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   UNIQUE (user_id)
+);
+
+-- 系统配置表
+CREATE TABLE IF NOT EXISTS public.system_settings (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  key TEXT NOT NULL UNIQUE,
+  value JSONB NOT NULL,
+  description TEXT,
+  updated_by UUID REFERENCES auth.users(id) ON DELETE SET NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- 生词本表
+CREATE TABLE IF NOT EXISTS public.vocabulary_book (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+
+  -- 词汇信息
+  word TEXT NOT NULL,                    -- 原文(游戏语言)
+  translation TEXT NOT NULL,             -- 中文释义
+  language TEXT NOT NULL,                -- 词汇语言代码 (ko, ja, en等)
+
+  -- 来源信息
+  level_id TEXT REFERENCES public.levels(id) ON DELETE SET NULL,
+  group_category TEXT,                   -- 所属分组类别
+  tile_id TEXT,                          -- 原始词牌ID
+
+  -- 元数据
+  added_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  last_reviewed_at TIMESTAMPTZ,          -- 最后复习时间
+  review_count INTEGER NOT NULL DEFAULT 0 CHECK (review_count >= 0),  -- 复习次数
+  notes TEXT,                            -- 用户笔记
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+  -- 防止重复添加同一个词
+  UNIQUE (user_id, word, language)
 );
 
 -- 基础关卡示例（供前端在线读取）
@@ -178,6 +234,9 @@ CREATE INDEX IF NOT EXISTS idx_levels_published ON public.levels(is_published);
 CREATE INDEX IF NOT EXISTS idx_user_level_progress_user ON public.user_level_progress(user_id);
 CREATE INDEX IF NOT EXISTS idx_leaderboards_level_time ON public.leaderboards(level_id, completion_time_ms);
 CREATE INDEX IF NOT EXISTS idx_admin_users_user_id ON public.admin_users(user_id);
+CREATE INDEX IF NOT EXISTS idx_vocabulary_book_user_language ON public.vocabulary_book(user_id, language, added_at DESC);
+CREATE INDEX IF NOT EXISTS idx_vocabulary_book_user_added ON public.vocabulary_book(user_id, added_at DESC);
+CREATE INDEX IF NOT EXISTS idx_vocabulary_book_level ON public.vocabulary_book(level_id);
 
 -- 启用 RLS
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
@@ -186,6 +245,8 @@ ALTER TABLE public.levels ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_level_progress ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.leaderboards ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.admin_users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.system_settings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.vocabulary_book ENABLE ROW LEVEL SECURITY;
 
 -- 公开访问策略
 CREATE POLICY "Profiles are publicly viewable" ON public.profiles
@@ -210,6 +271,11 @@ CREATE POLICY "Users manage own progress" ON public.user_progress
   WITH CHECK (auth.uid() = user_id);
 
 CREATE POLICY "Users manage own level progress" ON public.user_level_progress
+  USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users manage own vocabulary" ON public.vocabulary_book
+  FOR ALL
   USING (auth.uid() = user_id)
   WITH CHECK (auth.uid() = user_id);
 
@@ -248,6 +314,44 @@ CREATE POLICY "Service role manages admin list" ON public.admin_users
   FOR ALL
   USING (auth.role() = 'service_role')
   WITH CHECK (auth.role() = 'service_role');
+
+-- 管理员可以查看所有用户的进度数据（只读）
+CREATE POLICY "Admins can view all user progress" ON public.user_progress
+  FOR SELECT
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.admin_users au
+      WHERE au.user_id = auth.uid()
+    )
+  );
+
+CREATE POLICY "Admins can view all user level progress" ON public.user_level_progress
+  FOR SELECT
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.admin_users au
+      WHERE au.user_id = auth.uid()
+    )
+  );
+
+-- 系统配置策略
+CREATE POLICY "System settings are publicly viewable" ON public.system_settings
+  FOR SELECT USING (true);
+
+CREATE POLICY "Admins can manage system settings" ON public.system_settings
+  FOR ALL
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.admin_users au
+      WHERE au.user_id = auth.uid()
+    )
+  )
+  WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM public.admin_users au
+      WHERE au.user_id = auth.uid()
+    )
+  );
 
 -- 新用户自动初始化
 CREATE OR REPLACE FUNCTION public.handle_new_user()
@@ -310,6 +414,59 @@ CREATE TRIGGER trg_admin_users_updated_at
   BEFORE UPDATE ON public.admin_users
   FOR EACH ROW EXECUTE PROCEDURE public.updated_at_column();
 
--- 初始化管理员（执行前替换 UUID）
--- INSERT INTO public.admin_users (user_id)
--- VALUES ('your-user-uuid-here');
+CREATE TRIGGER trg_system_settings_updated_at
+  BEFORE UPDATE ON public.system_settings
+  FOR EACH ROW EXECUTE PROCEDURE public.updated_at_column();
+
+CREATE TRIGGER trg_vocabulary_book_updated_at
+  BEFORE UPDATE ON public.vocabulary_book
+  FOR EACH ROW EXECUTE PROCEDURE public.updated_at_column();
+
+-- 生词本复习计数增量函数
+CREATE OR REPLACE FUNCTION increment_review_count(vocab_id UUID)
+RETURNS void AS $$
+BEGIN
+  UPDATE public.vocabulary_book
+  SET
+    review_count = review_count + 1,
+    last_reviewed_at = NOW()
+  WHERE id = vocab_id;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- 插入默认系统配置
+INSERT INTO public.system_settings (key, value, description)
+VALUES
+  (
+    'registration_enabled',
+    'true'::jsonb,
+    '是否开放新用户注册'
+  ),
+  (
+    'email_verification_required',
+    'true'::jsonb,
+    '新用户注册是否需要邮箱验证'
+  )
+ON CONFLICT (key) DO NOTHING;
+
+-- ============================================================
+-- 初始化管理员说明
+-- ============================================================
+-- 执行以下步骤添加管理员：
+--
+-- 步骤 1: 查看所有用户及其 UUID
+-- SELECT id AS user_id, email, created_at
+-- FROM auth.users
+-- ORDER BY created_at DESC;
+--
+-- 步骤 2: 添加管理员（替换 'your-user-uuid-here' 为实际的用户 UUID）
+-- INSERT INTO public.admin_users (user_id, notes)
+-- VALUES ('your-user-uuid-here', '主管理员')
+-- ON CONFLICT (user_id) DO NOTHING;
+--
+-- 步骤 3: 验证管理员已添加
+-- SELECT au.user_id, u.email, au.notes, au.created_at
+-- FROM public.admin_users au
+-- LEFT JOIN auth.users u ON u.id = au.user_id
+-- ORDER BY au.created_at DESC;
+-- ============================================================
